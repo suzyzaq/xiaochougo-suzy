@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450">
+  <rect width="800" height="450" fill="#1C6FB5"/>
+  <rect x="60" y="60" width="170" height="170" fill="#FACD3A"/>
+  <circle cx="400" cy="150" r="95" fill="#EA453E"/>
+  <polygon points="650,70 760,330 540,330" fill="#15110D"/>
+  <rect x="60" y="300" width="320" height="34" fill="#F4EEE0"/>
+  <rect x="60" y="345" width="220" height="20" fill="#15110D"/>
+  <text x="400" y="408" font-size="34" fill="#ffffff" text-anchor="middle" font-family="-apple-system,'PingFang SC','Microsoft YaHei',sans-serif" font-weight="800">为什么要自装 · 人设起点</text>
+</svg>
