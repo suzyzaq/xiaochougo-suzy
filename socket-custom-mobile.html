@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page-node-id="1FqdDGFLHjIL0ZTZdLKZzp"><head data-page-node-id="fQpuZB1ZPIxhi5E67X2AjQ">
+<meta charset="UTF-8" data-page-node-id="YZUDLp5SUpyePc3sN1gXBV">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" data-page-node-id="PRPXlUEPUAfTGHFEIWRkHd">
+<title data-page-node-id="8GTS2e0AkBhhHt5efxwbOs">全屋插座定制清单 · 1 分钟测评</title>
+<style data-page-node-id="CWguVc9TbPNjsw7LKrcS3B">
+  :root{
+    --red:#E60026; --red-soft:#FFE3E8; --ink:#1A1A1A; --sub:#4A4A4A;
+    --line:#ECECEC; --bg:#F4F4F4; --gold:#6B4A00; --blue:#1E50D8; --green:#0B7A4B;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--bg);font-family:"PingFang SC","Microsoft YaHei",-apple-system,sans-serif;
+    color:var(--ink);line-height:1.5;}
+  .app{max-width:460px;margin:0 auto;min-height:100vh;background:#fff;
+    position:relative;padding-bottom:84px;}
+
+  /* 顶部品牌条 */
+  .brand{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line);}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--red);}
+  .brand b{font-size:15px;font-weight:800;}
+  .brand span{font-size:12px;color:var(--sub);margin-left:auto;}
+
+  /* 痛点引入页 */
+  #intro{padding:0 22px 30px;}
+  .hero{background:linear-gradient(160deg,#fff 0%,#fff 45%,var(--red-soft) 100%);
+    margin:0 -22px;padding:40px 22px 30px;text-align:center;}
+  .hero .q{font-size:54px;}
+  .hero h1{font-size:30px;font-weight:900;letter-spacing:.5px;margin-top:8px;}
+  .hero .accent{width:40px;height:6px;background:var(--red);border-radius:4px;margin:14px auto 16px;}
+  .hero p{font-size:14px;color:var(--sub);line-height:1.7;}
+  .insight{background:#EAEEF6;border-radius:16px;padding:18px 18px;margin:22px 0 0;
+    border-left:5px solid var(--blue);}
+  .insight .t{font-size:14px;font-weight:800;color:var(--blue);margin-bottom:8px;}
+  .insight p{font-size:13.5px;color:#22384f;line-height:1.7;margin:0;}
+  .method{background:var(--red-soft);border-radius:16px;padding:18px;margin-top:14px;}
+  .method .t{font-size:14px;font-weight:800;color:var(--red);margin-bottom:8px;}
+  .method p{font-size:13.5px;color:#5a2330;line-height:1.7;margin:0;}
+
+  /* 答题向导 */
+  #quiz{display:none;}
+  .progress{height:4px;background:var(--line);position:relative;}
+  .progress i{position:absolute;left:0;top:0;bottom:0;background:var(--red);transition:width .25s;}
+  .step-meta{padding:14px 18px 0;font-size:12px;color:var(--sub);}
+  .step-body{padding:10px 18px 0;}
+  .q-title{font-size:20px;font-weight:900;margin:6px 0 4px;line-height:1.35;}
+  .q-sub{font-size:13px;color:var(--sub);margin-bottom:16px;line-height:1.6;}
+  .q-title .no{color:var(--red);}
+  .sec-label{font-size:13px;font-weight:800;color:var(--red);margin:18px 0 10px;
+    display:flex;align-items:center;gap:8px;}
+  .sec-label .bar{width:4px;height:15px;background:var(--red);border-radius:3px;}
+
+  .opt{display:block;width:100%;text-align:left;background:#fff;border:1.5px solid var(--line);
+    border-radius:14px;padding:14px 16px;margin-bottom:10px;font-size:15px;font-weight:600;
+    color:var(--ink);cursor:pointer;transition:.15s;font-family:inherit;}
+  .opt:active{transform:scale(.99);}
+  .opt.sel{background:var(--red-soft);border-color:var(--red);color:var(--red);}
+  .opt .d{font-size:12px;font-weight:500;color:var(--sub);margin-top:3px;}
+  .opt.sel .d{color:#a23;}
+
+  .chips{display:flex;flex-wrap:wrap;gap:10px;}
+  .chip{flex:1 1 auto;min-width:84px;text-align:center;background:#fff;border:1.5px solid var(--line);
+    border-radius:14px;padding:12px 8px;font-size:14px;font-weight:700;cursor:pointer;color:var(--ink);
+    transition:.15s;font-family:inherit;}
+  .chip.sel{background:var(--red);border-color:var(--red);color:#fff;}
+  .chip .d{font-size:11px;font-weight:500;opacity:.8;margin-top:2px;}
+
+  /* 固定底部按钮 */
+  .footbar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:460px;
+    background:#fff;border-top:1px solid var(--line);padding:12px 18px calc(12px + env(safe-area-inset-bottom));
+    display:flex;gap:12px;}
+  .btn{flex:1;border:none;border-radius:14px;padding:15px;font-size:16px;font-weight:800;
+    cursor:pointer;font-family:inherit;}
+  .btn-pri{background:var(--red);color:#fff;}
+  .btn-pri:active{opacity:.9;}
+  .btn-ghost{flex:0 0 96px;background:#fff;border:1.5px solid var(--line);color:var(--sub);}
+
+  /* 结果页 */
+  #result{display:none;padding:0 16px 20px;}
+  .r-hero{background:var(--red);color:#fff;border-radius:0 0 22px 22px;margin:0 -16px;padding:22px 18px 20px;}
+  .r-hero h2{font-size:22px;font-weight:900;margin:0 0 6px;}
+  .r-hero .total{font-size:40px;font-weight:900;line-height:1;}
+  .r-hero .total small{font-size:15px;font-weight:700;opacity:.9;}
+  .r-hero p{font-size:12.5px;opacity:.92;margin:10px 0 0;line-height:1.6;}
+  .legend{background:#FAFAFA;border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:16px 0;}
+  .legend .t{font-size:13px;font-weight:800;color:var(--red);margin-bottom:8px;}
+  .legend .row{font-size:12.5px;color:var(--sub);line-height:1.7;}
+  .legend .row b{color:var(--ink);}
+  .sec{margin:16px 0;background:#fff;border:1.5px solid var(--line);border-radius:16px;overflow:hidden;}
+  .sec .sh{display:flex;align-items:center;gap:10px;padding:13px 16px;background:#FFF7F8;border-bottom:1px solid var(--line);}
+  .sec .sh .e{font-size:24px;}
+  .sec .sh .nm{font-size:16px;font-weight:900;}
+  .sec .sh .ct{margin-left:auto;font-size:12px;color:var(--red);font-weight:800;}
+  table{width:100%;border-collapse:collapse;font-size:12.5px;}
+  th,td{border-bottom:1px solid var(--line);padding:9px 10px;text-align:left;vertical-align:top;line-height:1.45;}
+  th{background:#FBFBFB;color:var(--sub);font-weight:700;font-size:11.5px;}
+  td.t{font-weight:800;color:var(--blue);white-space:nowrap;}
+  td.q{font-weight:900;color:var(--red);text-align:center;white-space:nowrap;}
+  td.h{color:var(--green);white-space:nowrap;font-weight:700;}
+  .sec .note{font-size:11.5px;color:var(--sub);background:#FAFAFA;padding:9px 14px;border-top:1px solid var(--line);line-height:1.6;}
+  .leak{background:#FFF6E6;border:1px solid #FFD9A6;border-radius:14px;padding:14px 16px;margin:16px 0;}
+  .leak .t{font-size:13px;font-weight:800;color:var(--gold);margin-bottom:8px;}
+  .leak .pills{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;}
+  .leak .pills span{background:#fff;border:1px solid #FFD9A6;border-radius:10px;font-size:11.5px;
+    padding:4px 9px;color:var(--gold);font-weight:700;}
+  .leak .top{font-size:12.5px;color:#5a3d00;line-height:1.8;}
+  .leak .top b{color:var(--red);}
+  .cta-box{background:var(--red-soft);border-radius:16px;padding:18px;margin:18px 0;text-align:center;}
+  .cta-box .kw{display:inline-block;background:var(--red);color:#fff;font-weight:900;font-size:20px;
+    padding:8px 22px;border-radius:30px;letter-spacing:2px;margin:6px 0;}
+  .cta-box p{font-size:13px;color:#5a2330;line-height:1.7;margin:6px 0 0;}
+  .r-foot{text-align:center;font-size:12px;color:var(--sub);padding:8px 0 4px;}
+  .r-foot b{color:var(--ink);}
+  .refbar{display:flex;align-items:center;padding:12px 16px 4px;}
+  .refbar button{background:#fff;border:1.5px solid var(--line);border-radius:12px;
+    padding:9px 16px;font-size:14px;font-weight:700;color:var(--blue);cursor:pointer;font-family:inherit;}
+  .refbar button:active{opacity:.85;}
+  .reflink{display:block;width:calc(100% - 36px);margin:18px auto 0;background:#EEF2FB;
+    border:1.5px solid #D6E0F5;border-radius:14px;padding:13px;text-align:center;
+    font-size:14px;font-weight:800;color:var(--blue);cursor:pointer;font-family:inherit;}
+  .reflink:active{opacity:.85;}
+  .sec table td.o{font-size:11px;color:var(--sub);line-height:1.4;}
+</style>
+<style id="__dm_no_drag_style__">* { -webkit-user-drag: none !important; }</style><style id="__dm_bindable_badge_style__">[data-sp-bindable="database"]{outline:1px dashed #0088ff;outline-offset:2px;border-radius:4px;}[data-sp-bindable="database"] *{pointer-events:none !important;transition:none !important;animation:none !important;}[data-sp-bindable="database"]{transition:none !important;animation:none !important;}</style></head>
+<body data-page-node-id="1FGVO8Fzo9b1sdwF1bhPfI" style="">
+<div class="app" data-page-node-id="JYklPV0SbnZqxwuI496Nza">
+
+  <div class="brand" data-page-node-id="N7OwBnSfFhXhMuHPrblhE3">
+    <span class="dot" data-page-node-id="OsovLjvnlJOBVsXJ7B6CTP"></span><b data-page-node-id="hETmepTvRBj3OAGrfYgIZB">是小臭狗 SUZY 呀</b>
+    <span data-page-node-id="sexdNEt5vHPCW0lBAoTR0q">重庆 150㎡ 自装实录</span>
+  </div>
+
+  <!-- 痛点引入 -->
+  <section id="intro" style="display:block;" data-page-node-id="v1ZU2fNbyg3D5Vk1MvHx7b">
+    <div class="hero" data-page-node-id="JEHMWlVVqgUGEba2ELJ0gF">
+      <div class="q" data-page-node-id="ec8hZ7zGAwoB58Wc7W5ayh">🔌</div>
+      <h1 data-page-node-id="X49pN9c3hNbN2WUlqKllCW">插座留错 = 砸墙</h1>
+      <div class="accent" data-page-node-id="HqA6TKobFfvxq6ArCe760j"></div>
+      <p data-page-node-id="UKnCp54zhVwJJpUF3QU8MU">墙一封，想再加一个插座都得刨开重来——<br data-page-node-id="v0pa8IOKxREEZKws73cSaC">工期、粉尘、钱，一样都省不了。</p>
+    </div>
+    <div class="insight" data-page-node-id="KLPZDzQpHAL2PdyogCx5C5">
+      <div class="t" data-page-node-id="sCX6K3L7Z6UXpWXWkC4HRe">⚠️ 比"留少"更糟的是"留错"</div>
+      <p data-page-node-id="pGGRYRBVjt6xeTgMkXT1ZQ">水电交底那天，师傅问你：「沙发多长？床朝哪边？柜体多深？」<br data-page-node-id="TkzLIwP4FpDMZwTLgXLB1h">
+      你答不上来，留再多插座也是错——位置不对，等于白留。</p>
+    </div>
+    <div class="method" data-page-node-id="W13m8XcIjKCtZ36NtBipiH">
+      <div class="t" data-page-node-id="2yO3BIpwWAwlEDcqhfWeMf">✅ 先摸清自己家，再留插座</div>
+      <p data-page-node-id="J1w8SsWEVCj2L01gSifOXP">插座该留哪，取决于你家的真实习惯：沙发摆哪、床朝哪边、要不要餐边柜小家电、卫生间上不上智能马桶。<br data-page-node-id="CDtznomk5r5BO2r0e0ga34">
+      先做 1 分钟测评，按你的习惯生成清单；<b data-page-node-id="EjohLBzmhZjF1I0VsbC1QZ">位置你定，我们给离地参考高度</b>。</p>
+    </div>
+    <button class="reflink" onclick="openRef('intro')" data-page-node-id="kzHQdbFs9UP3d9bworuotp">📋 看 SUZY 家 150㎡ 真实点位示例</button>
+  </section>
+
+  <!-- 答题向导 -->
+  <section id="quiz" style="display: none;" data-page-node-id="5FyDwCLPtbvLwQC3r8BxGX">
+    <div class="progress" data-page-node-id="ojDQsJQESF0Jd5YCgLsHnw"><i id="bar" style="width: 90.9091%;" data-page-node-id="voANqgqWmBNUwGAFWRRoGq"></i></div>
+    <div class="step-meta" id="stepMeta" data-page-node-id="MJXYyhHFGfBGKcFEYbvYHt">第 11 / 11 步</div>
+    <div class="step-body" id="stepBody" data-page-node-id="qLE0xykWrRnphcsoL8g7qw">
+    <div class="q-title" data-page-node-id="xz42R34QILe9zOFqS1CHzp"><span class="no" data-page-node-id="VEsErX5nMyt6Npu6jjH1wO">⑨</span> 家政 / 清洁 / 宠物</div>
+    <div class="q-sub" data-page-node-id="Ov3A7yrNlEmBqHW5xV9gzQ">家政区、储物间、清洁设备、宠物——这些最容易整屋漏算。</div>
+    <div class="sec-label" data-page-node-id="JJIsvnLTHJqf3IZbo36eQc"><span class="bar" data-page-node-id="RQqQhJUx4GhzhNB9SoRdS3"></span>有独立家政区 / 储物间吗</div>
+    <div class="chips" data-page-node-id="Eh3bmj4cgLXQnZ3liVWoh9">
+      <button class="chip " data-g="utility.has" data-v="1" data-multi="1" data-page-node-id="OX3OHvy4vSQ08FiHqgxxGW">有家政区/储物间<div class="d" data-page-node-id="g49ESyNW1pz6kWcJvplBQr">墙面+收纳充电</div></button>
+    </div>
+    <div class="sec-label" data-page-node-id="vTtOYj5pRS5QY3K691jPXK"><span class="bar" data-page-node-id="YcbXy8Uhk5zuZsmzBJTc3o"></span>清洁设备（可多选）</div>
+    <div class="chips" data-page-node-id="rMwNTqmp78tLj77w1MLzE0">
+      <button class="chip " data-g="utility.washer" data-v="1" data-multi="1" data-page-node-id="PW2iC56Q7FGBiXCDgwNqgk">洗地机<div class="d" data-page-node-id="rFxgFPCHnLwaO8pAYHggBw">收纳充电</div></button>
+      <button class="chip " data-g="utility.robot" data-v="1" data-multi="1" data-page-node-id="1onO1PI0Q8HEvO7gCvBjhv">扫地机器人<div class="d" data-page-node-id="VqVgZfb22RdGEz0BC69bs4">地面/收纳</div></button>
+      <button class="chip " data-g="utility.vacuum" data-v="1" data-multi="1" data-page-node-id="FMMJ52HFAUHguGM9YERnzQ">吸尘器<div class="d" data-page-node-id="C1ZNwm104uUGbGFMYItSxq">收纳充电</div></button>
+    </div>
+    <div class="sec-label" data-page-node-id="bR6dB10Dx88nM4IMbiMO4M"><span class="bar" data-page-node-id="69kxEuxLj4JY118z1S0qVL"></span>宠物设备（可多选）</div>
+    <div class="chips" data-page-node-id="XjiSreaj24gfBipEhp5A2t">
+      <button class="chip " data-g="utility.petWater" data-v="1" data-multi="1" data-page-node-id="RllezfYXgpGBfgocbQwdEo">宠物饮水机<div class="d" data-page-node-id="wALMUjba4hxnT0iVqHzOTV">带防溅盒</div></button>
+      <button class="chip " data-g="utility.petFeed" data-v="1" data-multi="1" data-page-node-id="UN1ssVhEfM9Wcm6O3icP6r">宠物喂食器</button>
+      <button class="chip " data-g="utility.litter" data-v="1" data-multi="1" data-page-node-id="3wkGEusB8hSBw6X67IMRUY">电动猫砂盆</button>
+    </div>
+    <div class="sec-label" data-page-node-id="0zBabmD0TFaG3RKkJOsFrw"><span class="bar" data-page-node-id="SrAM04XA6DrqAkunNoKLHm"></span>过道感应灯</div>
+    <div class="chips" data-page-node-id="m0mDQn4g3W1jPRAxCh73ZM">
+      <button class="chip " data-g="utility.hallway" data-v="1" data-multi="1" data-page-node-id="Dw2P2B5AqwPr39RmN5aZhF">要过道感应灯<div class="d" data-page-node-id="GFO9sPVSJP9GLarYf6yGCc">30-40cm</div></button>
+    </div></div>
+  </section>
+
+  <!-- 结果 -->
+  <section id="result" style="display:none;" data-page-node-id="AJFGtHvCicEJAR7RoUeEw2">
+    <div class="r-hero" data-page-node-id="0SfnIMCoHfpnClaJFpcOIG">
+      <h2 data-page-node-id="3NRJzDWtznea2scGebDOWj">你的全屋插座清单</h2>
+      <div class="total" data-page-node-id="zDIfa8wWkl4Y6ON87S0m90">67<small data-page-node-id="5JXUjPYss1TROyI5ix8v8c"> 个插座点位（预计）</small></div>
+      <p data-page-node-id="WfbtjfZeOmW7gkvbI1G0nQ">按你的真实习惯生成 · 位置你定，高度是参考 · 水电交底拿给师傅逐项核对</p>
+    </div>
+    
+    <div class="legend" data-page-node-id="0JmbDzIFbF9VHdAMks1Hxu">
+      <div class="t" data-page-node-id="8JaF5GDymcRg4XtMJPEV2g">插座类型速查（你的清单里会出现这些）</div>
+      <div class="row" data-page-node-id="jWzlH5DhUlfVzV7RRILMDk"><b data-page-node-id="4rUrg2xJ5E7iXAvHIhDn92">一开双控 / 单控</b>：带开关的灯控，双控=两地都能关灯（门+床头）。</div>
+      <div class="row" data-page-node-id="uEDxbAHuFfKCt9EXUWs2Lx"><b data-page-node-id="wVRB9uFrAw8S2ZgQWQTAZ7">五孔 / 斜五孔</b>：五孔=两孔+三孔通用；斜五孔=插头不挡位，并排插不打架。</div>
+      <div class="row" data-page-node-id="6B7NEdgTX46GjAp6GkOzOP"><b data-page-node-id="hPagbsn04j1E5lj5kyUbiI">五孔USB</b>：自带 USB 口，手机直充不用头。</div>
+      <div class="row" data-page-node-id="VJbI5bcBmFlMAc98zWlzBw"><b data-page-node-id="AFstp5NwFMzp0nnfHQwhbz">三孔 / 三孔10A / 16A</b>：大功率用；16A 专给空调、大功率电器（独立回路）。</div>
+      <div class="row" data-page-node-id="FLZ63ChCbRQ4XmPTbvTuBi"><b data-page-node-id="wL9FMFKBzmHppOWBFn1xdi">三孔防溅</b>：带防溅盒，厨房水槽下、卫生间必用。</div>
+      <div class="row" data-page-node-id="12zAvWj918KfJ9EGBu4vNE"><b data-page-node-id="VjAez1LfDWyf8boFywDmEf">四孔</b>：纯两孔设备（如路由器、电动牙刷充电器）扎堆处。</div>
+      <div class="row" data-page-node-id="NXN59En5anWgoeYb08S97i"><b data-page-node-id="Jm7jLyMul2qCjGmvrme0A1">宽带 / 网口</b>：电视、书桌上网用。</div>
+    </div>
+    <div class="sec" data-page-node-id="WE2s780Gzr3XysvDWlIEfC"><div class="sh" data-page-node-id="lU2G5m5GL4J43s3NCYS6Kj"><span class="e" data-page-node-id="uwg2oCMxf28GjL4AUrqNe5">🚪</span><span class="nm" data-page-node-id="G9mwSmdFKavhPEhWavyRBs">玄关</span><span class="ct" data-page-node-id="WKVrZ1qXK9pYf9rGmueJfW">3 个点位</span></div>
+      <table data-page-node-id="yR3UlWu7MWCdnx18UBtQwR"><tbody data-page-node-id="I5zCWLNHcRkWVW0jVNkTF7"><tr data-page-node-id="8301ExxWP3ogQXrFtgn5jf"><th data-page-node-id="HDlcTJDy2z6YYA1JbNIErc">插座类型</th><th data-page-node-id="KVruXp1lcZVBlpvjtgYpJm">数量</th><th data-page-node-id="kL12vob439HEDJqrEYDdIm">用途</th><th data-page-node-id="cznCdxXazEBRI0MMZlvOWJ">离地参考</th></tr><tr data-page-node-id="QuQra8XWnGMhRIJQFrOFmp"><td class="t" data-page-node-id="4gUmbtpihdv4QAxTUQ289T">一开双控</td><td class="q" data-page-node-id="yWcMRDSaYRu6pUEivfTIXd">1</td><td data-page-node-id="tefci50PonPwnAB2bn0NWu">玄关灯（门旁）</td><td class="h" data-page-node-id="e3XdnY1FsuTl3XLM6VG4um">130</td></tr><tr data-page-node-id="qvw2Pbd0NiPIrmOndiAju9"><td class="t" data-page-node-id="ERiJc6LMPfP51xKegfLBR0">四孔</td><td class="q" data-page-node-id="356IFNJK3l1U4QjbI7LFOr">1</td><td data-page-node-id="heahbVQivUE66R8UXQerTU">备用（鞋柜上）</td><td class="h" data-page-node-id="3j5RAvKutKBF0ZAyWujFT5">20</td></tr><tr data-page-node-id="0pDBgB3GTlhsncbpbrpfEK"><td class="t" data-page-node-id="Dkr4i0owJUr0nroauvnBuD">五孔USB</td><td class="q" data-page-node-id="3OUuADY44lw5bTxPAefREK">1</td><td data-page-node-id="cIDFhLCE2uaL9xeOd3AAMw">玄关柜临时充（手机）</td><td class="h" data-page-node-id="zCHovYWyelC46TBdS815JB">柜中</td></tr></tbody></table>
+      <div class="note" data-page-node-id="EH1HnjrYHcP1w9aGPHk9El">位置由你定 ✋ 高度为离地参考值（cm），施工请按完成面现场复尺，别照抄直接开孔。</div></div><div class="sec" data-page-node-id="vbpyZDmlF5R94YHFOIiBuK"><div class="sh" data-page-node-id="KeHklGLG1KUUrqaIaCteEd"><span class="e" data-page-node-id="6VIElJQhOMuA7ohVd8DUxr">🛏️</span><span class="nm" data-page-node-id="IiSSpTzVgyB5sTMi00Cynd">主卧</span><span class="ct" data-page-node-id="1BD9haFuhQSFIVEvtpeCxd">9 个点位</span></div>
+      <table data-page-node-id="yRKQT5BnlHBqLrLrVzD6pR"><tbody data-page-node-id="lCOMgiNBCVbmz1I9ny9vqE"><tr data-page-node-id="uYReuaDudVlhAce2wkjiKs"><th data-page-node-id="HgFhkfopz1ZpqmoGqHCr51">插座类型</th><th data-page-node-id="cfAN45YrCoW4JuCkkdm5D9">数量</th><th data-page-node-id="IF5UFYl3FsQYbXtfB3duYQ">用途</th><th data-page-node-id="eJTBMqS5vAKGlrgXE5qTJU">离地参考</th></tr><tr data-page-node-id="OPtkkHggCYQ0EQuSEMqLRG"><td class="t" data-page-node-id="N8wFWLkE2zTqPNMMgJfSlY">一开单控 / 双控</td><td class="q" data-page-node-id="hOLPaWJUj3HMD1Y9vNF8cb">3</td><td data-page-node-id="LbRBcnA2GsUDEeGysEpf2I">卧灯（门 + 床头双控）</td><td class="h" data-page-node-id="6b2COGCQqjvrBEEufJnHwE">130 / 床侧</td></tr><tr data-page-node-id="9icGUlbuIB1CLaxM4pjp8v"><td class="t" data-page-node-id="HAoW9s92ygKL0osPj3Xdsu">五孔带USB</td><td class="q" data-page-node-id="rHdAzN2NaEXgJSqnnQEt2H">2</td><td data-page-node-id="m9TEdg0kXKMFLiZ6swR5MV">床头（台灯 / 手机）</td><td class="h" data-page-node-id="5w6ePXmHF5gGLfZc31yrAL">30</td></tr><tr data-page-node-id="4cE8b6xQzbjX1PSH2fWvJJ"><td class="t" data-page-node-id="xvRZkf4EAAERFGyfzqk3tl">三孔开关</td><td class="q" data-page-node-id="O3GDSuirUm8kiVmMPPXQ2T">1</td><td data-page-node-id="UoaFNCbMMkbEGuJmZ7sse8">空调</td><td class="h" data-page-node-id="xQLQphNaOVGvoHbTFVcE73">空调位</td></tr><tr data-page-node-id="P6MwJDdaMR31yGmbKpml00"><td class="t" data-page-node-id="CveG4hGP42BCCmzARq1QSF">斜五孔</td><td class="q" data-page-node-id="RSP0JCnkwQpmuqaeaLTgoo">2</td><td data-page-node-id="PoDZR8g9GOHilMxd53JrGv">卷发棒 / 加湿器</td><td class="h" data-page-node-id="5iGHeN4aIL2CbanQ7cZg0V">梳妆 / 床尾</td></tr><tr data-page-node-id="3Le5ZBN2OWKv2dgxaRsSdR"><td class="t" data-page-node-id="RBqTtHcLZ8FO9VCk5kdH9s">三孔</td><td class="q" data-page-node-id="CaA8A9NinwDNxHNA4kcPLk">1</td><td data-page-node-id="x9poEh3xZGN1DTkrY5d9eS">内嵌熨烫机（衣柜旁）</td><td class="h" data-page-node-id="vGJzNVewgATJzUhkGatmk9">130</td></tr></tbody></table>
+      <div class="note" data-page-node-id="YCROFSQi2SFp3uiu0OUX5O">位置由你定 ✋ 高度为离地参考值（cm），施工请按完成面现场复尺，别照抄直接开孔。</div></div><div class="sec" data-page-node-id="hVTwjhY06ryaiwjekGbFSd"><div class="sh" data-page-node-id="gWFIib2ZJ2sbNtRUPJxx58"><span class="e" data-page-node-id="hb9BG0NZgLYGPHsO4H5emX">🛏️</span><span class="nm" data-page-node-id="oHLj5NaBvgFiRcWAxlMl3R">主卧</span><span class="ct" data-page-node-id="abeTjXvgyWcX5VwPDkXFct">9 个点位</span></div>
+      <table data-page-node-id="GIWyeVeEYcQ2fW1ow3Zrc7"><tbody data-page-node-id="9xkVYGNSzqaFo6srcMmQSd"><tr data-page-node-id="RC7XPfUjuUo1T2czD2S29V"><th data-page-node-id="HPCxecTwdekX9TMWav1ztz">插座类型</th><th data-page-node-id="GgAoghvWFPcIVJ4DdhSqCj">数量</th><th data-page-node-id="3bjfCB8DjGxJjN5umxzdUg">用途</th><th data-page-node-id="8x9rx31LDzCP8yL0srMO9z">离地参考</th></tr><tr data-page-node-id="UJhQjyciQuA50iA3GEExA0"><td class="t" data-page-node-id="iotny8SU2HYD6amJN9iyIk">一开单控 / 双控</td><td class="q" data-page-node-id="dw7mI5s1OXtLaRSN8AXFI9">3</td><td data-page-node-id="Rd5BIbvcR3DETHF8E32COX">卧灯（门 + 床头双控）</td><td class="h" data-page-node-id="IsBC8abIag2ytvNfUAiDTr">130 / 床侧</td></tr><tr data-page-node-id="7jBed07BecmgT18fPEuISb"><td class="t" data-page-node-id="mWbKJLszqC1PNrsskGPTM3">五孔带USB</td><td class="q" data-page-node-id="ioYbhku7SOYEZ3ncPeV2Wt">2</td><td data-page-node-id="vePNnw9jHX4IYF5BCBg3vZ">床头（台灯 / 手机）</td><td class="h" data-page-node-id="dUMCsx2zfcV4Oy790mMOpr">30</td></tr><tr data-page-node-id="rrJPJElhwrpLOMoDt4M2Ep"><td class="t" data-page-node-id="BfaBnYPbZmVA8XECfDGgyC">三孔开关</td><td class="q" data-page-node-id="gmV4EulqLviWgsaofEnBD1">1</td><td data-page-node-id="NOFfz3N3KyMrG9M5FZVYXH">空调</td><td class="h" data-page-node-id="TYbZIzEmPsgEaYWcbDhZyq">空调位</td></tr><tr data-page-node-id="l4DTYBDTGSDix0tExYivJE"><td class="t" data-page-node-id="61J9sqgUgDu3TEaOlFKQvE">斜五孔</td><td class="q" data-page-node-id="5CymleJymQMbi5jbK9vNAP">2</td><td data-page-node-id="7y4PC8lvq9gWfvZegmtoLe">卷发棒 / 加湿器</td><td class="h" data-page-node-id="PHDcAFjbHQr5EgyBesmLDx">梳妆 / 床尾</td></tr><tr data-page-node-id="vD9oEsq5FJXwUjnBycWw92"><td class="t" data-page-node-id="7OArNNeRc5TpcHNmQD5IwE">三孔</td><td class="q" data-page-node-id="ZAp4AsqeQyEvnidlcjxTpz">1</td><td data-page-node-id="xSy2NhlAkAmPHoEsUS88vj">内嵌熨烫机（衣柜旁）</td><td class="h" data-page-node-id="uKgIY2pvRmSeCA7qLd7GsX">130</td></tr></tbody></table>
+      <div class="note" data-page-node-id="jWO895IfZQCv6bKDpSZizj">位置由你定 ✋ 高度为离地参考值（cm），施工请按完成面现场复尺，别照抄直接开孔。</div></div><div class="sec" data-page-node-id="0D2rq0Td2HdrBDqs2F7lQE"><div class="sh" data-page-node-id="vOa7hkGF6ODvYMeIYYX4Kr"><span class="e" data-page-node-id="9S3f23xpWI3YilRNpRO5MZ">🍽️</span><span class="nm" data-page-node-id="YIix8YmwXnzPjtElXUvSH1">餐厅</span><span class="ct" data-page-node-id="jakv0x40aa5VZ9CKBiXfJV">4 个点位</span></div>
+      <table data-page-node-id="8HU46Bb6sfp3VYICBihbUO"><tbody data-page-node-id="RJpB2hdDyE77kcHMPPrGhp"><tr data-page-node-id="nmPudoIDEyGsrpZVI4tjsf"><th data-page-node-id="KE7GU8w0MIBToRVTNTd46E">插座类型</th><th data-page-node-id="RJJw0UXELuvECNz1ghL0Ky">数量</th><th data-page-node-id="QZlavLxMrgE3DHBibVfKRy">用途</th><th data-page-node-id="Q5IOJanFMedTc9CNxLMhrn">离地参考</th></tr><tr data-page-node-id="D8KEiCU99JOuXQRmN9WB7d"><td class="t" data-page-node-id="tDJn9ivnzu4NRKhHFcz0AJ">一开双控</td><td class="q" data-page-node-id="vAgQDtrld3wqq0Sfk9S1eO">1</td><td data-page-node-id="c4VZvj9eDgvR6RwNxvGjYe">餐厅灯（门旁）</td><td class="h" data-page-node-id="FWoDf4cxtBiED4qgN4EyTX">130</td></tr><tr data-page-node-id="IEoVtqzJ0DIUsF5LL2bcEV"><td class="t" data-page-node-id="gNwVyAXP1PQaGuYGia5LSw">一开五孔</td><td class="q" data-page-node-id="wjGIDF32LROcr5r3LjAE9z">2</td><td data-page-node-id="DQRMVBgq2VmITCmTEUcp7s">餐边柜上方小家电</td><td class="h" data-page-node-id="C8gSGerJ83mA6STf7iwhZ2">20</td></tr><tr data-page-node-id="cNsmgmECn34xjRfMXc8Xpq"><td class="t" data-page-node-id="ZszG0AcRpsA8TgtwViMtNP">斜五孔</td><td class="q" data-page-node-id="XlygpiwiDgpZV0Z34ZhqIV">1</td><td data-page-node-id="RN3jqMlPpqhoQD5FBK8GFW">备用</td><td class="h" data-page-node-id="qqdMjxNzoaFmVCw1hAAgQe">—</td></tr></tbody></table>
+      <div class="note" data-page-node-id="g1v500GsfbBSnUaxo94sBl">位置由你定 ✋ 高度为离地参考值（cm），施工请按完成面现场复尺，别照抄直接开孔。</div></div><div class="sec" data-page-node-id="eU05jdBx9xH0gdxo8t6ABn"><div class="sh" data-page-node-id="mxukA1gm2xcN2EZGEeOCra"><span class="e" data-page-node-id="ux0Vzzb7JRRPgh3ZWcCdug">🍳</span><span class="nm" data-page-node-id="fRxbJO9FQr7pZeDC8y1cHW">厨房</span><span class="ct" data-page-node-id="WULVKHSGkHT0oGs1Xk9jIW">20 个点位</span></div>
+      <table data-page-node-id="s4EINGmeChii9PVE1pSeAg"><tbody data-page-node-id="seRAATkrDcKmfipX6CmRmH"><tr data-page-node-id="GxaXUep69q2YRliUHU1P5t"><th data-page-node-id="ETL5ATDalYcZp1xqk0zdTe">插座类型</th><th data-page-node-id="7Ixx8VUVtc7xSsCKk0mcQd">数量</th><th data-page-node-id="W9MxqC4GtCAeAMoYw2xa1c">用途</th><th data-page-node-id="CxpfIcuewsJJXnjbwbULod">离地参考</th></tr><tr data-page-node-id="5dwqVJW2eGvb5HUCwtNRiX"><td class="t" data-page-node-id="aQMZnxQ38CDbYU7lEzS9fT">二开单控</td><td class="q" data-page-node-id="Kb7zVjnOylKIY2dhzGB6Va">1</td><td data-page-node-id="KHOvk1gcKbGrWK05fM4mHo">灯 / 换风</td><td class="h" data-page-node-id="dPUGv6dPAClqBlcivRCtL8">吊顶</td></tr><tr data-page-node-id="dNkdDe63hdx8LsPRAUvXwq"><td class="t" data-page-node-id="f2weiyJhW9EqutTTjJghDC">一开五孔</td><td class="q" data-page-node-id="BKsvSIzOfvLKQJe76Ziavv">4</td><td data-page-node-id="fC7YKKzCUihgI0Lj8DC3Zt">台面小家电（带开关斜五孔免拔插）</td><td class="h" data-page-node-id="PZ5o45vqiLkNNuRQMQNPg5">台面上方</td></tr><tr data-page-node-id="HORnPPQRyqPFjrbTCQ88dc"><td class="t" data-page-node-id="FrrmUhLmgjOSUTVK4QFQVF">三孔10A</td><td class="q" data-page-node-id="4Y2mxMqMvUPxhtyeSZLaY6">7</td><td data-page-node-id="iL098ymsam4Wrywg0d9eUO">油烟机 / 洗碗机等</td><td class="h" data-page-node-id="GFie4cjeI1XcQTnpOUgB3b">油烟机200</td></tr><tr data-page-node-id="JnjV1TGJ8zfxomMmjPDn2P"><td class="t" data-page-node-id="9AvoSQZBUrouDIdqFaIhpp">三孔防溅</td><td class="q" data-page-node-id="QPhjoctoGEDgqHgS2kIFn7">4</td><td data-page-node-id="g4mjwUmEo8pGiB4CpAtyxp">水槽下：垃圾处理器 / 净水 / 小厨宝</td><td class="h" data-page-node-id="FMQQ5sFmf7x3wA7DKCNBN7">50</td></tr><tr data-page-node-id="X0vNhrJlafQGk69HwXA7BG"><td class="t" data-page-node-id="hDwkO9ry8SYgk5REiY6umu">三孔16A</td><td class="q" data-page-node-id="ro2dQBoZsSSav63p7iCp7n">1</td><td data-page-node-id="EAiyxASUtKNSI3J4ByTqCA">冰箱（独立回路）</td><td class="h" data-page-node-id="XQUJsVbNtTd4I0ZhjdciME">30</td></tr><tr data-page-node-id="ydgCZKEAliyuADHOr7pUrw"><td class="t" data-page-node-id="MX7q09ARZH8jLLIWXCQB37">三孔</td><td class="q" data-page-node-id="tiElNexXd5tfHcYHMtX1Dx">1</td><td data-page-node-id="xjZJRkQs1V4vEXfJXBsPzn">烤箱 / 蒸箱</td><td class="h" data-page-node-id="mS4jj39ClkCcj4DEDlFDgX">40</td></tr><tr data-page-node-id="I73eKlbdik70Lu9EaKGmYu"><td class="t" data-page-node-id="IJ6e1NvYCUzU8o7FeYMNOA">三孔</td><td class="q" data-page-node-id="ekwjeMnFWWdnX4rHxY2ESD">1</td><td data-page-node-id="TKTwFYJDrDduQMVGybvO9d">消毒柜</td><td class="h" data-page-node-id="x1cqVzlOvh6Ovqw9PpBe8p">50</td></tr><tr data-page-node-id="YqqBetEILGfCjNaBEeFrmM"><td class="t" data-page-node-id="I6JYcDfbrU7brG9jSRuYY0">五孔</td><td class="q" data-page-node-id="gL6FwB4LxWoZuVDf3JBpBc">1</td><td data-page-node-id="bEj3wub0XuX4NLEHa0p7wL">燃气热水器 / 警报器</td><td class="h" data-page-node-id="IEgHfANLx1JHWcahq2QfWP">220</td></tr></tbody></table>
+      <div class="note" data-page-node-id="CBYBFch0AxvTT9M4wff2oN">位置由你定 ✋ 高度为离地参考值（cm），施工请按完成面现场复尺，别照抄直接开孔。</div></div><div class="sec" data-page-node-id="5pUyOYI6jVLdMiz3IoiBMW"><div class="sh" data-page-node-id="XI4Ye0tx452SJQIVIkLy1n"><span class="e" data-page-node-id="a0ft2DgpvTuNQ0CNsSglfA">🚿</span><span class="nm" data-page-node-id="3eHuiGlTZTeoVTzfSJ7tB0">卫生间1</span><span class="ct" data-page-node-id="rAoj2FLkEGWUQ0eImXjz0R">7 个点位</span></div>
+      <table data-page-node-id="z9QbqCv0WhAlmH2nbHKt6p"><tbody data-page-node-id="Tp9eatnEoMjnLyzPhkQwnr"><tr data-page-node-id="nsQZO03EcSi315XKlHb6r1"><th data-page-node-id="3N5iEkEN9H3oJ2tEwyyWTG">插座类型</th><th data-page-node-id="HwCJrrh63dcfxG6bEDgWxs">数量</th><th data-page-node-id="3ef8QbZFN17FX8vbIWc0Fd">用途</th><th data-page-node-id="XRT30VaS7l9QDBbmDCoywS">离地参考</th></tr><tr data-page-node-id="ClyL92ZyeaF1FEh7SNtbWN"><td class="t" data-page-node-id="sbEUeNrcstR2SFooepINgO">双开单控</td><td class="q" data-page-node-id="m17jEQxwybYdzzT4Atdl9O">1</td><td data-page-node-id="2y74BAIYLfFANSwC754t4f">灯 / 换风</td><td class="h" data-page-node-id="p8xPTmZur7wQR7yhLeYtuC">130</td></tr><tr data-page-node-id="YD2tiujxQOCgMX67ySEnAO"><td class="t" data-page-node-id="8gdy8P5SB6CJJBoozgbdtM">五孔防溅</td><td class="q" data-page-node-id="jwto6zgUqpttt7WSdWPkiX">2</td><td data-page-node-id="Db8fWJdCCrOAiK1duCRInH">镜前（牙刷 / 洁面）</td><td class="h" data-page-node-id="tg3fqIpAO8LNn9SXBpCKCw">130</td></tr><tr data-page-node-id="J2wIpyqmJOY4ODbBbp8zul"><td class="t" data-page-node-id="b0aApKUJmrhvCKDUFf6fYl">四孔</td><td class="q" data-page-node-id="indkDnroXB8tz1LMbWM1Aw">1</td><td data-page-node-id="UciLqnxA7QbRIgFio3N7ug">小电器备用</td><td class="h" data-page-node-id="kzUZCzS5MjDl1d3uK9eEog">—</td></tr><tr data-page-node-id="vcFvOLXmLt8bdrtZkk0hAt"><td class="t" data-page-node-id="Xj3IjBqRLjamAiPR3APgx9">三孔防溅</td><td class="q" data-page-node-id="HJtKtwVAyKMklawMlihqGS">1</td><td data-page-node-id="7FFDENCfY8i1TDDlTIAvNI">智能马桶</td><td class="h" data-page-node-id="xZ54w1cxnhTSlievU2ZomR">40</td></tr><tr data-page-node-id="YXyYI0qhk9kl7mkLlXLwRu"><td class="t" data-page-node-id="sAAjQoYocMCepseyIwFKyU">三孔防溅</td><td class="q" data-page-node-id="G1pXC1AK4PW7NkAs5vXq1A">1</td><td data-page-node-id="06RggOKabWVyPlPERX1Dhb">电热毛巾架</td><td class="h" data-page-node-id="ab4yt8TFvdZwmxJInMe0kx">150</td></tr><tr data-page-node-id="QEYMAqb9qFy8IPTouCnyEq"><td class="t" data-page-node-id="OPH3H0EH9VKiUeOnCdQX74">五孔防溅</td><td class="q" data-page-node-id="2kIa5Yf7LiQdF6pBtRgedl">1</td><td data-page-node-id="OylMz9N4ADrRx7mAhdIpX4">电热水器</td><td class="h" data-page-node-id="9NEVnmz2SAoIrZvxU8yQQx">200</td></tr></tbody></table>
+      <div class="note" data-page-node-id="hcaBlpWncAqAzHCmIP7OUN">位置由你定 ✋ 高度为离地参考值（cm），施工请按完成面现场复尺，别照抄直接开孔。</div></div><div class="sec" data-page-node-id="GFt1NPpHjRB740tGdXzicC"><div class="sh" data-page-node-id="NCqzdT64Lx68rzTMFx4NGi"><span class="e" data-page-node-id="CejhwJFicRw3K5tL2Fg7iT">🚿</span><span class="nm" data-page-node-id="IGOYg1Z1cGWg8YCvmiVU81">卫生间2</span><span class="ct" data-page-node-id="phmJmtsNjTRTuMYQx5I02W">7 个点位</span></div>
+      <table data-page-node-id="bvCZF06nSoOGcvIFbR79zE"><tbody data-page-node-id="mTwRroSjbui2V70VHYQVgg"><tr data-page-node-id="9IlxcN3nQjsBVz7xDnLrBx"><th data-page-node-id="VxfzLNdAC6Cgf6VRumSDiB">插座类型</th><th data-page-node-id="exnFgNjw38WrCb2Y6e2rhI">数量</th><th data-page-node-id="u8mxxgDXF8Yq1kVRqSds7d">用途</th><th data-page-node-id="Xl8PYOXNAYsMJPAvurpEyQ">离地参考</th></tr><tr data-page-node-id="FKRmgPzXE0OFX6xgvBqCnc"><td class="t" data-page-node-id="6bDYMc4d1FZqP4fSfSo8lF">双开单控</td><td class="q" data-page-node-id="Gq6x7mp0RaK5wvsXBIJAvb">1</td><td data-page-node-id="eJNeQAKNtySeDosfbfJZFZ">灯 / 换风</td><td class="h" data-page-node-id="dSh3alBxmoY9JTFXPGxYlu">130</td></tr><tr data-page-node-id="ieMhBApTpuuAKLgdhGZJzn"><td class="t" data-page-node-id="VAgtUZ5ZdjQEhAV4F6nERS">五孔防溅</td><td class="q" data-page-node-id="niimgKK1S23no2ERfwD1dT">2</td><td data-page-node-id="gTvtyHpcZ3mbKvnMVePF3z">镜前（牙刷 / 洁面）</td><td class="h" data-page-node-id="ONrpLXFN7Xzqndez2MGwdh">130</td></tr><tr data-page-node-id="8dXQm8ZRdhf5VDWM4IXMAm"><td class="t" data-page-node-id="RaMmURaFkcgJ93Krtbrr3X">四孔</td><td class="q" data-page-node-id="GuoxsJnknYCaWG1ur0IVSI">1</td><td data-page-node-id="97LKxLP6HKkIuw8utytf7s">小电器备用</td><td class="h" data-page-node-id="Btzy2dnB6mI99x0K4h8J2a">—</td></tr><tr data-page-node-id="7FDBi2TXc1E4Tp5tgNE1ed"><td class="t" data-page-node-id="8Pg1iqFUBpIYyMUdH76zEd">三孔防溅</td><td class="q" data-page-node-id="qILzgMrJbVnROM8e1PHcUG">1</td><td data-page-node-id="LY3e6Xm4MGWIQmp6D5RxeP">智能马桶</td><td class="h" data-page-node-id="Lr6OFxSAw15RuGlOjM4r6A">40</td></tr><tr data-page-node-id="wYrSO6lvVbCJeVxkxat5JA"><td class="t" data-page-node-id="GGNhZ2SNMhbDt82s6r7OYe">三孔防溅</td><td class="q" data-page-node-id="MWeoDAaaGRBAsTL7Tl0nHi">1</td><td data-page-node-id="J34T1dcbfLGKGAaQHEI2D1">电热毛巾架</td><td class="h" data-page-node-id="BpCfOHwI76rx1Gfd4PhdVF">150</td></tr><tr data-page-node-id="72SIeN1R4avXnn3vNS0m81"><td class="t" data-page-node-id="z0tVxj05pXk3mE9wOURbyC">五孔防溅</td><td class="q" data-page-node-id="GFLjZNKDgnigWDUI3KsU0A">1</td><td data-page-node-id="MAUFrXCVCF760JHZcBLTHy">电热水器</td><td class="h" data-page-node-id="olVJ904vXsEbEw0FVnk256">200</td></tr></tbody></table>
+      <div class="note" data-page-node-id="VX91qP5WZy7RNCZQQDz48X">位置由你定 ✋ 高度为离地参考值（cm），施工请按完成面现场复尺，别照抄直接开孔。</div></div><div class="sec" data-page-node-id="OegHorsMch5MU7gVlXghFt"><div class="sh" data-page-node-id="Dk38L3zSJUY3Kv052HApYD"><span class="e" data-page-node-id="hDslzJhGbNFaxTWIxQp1f6">🧺</span><span class="nm" data-page-node-id="G5NBA6ryOnxIUCAp11f7Dc">阳台</span><span class="ct" data-page-node-id="o7qvsFjEyFpLpUyh5fDmFB">5 个点位</span></div>
+      <table data-page-node-id="JJD1bTyx3QGFz7TL32KpIq"><tbody data-page-node-id="REYv9o9WADDEDmC0pZuT9o"><tr data-page-node-id="eZzFWYQ77GpbmQwNUqeV7b"><th data-page-node-id="9GrvBfwUVxBtR5Yte1dt7P">插座类型</th><th data-page-node-id="1fQjZSGTotaJYj9zX40nPT">数量</th><th data-page-node-id="IydQHRKSPDS1dku2JrmySc">用途</th><th data-page-node-id="M1gqzu8BXg4M4SCsFpdpfP">离地参考</th></tr><tr data-page-node-id="fGF6lZINAF0v3fb6ATEysl"><td class="t" data-page-node-id="qZY200JX6hMcRP3X35fUBW">一开单控</td><td class="q" data-page-node-id="plZmJv2vbXmCtXwxarxqlA">1</td><td data-page-node-id="1DM5xJkwJ4FvUCHb4nB55Y">阳台灯</td><td class="h" data-page-node-id="X3MTuRoeCyH5oz5aR9IaoE">130</td></tr><tr data-page-node-id="tD4mystN3bsjccg4oCdfTl"><td class="t" data-page-node-id="XW87NwcoO1FoFNY5sovCMh">五孔</td><td class="q" data-page-node-id="NkqPHFtGaq6pJx6b3sPvDj">2</td><td data-page-node-id="MZPK3gqoIsjG5TeRL2TmTK">洗衣机 / 烘干机（带控制）</td><td class="h" data-page-node-id="WO1MRRMI7hvEmOrkbhhNsh">130</td></tr><tr data-page-node-id="x0MlkIgGwkC6AImxo619gw"><td class="t" data-page-node-id="4ffydSZnVAMzVsyyL7sL6g">三孔防溅</td><td class="q" data-page-node-id="E1VHpTQsOjulQUmdoirloA">1</td><td data-page-node-id="2PgaZ2tUHOkmYBkTbVbjCQ">备用</td><td class="h" data-page-node-id="0H1k2E6Jur07T4mfOrmnxI">—</td></tr><tr data-page-node-id="m7vxgB7JvIAOqcfAyQv3AO"><td class="t" data-page-node-id="e4o3jD72dvEUa74F0Mskm0">五孔</td><td class="q" data-page-node-id="PBO9h1OuB5UdmSqKNcYYKz">1</td><td data-page-node-id="qy82fRhrFMorrBZ32TFV57">扫地机 / 宠物饮水机（地面）</td><td class="h" data-page-node-id="yZHTRogosBc2ylebp4lAxZ">30</td></tr></tbody></table>
+      <div class="note" data-page-node-id="sCXdt5PIh8W9ezgPu0Pzs9">位置由你定 ✋ 高度为离地参考值（cm），施工请按完成面现场复尺，别照抄直接开孔。</div></div><div class="sec" data-page-node-id="ShtdDBxW0eKHWQNDeYMxxD"><div class="sh" data-page-node-id="xV1u4pn5OnYCRyFumJdmBy"><span class="e" data-page-node-id="fTbD01I5j36INtVHo7nKEu">🛋️</span><span class="nm" data-page-node-id="kqywygEyLDNARoKuOKaSu8">客厅/书房</span><span class="ct" data-page-node-id="zjheLEPs0bLmf9gT2JC8GF">3 个点位</span></div>
+      <table data-page-node-id="mV7OHO3DE5DmTHa1qKKEWx"><tbody data-page-node-id="BifmJNH87WoJJH3GOczmF1"><tr data-page-node-id="VwGahi6ZfB3SyhRo4TzLGX"><th data-page-node-id="YCJlUUi03SmavxjxDbo8Uq">插座类型</th><th data-page-node-id="iiTqx1KITPCyxXqJsqh22X">数量</th><th data-page-node-id="9Ae5v1OGqjPKcBkewLeDM4">用途</th><th data-page-node-id="BlnXXI6OQV35MDJ77xSBTr">离地参考</th></tr><tr data-page-node-id="SxJeTtfVe4dh6eipS9SJIo"><td class="t" data-page-node-id="4qRG56ruRkZHbnywtkiB8Z">四孔 + 五孔 + 两线（预埋50管藏线）+ 宽带</td><td class="q" data-page-node-id="j66KR8CPxKlIeVDV0CkpQH" style="white-space: pre-wrap;">5</td><td data-page-node-id="JMlrupmwzTrvFvzTm3Rpp3">电视墙藏线</td><td class="h" data-page-node-id="WK9Dec0eaCn288dDbX04BS">电视墙</td></tr><tr data-page-node-id="druUMSHXyTVBTk9tOyNKJU"><td class="t" data-page-node-id="2Z5bnS6lBQHxan4ZJ2Xqa4">五孔USB</td><td class="q" data-page-node-id="053wzDZcCDIUUwXBWRsxla">2</td><td data-page-node-id="Df1lB6XtTYn7h09AHe6ski">沙发两侧（手机 / 电动沙发）</td><td class="h" data-page-node-id="p16ZDBR46ZsZKHvvtu4I9u">70–100</td></tr></tbody></table>
+      <div class="note" data-page-node-id="aj6HtghXZnfAhNVUDJ7ZHQ">位置由你定 ✋ 高度为离地参考值（cm），施工请按完成面现场复尺，别照抄直接开孔。</div></div>
+    
+    <div class="leak" data-page-node-id="mPAoSJHOUkgPOtciFFiZsI">
+      <div class="t" data-page-node-id="ZwZKQFdOG8vSdFUiJ5zzX6">⚠️ 最容易漏的 9 个</div>
+      <div class="pills" data-page-node-id="Zkha6mDpFMhv2in7YkLBRk"><span data-page-node-id="4x135gAzOD9gJaVMuAepGB">电动窗帘</span><span data-page-node-id="IR5WazVnDDCh25iFCzQoDu">USB 快充</span><span data-page-node-id="QCk2Oc0SaWNOlqQqNA8hSu">网口</span><span data-page-node-id="Eu4aG6ZOJzfcTvSmiNVvBP">HDMI 预埋管</span><span data-page-node-id="h7ewICCZZb0RREL4HRTGPn">智能面板</span><span data-page-node-id="67ht4UBd16nN3K1W0KH2sK">洗烘设备</span><span data-page-node-id="i6pVGVZjqy023yoIjKamI5">蒸烤箱</span><span data-page-node-id="uZ1CSJNNfzL7cVa8OvYtMm">洗碗机</span><span data-page-node-id="QjMKm5PJxiPbmHpsBO35Iz">柜内隐藏电源</span></div>
+      <div class="top" data-page-node-id="9aA7rzOypcqYimVhUTD1QE">翻车率最高：<b data-page-node-id="6OHvqpo9ryUUEAPVwZtyhE">智能马桶盖 40cm 必留</b> · <b data-page-node-id="pJE8cGs6gz6Vtv6h2aHnzY">电热毛巾架 150cm</b> · <b data-page-node-id="nALApTVRWCXlF7lt8PY3qT">冰箱独立回路 16A</b> · <b data-page-node-id="cD8tmlfOmLC9De4M06Wa7c">餐边柜小家电 20cm 上方</b></div>
+    </div>
+    <div class="cta-box" data-page-node-id="hlBg7tDUr11qabNRWTXUTp">
+      <p data-page-node-id="Y36GNRVDton544Is7WVRzy">清单收好，墙一封就改不了</p>
+      <div class="kw" data-page-node-id="OH2snyq9OOHzfq9H48Wb74">插座</div>
+      <p data-page-node-id="JUDe0aHGHZD1NX0T63cqSm">评论区打「<b data-page-node-id="HYOIEGnCXBv4oVacKt7O2K">插座</b>」<br data-page-node-id="PTfxxfaKd91oLxDRF9urSF">找 SUZY 领完整 7 区速查表 ✅</p>
+    </div>
+    <button class="reflink" onclick="openRef('result')" data-page-node-id="WENUgDcDYBUXYLyGTVPlY8">📋 参考 SUZY 家 150㎡ 真实点位示例</button>
+    <div class="r-foot" data-page-node-id="x6cTCdEXpUwCanAtZpQVwZ">@是小臭狗 SUZY 呀 · 重庆 150㎡ 自装实录<br data-page-node-id="FMwjQmvipIEFdd2mhm7x1L">本清单为测评参考，具体回路与平方数请交专业电工核定</div></section>
+
+  <!-- SUZY 真实点位参考 -->
+  <section id="ref" style="display:none;padding:0 16px 20px;" data-page-node-id="ytRlGkBHkcIfPPKDELXa8n">
+    <div class="r-hero" style="background:#1E50D8;" data-page-node-id="c3dGBBpPOYGBzLfgwS0qqc">
+      <h2 data-page-node-id="XoaxxiP90930EIpp4UVCTm">SUZY 家 150㎡ 真实点位</h2>
+      <p data-page-node-id="tY0PgM32E0GpoFT6TUn3R9">以下为 SUZY 自装实际规划（示例），供你对照参考；你的清单按你的户型生成。</p>
+    </div>
+    <div class="refbar" data-page-node-id="XcxNPVyCYmV0vIJo4wg8fs"><button onclick="closeRef()" data-page-node-id="SU4k1Tqkj0wa0OdVA5WGS3">← 返回</button></div>
+    <div id="refBody" data-page-node-id="gSh4kc6WZd7FDxAe2BjugR"></div>
+    <div class="r-foot" data-page-node-id="hUIR9K9ruGreYysNnv4mk4">数据来源：SUZY 全屋插座点位规划表「霸道插座」<br data-page-node-id="DuxV5GnZcOs8DYVB5Px0C2">位置由你定，离地高度为参考值</div>
+  </section>
+
+  <!-- 底部按钮 -->
+  <div class="footbar" id="footbar" style="display:flex;" data-page-node-id="dNJfHsJvccOtEcIqFypUI8">
+    <button class="btn btn-pri" id="mainBtn" data-page-node-id="OsbRLTY8ADhISJQdC8gt7t">开始定制我的插座清单</button>
+  </div>
+
+</div>
+
+<script data-page-node-id="g4jSB7l7AIeSOV68g4N862">
+/* ============ 数据模型 ============ */
+function defaultAnswers(){
+  return {
+    bedroomCount:2, bathCount:2, hasBalcony:true, hasStudy:false,
+    bedrooms:[], baths:[],
+    living:{tvWall:true,sofaCharge:true,curtain:false,projector:false,tea:false,floorAC:false,desk:false},
+    dining:{sideboard:true,hotpot:false,fridge:false},
+    kitchen:{dishwasher:true,oven:true,water:true,disposal:true,heater:true,gas:true},
+    balcony:{washer:true,robot:true,pet:false},
+    entry:{shoeDryer:false,monitor:false,robot:false},
+    utility:{has:false,washer:false,robot:false,vacuum:false,petWater:false,petFeed:false,litter:false,hallway:false}
+  };
+}
+let A = defaultAnswers();
+
+/* 插座推荐规则库：型号(t) 数量(q) 用途(u) 离地参考高度(h) 条件(c) */
+const SOCKET_DB = {
+  entry:[
+    {t:'一开双控', q:1, u:'玄关灯（门旁）', h:'130'},
+    {t:'四孔', q:1, u:'备用（鞋柜上）', h:'20'},
+    {t:'斜五孔', q:2, u:'扫地机 / 夜灯 / 烘鞋（鞋柜下）', h:'30', c:()=>A.entry.robot||A.entry.shoeDryer},
+    {t:'五孔USB', q:1, u:'玄关柜临时充（手机）', h:'柜中'},
+    {t:'五孔', q:1, u:'监控（入户门上方）', h:'220', c:()=>A.entry.monitor}
+  ],
+  dining:[
+    {t:'一开双控', q:1, u:'餐厅灯（门旁）', h:'130'},
+    {t:'一开五孔', q:2, u:'餐边柜上方小家电', h:'20', c:()=>A.dining.sideboard},
+    {t:'三孔', q:1, u:'冰箱', h:'冰箱位', c:()=>A.dining.fridge},
+    {t:'斜五孔', q:1, u:'备用', h:''},
+    {t:'五孔', q:1, u:'餐桌下火锅 / 备用', h:'50', c:()=>A.dining.hotpot}
+  ],
+  kitchen:[
+    {t:'二开单控', q:1, u:'灯 / 换风', h:'吊顶'},
+    {t:'一开五孔', q:4, u:'台面小家电（带开关斜五孔免拔插）', h:'台面上方'},
+    {t:'三孔10A', q:7, u:'油烟机 / 洗碗机等', h:'油烟机200'},
+    {t:'三孔防溅', q:4, u:'水槽下：垃圾处理器 / 净水 / 小厨宝', h:'50', c:()=>A.kitchen.disposal||A.kitchen.water||A.kitchen.heater},
+    {t:'三孔16A', q:1, u:'冰箱（独立回路）', h:'30'},
+    {t:'三孔', q:1, u:'烤箱 / 蒸箱', h:'40', c:()=>A.kitchen.oven},
+    {t:'三孔', q:1, u:'消毒柜', h:'50', c:()=>A.kitchen.oven},
+    {t:'五孔', q:1, u:'燃气热水器 / 警报器', h:'220', c:()=>A.kitchen.gas}
+  ],
+  balcony:[
+    {t:'一开单控', q:1, u:'阳台灯', h:'130'},
+    {t:'五孔', q:2, u:'洗衣机 / 烘干机（带控制）', h:'130', c:()=>A.balcony.washer},
+    {t:'三孔防溅', q:1, u:'备用', h:''},
+    {t:'五孔', q:1, u:'扫地机 / 宠物饮水机（地面）', h:'30', c:()=>A.balcony.robot||A.balcony.pet}
+  ]
+};
+
+/* SUZY 家 150㎡ 真实点位（取自「霸道插座」规划表，仅作示例展示） */
+const SUZY_PLAN = [{"r": "玄关", "l": "鞋柜中间", "s": "烘鞋器", "e": "", "f": "", "g": "1", "h": "", "j": "", "n": "30cm", "o": "可选带开关插座，考虑是否方便频繁插拔烘鞋器"}, {"r": "玄关", "l": "上端开放格（玄关台面）", "s": "智能门铃/摄像头充电 / 充电宝临时充电/手表充电", "e": "", "f": "3", "g": "", "h": "", "j": "", "n": "离台面15cm", "o": "可选五孔+USB"}, {"r": "玄关", "l": "玄关顶部洞洞板", "s": "监控位置", "e": "", "f": "1", "g": "1", "h": "", "j": "", "n": "具体看吊顶位置", "o": "适配宠物、小孩家庭"}, {"r": "进门八百库", "l": "墙面", "s": "电器点位", "e": "", "f": "3", "g": "", "h": "", "j": "", "n": "", "o": ""}, {"r": "进门八百库", "l": "弱电箱内", "s": "路由器", "e": "", "f": "1", "g": "", "h": "", "j": "", "n": "", "o": ""}, {"r": "客厅", "l": "电视墙（核心）", "s": "电视、机顶盒、音响、 / 路由器、游戏机、投影仪、幕布等", "e": "6", "f": "", "g": "", "h": "", "j": "", "n": "30-40cm（隐藏式）", "o": "建议预埋一根50管，所有线 / 穿管隐藏，极度舒适"}, {"r": "客厅", "l": "沙发两侧", "s": "手机充电、落地灯、 / 电风扇、空气净化器、沙发", "e": "", "f": "6", "g": "2", "h": "", "j": "", "n": "90cm（高于沙发扶手）", "o": "选四孔或五孔+USB，方便小电器"}, {"r": "客厅", "l": "书房-半墙", "s": "办公", "e": "", "f": "4", "g": "", "h": "", "j": "", "n": "", "o": ""}, {"r": "客厅", "l": "天花板", "s": "投影仪、电动幕布", "e": "1", "f": "1", "g": "", "h": "", "j": "", "n": "根据吊顶设计", "o": "需提前规划，水电阶段预留"}, {"r": "客厅", "l": "沙发旁", "s": "沙发左右各一个", "e": "", "f": "", "g": "", "h": "", "j": "", "n": "", "o": ""}, {"r": "厨房 / ✨✨✨✨✨ / 重要重要", "l": "电器柜", "s": "1、电饭煲、2、破壁机、3、微波炉、4、空气炸锅、5、蒸锅、6、小蒸锅、7、高压锅、8蔬果净水、9、电饼铛等小家电", "e": "", "f": "2", "g": "", "h": "10", "j": "", "n": "1.2-1.3米（距台面30cm）", "o": "必须用带独立开关的五孔，湿手 / 操作更安全，不用老是拔插头"}, {"r": "厨房 / ✨✨✨✨✨ / 重要重要", "l": "燃气灶下方", "s": "电器灶", "e": "", "f": "", "g": "", "h": "1", "j": "", "n": "50cm", "o": "/"}, {"r": "厨房 / ✨✨✨✨✨ / 重要重要", "l": "吊柜内/下方", "s": "油烟机、升降式拉篮", "e": "", "f": "2", "g": "", "h": "1", "j": "", "n": "1.6-1.8米", "o": "/"}, {"r": "厨房 / ✨✨✨✨✨ / 重要重要", "l": "地柜内部", "s": "洗碗机", "e": "", "f": "1", "g": "", "h": "", "j": "", "n": "50cm", "o": "需提前确定电器的型号和尺寸；  / 蒸烤一体机须用16A的插座"}, {"r": "厨房 / ✨✨✨✨✨ / 重要重要", "l": "燃气旁边", "s": "燃气报警器", "e": "", "f": "1", "g": "", "h": "", "j": "", "n": "参考燃气的位置调整", "o": "部分地区要求开放式厨房必须装"}, {"r": "厨房 / ✨✨✨✨✨ / 重要重要", "l": "水槽下方", "s": "净水器、小厨宝 、末端直饮水机、垃圾处理器", "e": "", "f": "2", "g": "", "h": "", "j": "", "n": "50cm", "o": "务必加装防溅盒"}, {"r": "厨房 / ✨✨✨✨✨ / 重要重要", "l": "冰箱 / 侧后方或上方", "s": "冰箱", "e": "", "f": "", "g": "", "h": "1", "j": "", "n": "50cm 或 1.5米", "o": "可根据冰箱是嵌入式还是普通式 / 决定高度，可考虑内嵌式插座"}, {"r": "厨房 / ✨✨✨✨✨ / 重要重要", "l": "厨房角落", "s": "空调/凉霸/风扇/手机充电/平板", "e": "", "f": "2", "g": "2", "h": "", "j": "", "n": "30cm", "o": "根据需求加啦(◕ᴥ◕)"}, {"r": "餐厅", "l": "岛台（如有）", "s": "升降插座或者轨道插座；火锅、手机充电、 / 咖啡机、热水壶、电磁炉", "e": "", "f": "", "g": "", "h": "", "j": "", "n": "岛台台面", "o": "提前确定好位置"}, {"r": "阳台", "l": "窗帘盒旁", "s": "电动窗帘", "e": "", "f": "", "g": "2", "h": "", "j": "", "n": "", "o": ""}, {"r": "阳台", "l": "卡座", "s": "充电、灯", "e": "", "f": "3", "g": "", "h": "", "j": "", "n": "", "o": ""}, {"r": "阳台", "l": "手工柜", "s": "打印机、风箱、加热风机", "e": "", "f": "3", "g": "", "h": "", "j": "1", "n": "", "o": ""}, {"r": "阳台", "l": "餐边柜中间开放格", "s": "小型家电（如即热饮水机）制冰机", "e": "", "f": "4", "g": "", "h": "", "j": "", "n": "距台面15cm", "o": "带开关五孔"}, {"r": "阳台", "l": "小冰箱背后侧", "s": "冰箱", "e": "", "f": "1", "g": "", "h": "", "j": "", "n": "", "o": ""}, {"r": "阳台", "l": "书桌上方/下方", "s": "手机、  Pad、电脑 、显示器、台灯", "e": "", "f": "3", "g": "", "h": "", "j": "", "n": "30-40cm（桌面下方）", "o": "桌面以上更好用，或用轨道插座"}, {"r": "主卧", "l": "床头两侧", "s": "投影仪、床头灯、 / 手机充电、香薰机等", "e": "", "f": "2", "g": "", "h": "", "j": "3", "n": "70-80cm（高于床头柜）", "o": "四孔+五孔或带USB的五孔 / 注意插座输出电流，有的巨慢"}, {"r": "主卧", "l": "床尾墙角", "s": "电风扇、加湿器、 / 空气净化器、蚊香液", "e": "4", "f": "", "g": "", "h": "", "j": "", "n": "30cm", "o": "/"}, {"r": "主卧", "l": "梳妆台/书桌下方", "s": "美容仪、卷发棒、台灯、发光镜等", "e": "", "f": "2", "g": "", "h": "", "j": "3", "n": "90cm（桌面上方）", "o": "桌面以上更好用 / 可以考虑在抽屉里加装带开关的插座"}, {"r": "主卧", "l": "窗帘盒旁", "s": "电动窗帘", "e": "", "f": "", "g": "2", "h": "", "j": "", "n": "天花板下", "o": "需提前规划"}, {"r": "主卧", "l": "衣柜内部", "s": "熨烫机", "e": "", "f": "1", "g": "", "h": "", "j": "", "n": "1.2米", "o": "放在衣柜内部既操作方便又能隐藏起来"}, {"r": "主卧", "l": "飘窗", "s": "备用", "e": "", "f": "2", "g": "", "h": "", "j": "", "n": "30-40cm", "o": "/"}, {"r": "主卧", "l": "床头", "s": "给床下灯带使用", "e": "", "f": "1", "g": "", "h": "", "j": "", "n": "", "o": ""}, {"r": "卧室2 / （老人房） / 根据不同房间功能勾选即可，名称不影响", "l": "床头两侧", "s": "投影仪、床头灯、 / 手机充电、香薰机等", "e": "", "f": "3", "g": "", "h": "", "j": "", "n": "70-80cm（高于床头柜）", "o": "四孔+五孔或带USB的五孔 / 注意插座输出电流，有的巨慢"}, {"r": "卧室2 / （老人房） / 根据不同房间功能勾选即可，名称不影响", "l": "床尾墙角", "s": "电风扇、加湿器、 / 空气净化器、蚊香液", "e": "", "f": "2", "g": "", "h": "", "j": "", "n": "30cm", "o": "/"}, {"r": "卧室2 / （老人房） / 根据不同房间功能勾选即可，名称不影响", "l": "床头", "s": "给床下灯带使用", "e": "", "f": "1", "g": "", "h": "", "j": "", "n": "", "o": ""}, {"r": "卧室2 / （老人房） / 根据不同房间功能勾选即可，名称不影响", "l": "窗帘盒旁", "s": "电动窗帘", "e": "", "f": "", "g": "1", "h": "", "j": "", "n": "天花板下", "o": "需提前规划"}, {"r": "卧室2 / （老人房） / 根据不同房间功能勾选即可，名称不影响", "l": "飘窗", "s": "备用", "e": "", "f": "2", "g": "", "h": "", "j": "", "n": "30-40cm", "o": "/"}, {"r": "卫生间主", "l": "浴室柜·镜柜内部/后方（干区）", "s": "浴室柜镜柜：智能镜柜、电动牙刷/剃须刀充电、电吹风、卷发棒、剃须刀；带防溅盒和独立开关", "e": "", "f": "2", "g": "", "h": "", "j": "3", "n": "1.3-1.4米", "o": "藏在柜内台面更整洁；卫生间做干湿分离，本行属干区（浴室柜/镜柜），与湿区（淋浴/浴缸）隔断；湿区插座须带防溅盒并远离花洒溅水范围"}, {"r": "卫生间主", "l": "马桶侧后方（干区）", "s": "智能马桶", "e": "", "f": "1", "g": "", "h": "", "j": "", "n": "30-40cm", "o": "必须加装防溅盒；属干区，远离湿区淋浴溅水"}, {"r": "卫生间次", "l": "马桶侧后方（干区）", "s": "智能马桶", "e": "", "f": "1", "g": "", "h": "", "j": "", "n": "30-40cm", "o": "必须加装防溅盒；属干区，远离湿区淋浴溅水"}, {"r": "卫生间次", "l": "浴室柜·镜柜内部/后方（干区）", "s": "浴室柜镜柜：智能镜柜、电动牙刷/剃须刀充电、电吹风、卷发棒、剃须刀；带防溅盒和独立开关", "e": "", "f": "2", "g": "", "h": "", "j": "2", "n": "", "o": "藏在柜内台面更整洁；卫生间做干湿分离，本行属干区（浴室柜/镜柜），与湿区（淋浴/浴缸）隔断"}, {"r": "卫生间（湿区）", "l": "淋浴/浴缸侧（带防溅盒）", "s": "电热毛巾架（150cm）；电热水器（若有，五孔防溅×1 @200cm）", "e": "", "f": "", "g": "", "h": "1", "j": "", "n": "150cm", "o": "须带防溅盒，位于湿区远离花洒直接溅水；浴霸通常为直接布线/开关预留（非插座）；与干区（浴室柜/镜柜/马桶）隔断"}, {"r": "阳台/家 / 政区", "l": "非直晒位置", "s": "宠物自动饮水机/喂食器 / 电动猫砂盆等", "e": "", "f": "1", "g": "", "h": "", "j": "2", "n": "30-40cm", "o": "根据宠物肩高确认是否加装防溅盒"}, {"r": "阳台/家 / 政区", "l": "阳台柜内", "s": "洗衣机、烘干机", "e": "", "f": "2", "g": "", "h": "4", "j": "", "n": "1.4米", "o": "/"}, {"r": "阳台/家 / 政区", "l": "阳台另一侧", "s": "热水器", "e": "", "f": "1", "g": "", "h": "", "j": "", "n": "50cm", "o": "需提前规划上下水"}, {"r": "阳台/家 / 政区", "l": "阳台角落", "s": "备用 / （未来可能放健身器材 、茶台）", "e": "", "f": "", "g": "", "h": "", "j": "", "n": "30cm", "o": "/"}, {"r": "储物间 / 八百库", "l": "空置拐角", "s": "吸尘器、蒸汽拖把、扫地机器人、感应灯识别器等", "e": "", "f": "4", "g": "", "h": "", "j": "2", "n": "30-40cm", "o": "/"}, {"r": "过道", "l": "过道墙上", "s": "过道感应灯", "e": "", "f": "", "g": "", "h": "", "j": "", "n": "30-40cm", "o": "需提前规划"}, {"r": "儿童房", "l": "床头两侧", "s": "投影仪、床头灯、手机充电、香薰机等", "e": "", "f": "2", "g": "", "h": "", "j": "2", "n": "70-80cm（高于床头柜）", "o": "四孔+五孔或带USB的五孔 注意插座输出电流，有的巨慢"}, {"r": "儿童房", "l": "床尾墙角", "s": "电风扇、加湿器、空气净化器、蚊香液，1个带开关的usb，2个4孔一开", "e": "", "f": "", "g": "", "h": "", "j": "2", "n": "30cm", "o": "/"}, {"r": "儿童房", "l": "书桌上方/下方", "s": "书桌，书桌侧边", "e": "", "f": "8", "g": "", "h": "", "j": "", "n": "", "o": ""}, {"r": "儿童房", "l": "飘窗", "s": "备用", "e": "", "f": "2", "g": "", "h": "", "j": "", "n": "30-40cm", "o": "/"}, {"r": "儿童房", "l": "楼梯", "s": "楼梯下床夜灯", "e": "", "f": "", "g": "", "h": "", "j": "", "n": "", "o": ""}, {"r": "儿童房", "l": "楼梯地台", "s": "三个带开关的五孔一开，充电用", "e": "", "f": "3", "g": "", "h": "", "j": "", "n": "", "o": ""}];
+
+/* 家政 / 清洁 / 宠物 / 过道 —— 补全生成器缺失的真实空间 */
+function utilityItems(){
+  const U=A.utility, its=[];
+  if(U.has){ its.push({t:'五孔一开', q:3, u:'家政区 / 储物间墙面（电器点位）', h:'30-40'});
+             its.push({t:'四孔一开', q:2, u:'收纳充电位（吸尘器 / 工具）', h:'30-40'}); }
+  const clean=(U.washer?1:0)+(U.robot?1:0)+(U.vacuum?1:0);
+  if(clean>0) its.push({t:'五孔一开', q:clean, u:'清洁设备收纳充电（洗地机 / 扫地机 / 吸尘器）', h:'30-40'});
+  if(U.petWater) its.push({t:'五孔', q:1, u:'宠物饮水机（带防溅盒）', h:'30-40'});
+  if(U.petFeed) its.push({t:'五孔', q:1, u:'宠物喂食器', h:'30-40'});
+  if(U.litter) its.push({t:'五孔', q:1, u:'电动猫砂盆', h:'30-40'});
+  if(U.hallway) its.push({t:'五孔一开', q:1, u:'过道感应灯', h:'30-40'});
+  return its;
+}
+
+function bedroomItems(b){
+  const items=[];
+  items.push({t:'一开单控 / 双控', q:3, u:'卧灯（门 + 床头双控）', h:'130 / 床侧'});
+  items.push({t:'五孔带USB', q:2, u:'床头（台灯 / 手机）', h:'30'});
+  items.push({t:'三孔开关', q:1, u:'空调', h:'空调位'});
+  if(b.type==='主卧'){
+    items.push({t:'斜五孔', q:2, u:'卷发棒 / 加湿器', h:'梳妆 / 床尾'});
+    items.push({t:'三孔', q:1, u:'内嵌熨烫机（衣柜旁）', h:'130'});
+  }
+  if(b.habits.includes('梳妆台')) items.push({t:'五孔 + 网口', q:1, u:'梳妆台（电脑 / 路由器）', h:'90'});
+  if(b.habits.includes('书桌')) items.push({t:'五孔 + 网口', q:1, u:'书桌（电脑位 + 桌下网口）', h:'桌面25'});
+  if(b.habits.includes('电视')) items.push({t:'宽带 + 五孔', q:1, u:'电视 / 路由器', h:'电视墙'});
+  if(b.habits.includes('加湿香薰')) items.push({t:'斜五孔', q:1, u:'加湿器 / 香薰', h:'床尾'});
+  if(b.habits.includes('电动床')) items.push({t:'三孔', q:1, u:'电动床 / 按摩椅', h:'床侧'});
+  if(b.type==='儿童房'){
+    items.push({t:'斜五孔', q:1, u:'夜灯 / 空气净化', h:'床侧'});
+    items.push({t:'五孔一开', q:1, u:'楼梯下床夜灯', h:'楼梯'});
+    items.push({t:'五孔一开', q:3, u:'楼梯地台（充电用）', h:'楼梯地台'});
+  }
+  if(b.type==='老人房'){
+    items.push({t:'斜五孔', q:1, u:'夜灯（起夜）', h:'30'});
+    items.push({t:'五孔一开', q:1, u:'床下灯带', h:'床侧'});
+  }
+  return items;
+}
+function bathItems(b){
+  const items=[{t:'双开单控', q:1, u:'灯 / 换风', h:'130'},
+               {t:'五孔防溅', q:2, u:'镜前（牙刷 / 洁面）', h:'130'},
+               {t:'四孔', q:1, u:'小电器备用', h:''}];
+  if(b.smartToilet) items.push({t:'三孔防溅', q:1, u:'智能马桶', h:'40'});
+  if(b.towel) items.push({t:'三孔防溅', q:1, u:'电热毛巾架', h:'150'});
+  if(b.waterHeater) items.push({t:'五孔防溅', q:1, u:'电热水器', h:'200'});
+  return items;
+}
+function livingItems(){
+  const L=A.living, its=[];
+  if(L.tvWall){
+    its.push({t:'五孔', q:4, u:'电视墙：电视 / 机顶盒 / 音响 / 游戏机（隐藏式）', h:'30–40'});
+    its.push({t:'四孔', q:2, u:'电视墙：路由器 / 小电器（隐藏式）', h:'30–40'});
+    its.push({t:'网口', q:1, u:'电视墙：宽带 / IPTV（预埋50管藏线）', h:'30–40'});
+  }
+  if(L.sofaCharge) its.push({t:'五孔USB', q:4, u:'沙发两侧：手机充电 / 落地灯 / 电动沙发（两侧各2）', h:'70–100'});
+  if(L.curtain) its.push({t:'五孔', q:1, u:'电动窗帘', h:'200–220'});
+  if(L.projector) its.push({t:'五孔', q:1, u:'投影仪（吊顶）', h:'220'});
+  if(L.projector||L.tvWall) its.push({t:'四孔', q:1, u:'电动幕布 / 回音壁（吊顶）', h:'220'});
+  if(L.tea) its.push({t:'地插', q:1, u:'茶台 / 加湿（茶几下）', h:'地面'});
+  if(L.floorAC) its.push({t:'16A 带开关', q:1, u:'立式空调（墙角）', h:'墙角'});
+  if(L.desk||A.hasStudy) its.push({t:'五孔 + 网口', q:2, u:'书桌（电脑位 + 桌下网口，双位）', h:'桌面25'});
+  // 客厅常漏·通用备用（位置由你定，参考高度见上）
+  its.push({t:'五孔', q:2, u:'客厅角落备用：落地灯 / 空气净化器 / 电风扇', h:'30–40'});
+  return its;
+}
+function filterItems(list){ return list.filter(it=> !it.c || it.c()); }
+
+/* ============ 步骤流程 ============ */
+let steps=[], cur=0;
+function syncArrays(){
+  while(A.bedrooms.length<A.bedroomCount) A.bedrooms.push({type:'主卧',habits:[]});
+  A.bedrooms.length=A.bedroomCount;
+  while(A.baths.length<A.bathCount) A.baths.push({smartToilet:true,towel:true,mirror:true,waterHeater:true});
+  A.baths.length=A.bathCount;
+}
+function buildSteps(){
+  steps=['overview'];
+  for(let i=0;i<A.bedroomCount;i++) steps.push('bed'+i);
+  steps.push('living','dining','kitchen');
+  for(let i=0;i<A.bathCount;i++) steps.push('bath'+i);
+  if(A.hasBalcony) steps.push('balcony');
+  steps.push('entry','utility','result');
+}
+
+/* ---- 渲染辅助 ---- */
+function pathGet(o,p){ return p.split('.').reduce((a,c)=>a[c],o); }
+function pathSet(o,p,v){ const ks=p.split('.'); const last=ks.pop(); let t=o; ks.forEach(k=>t=t[k]); t[last]=v; }
+function esc(s){ return (s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+function optRow(g,v,label,desc,sel){ return `<button class="opt ${sel?'sel':''}" data-g="${g}" data-v="${v}">${esc(label)}${desc?'<div class="d">'+esc(desc)+'</div>':''}</button>`; }
+function chip(g,v,label,desc,sel,multi){ return `<button class="chip ${sel?'sel':''}" data-g="${g}" data-v="${v}" ${multi?'data-multi="1"':''}>${esc(label)}${desc?'<div class="d">'+esc(desc)+'</div>':''}</button>`; }
+
+/* ---- 各步骤渲染 ---- */
+function renderOverview(){
+  return `
+    <div class="q-title"><span class="no">①</span> 先说户型概况</div>
+    <div class="q-sub">后面每间房都会问到，先定大框架。</div>
+    <div class="sec-label"><span class="bar"></span>卧室数量</div>
+    <div class="chips" id="bc">
+      ${[1,2,3,4].map(n=>chip('bedroomCount',n,n+' 间',n===4?'4 间及以上':'',A.bedroomCount===n,false)).join('')}
+    </div>
+    <div class="sec-label"><span class="bar"></span>卫生间数量</div>
+    <div class="chips">
+      ${[1,2,3].map(n=>chip('bathCount',n,n+' 间',n===3?'3 间及以上':'',A.bathCount===n,false)).join('')}
+    </div>
+    <div class="sec-label"><span class="bar"></span>有独立阳台吗</div>
+    <div class="chips">
+      ${chip('hasBalcony',1,'有阳台','',A.hasBalcony,false)}
+      ${chip('hasBalcony',0,'无阳台','',!A.hasBalcony,false)}
+    </div>
+    <div class="sec-label"><span class="bar"></span>有独立书房吗</div>
+    <div class="chips">
+      ${chip('hasStudy',1,'有书房','',A.hasStudy,false)}
+      ${chip('hasStudy',0,'无（客厅兼顾）','',!A.hasStudy,false)}
+    </div>`;
+}
+function renderBed(i){
+  const b=A.bedrooms[i];
+  const types=[['主卧','带独卫/梳妆台'],['儿童房','夜灯/安全'],['老人房','起夜便利'],['客卧','简单够用']];
+  const habits=[['梳妆台','镜前化妆'],['书桌','办公/学习'],['电视','床头看电视'],['加湿香薰','湿度/香氛'],['电动床','电动床/按摩椅']];
+  return `
+    <div class="q-title"><span class="no">②</span> 第 ${i+1} 间卧室</div>
+    <div class="q-sub">这间房主要是谁住、有哪些习惯？决定插座类型。</div>
+    <div class="sec-label"><span class="bar"></span>房间类型</div>
+    <div class="chips">
+      ${types.map(t=>`<button class="chip ${b.type===t[0]?'sel':''}" data-g="bedType" data-i="${i}" data-v="${esc(t[0])}">${esc(t[0])}<div class="d">${esc(t[1])}</div></button>`).join('')}
+    </div>
+    <div class="sec-label"><span class="bar"></span>生活习惯（可多选）</div>
+    <div class="chips">
+      ${habits.map(h=>`<button class="chip ${b.habits.includes(h[0])?'sel':''}" data-g="bedHabit" data-i="${i}" data-v="${esc(h[0])}" data-multi="1">${esc(h[0])}<div class="d">${esc(h[1])}</div></button>`).join('')}
+    </div>`;
+}
+function renderLiving(){
+  const L=A.living;
+  const items=[['tvWall','电视墙','藏线+宽带'],['sofaCharge','沙发两侧充电','手机/电动沙发'],
+    ['curtain','电动窗帘','窗边'],['projector','投影仪','吊顶'],
+    ['tea','茶台地插','茶几下'],['floorAC','立式空调','墙角16A'],['desk','书房书桌','电脑+网口']];
+  return `
+    <div class="q-title"><span class="no">③</span> 客厅 / 书房</div>
+    <div class="q-sub">沙发摆哪、要不要电视墙，直接决定插座位置。</div>
+    <div class="sec-label"><span class="bar"></span>你家客厅有这些吗（可多选）</div>
+    <div class="chips">
+      ${items.map(it=>chip('living.'+it[0],1,it[1],it[2],L[it[0]],true)).join('')}
+    </div>`;
+}
+function renderDining(){
+  const D=A.dining;
+  return `
+    <div class="q-title"><span class="no">④</span> 餐厅</div>
+    <div class="q-sub">餐边柜是咖啡机、热水壶扎堆的地方，最易被忽略。</div>
+    <div class="chips">
+      ${chip('dining.sideboard',1,'餐边柜小家电','咖啡机/热水壶',D.sideboard,true)}
+      ${chip('dining.hotpot',1,'餐桌火锅','桌下取电',D.hotpot,true)}
+      ${chip('dining.fridge',1,'冰箱在餐厅','独立回路',D.fridge,true)}
+    </div>`;
+}
+function renderKitchen(){
+  const K=A.kitchen;
+  const items=[['dishwasher','洗碗机'],['oven','烤箱/蒸箱'],['water','净水器'],['disposal','垃圾处理器'],['heater','小厨宝'],['gas','燃气热水器']];
+  return `
+    <div class="q-title"><span class="no">⑤</span> 厨房家电</div>
+    <div class="q-sub">水槽下、台面下的家电，插座位置差一点就装不上。</div>
+    <div class="sec-label"><span class="bar"></span>你家厨房有这些吗（可多选）</div>
+    <div class="chips">
+      ${items.map(it=>chip('kitchen.'+it[0],1,it[1],'',K[it[0]],true)).join('')}
+    </div>`;
+}
+function renderBath(i){
+  const b=A.baths[i], n=A.bathCount>1?('（卫生间'+(i+1)+'）'):'';
+  return `
+    <div class="q-title"><span class="no">⑥</span> 卫生间 ${esc(n)}</div>
+    <div class="q-sub">智能马桶、电热毛巾架，装完才后悔没留。</div>
+    <div class="chips">
+      ${chip('bath.st'+i,1,'智能马桶','马桶旁40cm',b.smartToilet,true)}
+      ${chip('bath.tw'+i,1,'电热毛巾架','150cm',b.towel,true)}
+      ${chip('bath.mr'+i,1,'镜前护肤','镜边130cm',b.mirror,true)}
+      ${chip('bath.wh'+i,1,'电热水器','200cm',b.waterHeater,true)}
+    </div>`;
+}
+function renderBalcony(){
+  const B=A.balcony;
+  return `
+    <div class="q-title"><span class="no">⑦</span> 阳台</div>
+    <div class="q-sub">洗烘两台都要留，扫地机也得有电源。</div>
+    <div class="chips">
+      ${chip('balcony.washer',1,'洗烘设备','洗衣机/烘干机',B.washer,true)}
+      ${chip('balcony.robot',1,'扫地机','地面30cm',B.robot,true)}
+      ${chip('balcony.pet',1,'宠物饮水机','地面30cm',B.pet,true)}
+    </div>`;
+}
+function renderEntry(){
+  const E=A.entry;
+  return `
+    <div class="q-title"><span class="no">⑧</span> 玄关</div>
+    <div class="q-sub">进门动线，烘鞋器、监控最容易漏。</div>
+    <div class="chips">
+      ${chip('entry.shoeDryer',1,'烘鞋器','鞋柜下30cm',E.shoeDryer,true)}
+      ${chip('entry.monitor',1,'入户监控','门上220cm',E.monitor,true)}
+      ${chip('entry.robot',1,'扫地机/夜灯','鞋柜下30cm',E.robot,true)}
+    </div>`;
+}
+function renderUtility(){
+  const U=A.utility;
+  return `
+    <div class="q-title"><span class="no">⑨</span> 家政 / 清洁 / 宠物</div>
+    <div class="q-sub">家政区、储物间、清洁设备、宠物——这些最容易整屋漏算。</div>
+    <div class="sec-label"><span class="bar"></span>有独立家政区 / 储物间吗</div>
+    <div class="chips">
+      ${chip('utility.has',1,'有家政区/储物间','墙面+收纳充电',U.has,true)}
+    </div>
+    <div class="sec-label"><span class="bar"></span>清洁设备（可多选）</div>
+    <div class="chips">
+      ${chip('utility.washer',1,'洗地机','收纳充电',U.washer,true)}
+      ${chip('utility.robot',1,'扫地机器人','地面/收纳',U.robot,true)}
+      ${chip('utility.vacuum',1,'吸尘器','收纳充电',U.vacuum,true)}
+    </div>
+    <div class="sec-label"><span class="bar"></span>宠物设备（可多选）</div>
+    <div class="chips">
+      ${chip('utility.petWater',1,'宠物饮水机','带防溅盒',U.petWater,true)}
+      ${chip('utility.petFeed',1,'宠物喂食器','',U.petFeed,true)}
+      ${chip('utility.litter',1,'电动猫砂盆','',U.litter,true)}
+    </div>
+    <div class="sec-label"><span class="bar"></span>过道感应灯</div>
+    <div class="chips">
+      ${chip('utility.hallway',1,'要过道感应灯','30-40cm',U.hallway,true)}
+    </div>`;
+}
+
+/* ---- 主渲染 ---- */
+function renderStep(){
+  const key=steps[cur];
+  let html='';
+  if(key==='overview') html=renderOverview();
+  else if(key.startsWith('bed')) html=renderBed(+key.slice(3));
+  else if(key==='living') html=renderLiving();
+  else if(key==='dining') html=renderDining();
+  else if(key==='kitchen') html=renderKitchen();
+  else if(key.startsWith('bath')) html=renderBath(+key.slice(4));
+  else if(key==='balcony') html=renderBalcony();
+  else if(key==='entry') html=renderEntry();
+  else if(key==='utility') html=renderUtility();
+  else if(key==='result'){ showResult(); return; }
+
+  document.getElementById('stepBody').innerHTML=html;
+  const total=steps.length-1; // 不含 result
+  document.getElementById('bar').style.width=(cur/total*100)+'%';
+  document.getElementById('stepMeta').textContent='第 '+Math.min(cur+1,total)+' / '+total+' 步';
+
+  const mb=document.getElementById('mainBtn');
+  if(cur===0){ mb.textContent='下一步'; }
+  else { mb.textContent=(steps[cur+1]==='result')?'生成我的插座清单 ✨':'下一步'; }
+  document.getElementById('footbar').querySelector('.btn-ghost')?.remove();
+  if(cur>0){
+    const back=document.createElement('button');
+    back.className='btn btn-ghost'; back.textContent='上一步';
+    back.onclick=()=>{ if(cur>0){cur--;renderStep();window.scrollTo(0,0);} };
+    document.getElementById('footbar').insertBefore(back, mb);
+  }
+  window.scrollTo(0,0);
+}
+
+/* ---- 结果页 ---- */
+function compute(){
+  const secs=[];
+  secs.push({e:'🚪',name:'玄关',items:filterItems(SOCKET_DB.entry)});
+  A.bedrooms.forEach((b,i)=> secs.push({e:'🛏️',name:b.type||('卧室'+(i+1)),items:bedroomItems(b)}));
+  secs.push({e:'🍽️',name:'餐厅',items:filterItems(SOCKET_DB.dining)});
+  secs.push({e:'🍳',name:'厨房',items:filterItems(SOCKET_DB.kitchen)});
+  A.baths.forEach((b,i)=> secs.push({e:'🚿',name:A.bathCount>1?('卫生间'+(i+1)):'卫生间',items:bathItems(b)}));
+  if(A.hasBalcony) secs.push({e:'🧺',name:'阳台',items:filterItems(SOCKET_DB.balcony)});
+  const util=utilityItems();
+  if(util.length) secs.push({e:'🧹',name:A.utility.has?'家政区/储物间':'清洁·宠物设备',items:util});
+  if(A.hasStudy) A.living.desk=true;
+  secs.push({e:'🛋️',name:'客厅/书房',items:livingItems()});
+  let total=0; secs.forEach(s=>s.items.forEach(it=>total+=(+it.q||0)));
+  return {secs,total};
+}
+function showResult(){
+  const {secs,total}=compute();
+  const legend=`
+    <div class="legend">
+      <div class="t">插座类型速查（你的清单里会出现这些）</div>
+      <div class="row"><b>一开双控 / 单控</b>：带开关的灯控，双控=两地都能关灯（门+床头）。</div>
+      <div class="row"><b>五孔 / 斜五孔</b>：五孔=两孔+三孔通用；斜五孔=插头不挡位，并排插不打架。</div>
+      <div class="row"><b>五孔USB</b>：自带 USB 口，手机直充不用头。</div>
+      <div class="row"><b>三孔 / 三孔10A / 16A</b>：大功率用；16A 专给空调、大功率电器（独立回路）。</div>
+      <div class="row"><b>三孔防溅</b>：带防溅盒，厨房水槽下、卫生间必用。</div>
+      <div class="row"><b>四孔</b>：纯两孔设备（如路由器、电动牙刷充电器）扎堆处。</div>
+      <div class="row"><b>宽带 / 网口</b>：电视、书桌上网用。</div>
+    </div>`;
+  const leak=`
+    <div class="leak">
+      <div class="t">⚠️ 最容易漏的 9 个</div>
+      <div class="pills"><span>电动窗帘</span><span>USB 快充</span><span>网口</span><span>HDMI 预埋管</span><span>智能面板</span><span>洗烘设备</span><span>蒸烤箱</span><span>洗碗机</span><span>柜内隐藏电源</span></div>
+      <div class="top">翻车率最高：<b>智能马桶盖 40cm 必留</b> · <b>电热毛巾架 150cm</b> · <b>冰箱独立回路 16A</b> · <b>餐边柜小家电 20cm 上方</b></div>
+    </div>`;
+  let body=secs.map(s=>{
+    const rows=s.items.map(it=>`<tr><td class="t">${esc(it.t)}</td><td class="q">${esc(it.q)}</td><td>${esc(it.u)}</td><td class="h">${esc(it.h)||'—'}</td></tr>`).join('');
+    const cnt=s.items.reduce((a,b)=>a+(+b.q||0),0);
+    return `<div class="sec"><div class="sh"><span class="e">${s.e}</span><span class="nm">${esc(s.name)}</span><span class="ct">${cnt} 个点位</span></div>
+      <table><tr><th>插座类型</th><th>数量</th><th>用途</th><th>离地参考</th></tr>${rows}</table>
+      <div class="note">位置由你定 ✋ 高度为离地参考值（cm），施工请按完成面现场复尺，别照抄直接开孔。</div></div>`;
+  }).join('');
+
+  document.getElementById('result').innerHTML=`
+    <div class="r-hero">
+      <h2>你的全屋插座清单</h2>
+      <div class="total">${total}<small> 个插座点位（预计）</small></div>
+      <p>按你的真实习惯生成 · 位置你定，高度是参考 · 水电交底拿给师傅逐项核对</p>
+    </div>
+    ${legend}
+    ${body}
+    ${leak}
+    <div class="cta-box">
+      <p>清单收好，墙一封就改不了</p>
+      <div class="kw">插座</div>
+      <p>评论区打「<b>插座</b>」<br>找 SUZY 领完整 7 区速查表 ✅</p>
+    </div>
+    <button class="reflink" onclick="openRef('result')">📋 参考 SUZY 家 150㎡ 真实点位示例</button>
+    <div class="r-foot">@是小臭狗 SUZY 呀 · 重庆 150㎡ 自装实录<br>本清单为测评参考，具体回路与平方数请交专业电工核定</div>`;
+  document.getElementById('intro').style.display='none';
+  document.getElementById('quiz').style.display='none';
+  document.getElementById('result').style.display='block';
+  document.getElementById('footbar').style.display='none';
+  window.scrollTo(0,0);
+}
+
+/* ---- SUZY 真实点位参考页 ---- */
+function sockSum(o){
+  const m=[['五孔',o.e],['五孔一开',o.f],['四孔',o.g],['三孔一开',o.h],['四孔一开',o.j]];
+  return m.filter(x=>x[1]).map(x=>x[0]+'×'+x[1]).join(' ')||'—';
+}
+function renderRef(){
+  const groups=[], order=[];
+  SUZY_PLAN.forEach(r=>{ let gi=order.indexOf(r.r); if(gi<0){gi=groups.length;groups.push({r:r.r,rows:[]});order.push(r.r);} groups[gi].rows.push(r); });
+  document.getElementById('refBody').innerHTML=groups.map(g=>{
+    const rows=g.rows.map(r=>`<tr><td>${esc(r.l)}</td><td>${esc(r.s)}</td><td class="t">${esc(sockSum(r))}</td><td class="h">${esc(r.n)||'—'}</td><td class="o">${esc(r.o)||''}</td></tr>`).join('');
+    return `<div class="sec"><div class="sh"><span class="e">📍</span><span class="nm">${esc(g.r)}</span><span class="ct">${g.rows.length} 处</span></div>
+      <table><tr><th>位置</th><th>场景</th><th>点位</th><th>离地</th><th>备注</th></tr>${rows}</table></div>`;
+  }).join('');
+}
+let refFrom='intro';
+function openRef(from){
+  refFrom=from; renderRef();
+  document.getElementById('intro').style.display='none';
+  document.getElementById('quiz').style.display='none';
+  document.getElementById('result').style.display='none';
+  document.getElementById('ref').style.display='block';
+  document.getElementById('footbar').style.display='none';
+  window.scrollTo(0,0);
+}
+function closeRef(){
+  document.getElementById('ref').style.display='none';
+  if(refFrom==='result'){ document.getElementById('result').style.display='block'; }
+  else { document.getElementById('intro').style.display='block'; document.getElementById('footbar').style.display='flex'; document.getElementById('mainBtn').textContent='开始定制我的插座清单'; }
+  window.scrollTo(0,0);
+}
+
+/* ============ 交互 ============ */
+document.getElementById('stepBody').addEventListener('click',e=>{
+  const t=e.target.closest('[data-g]'); if(!t) return;
+  const g=t.dataset.g;
+  if(g==='bedHabit'){
+    const i=+t.dataset.i;
+    const arr=A.bedrooms[i].habits; const v=t.dataset.v;
+    const idx=arr.indexOf(v); if(idx>=0)arr.splice(idx,1); else arr.push(v);
+    renderStep(); return;
+  }
+  if(g.startsWith('bedType')){
+    A.bedrooms[+t.dataset.i].type=t.dataset.v; renderStep(); return;
+  }
+  if(g.startsWith('bath.')){
+    const i=+g.slice(5); const f=g.slice(0,4);
+    const map={'st':'smartToilet','tw':'towel','mr':'mirror','wh':'waterHeater'};
+    A.baths[i][map[f]]=!A.baths[i][map[f]]; renderStep(); return;
+  }
+  const multi=t.hasAttribute('data-multi');
+  if(multi){ pathSet(A,g,!pathGet(A,g)); }
+  else {
+    let v=t.dataset.v;
+    if(v==='1'||v==='true') v=true; else if(v==='0'||v==='false') v=false; else if(!isNaN(+v)) v=+v;
+    pathSet(A,g,v);
+  }
+  renderStep();
+});
+
+document.getElementById('mainBtn').addEventListener('click',()=>{
+  const quizShown = document.getElementById('quiz').style.display==='block';
+  if(!quizShown){
+    // 从引入页进入答题
+    document.getElementById('intro').style.display='none';
+    document.getElementById('quiz').style.display='block';
+    syncArrays(); buildSteps(); cur=0; renderStep(); return;
+  }
+  // 答题中：下一步 / 生成清单
+  if(steps[cur]==='overview'){ syncArrays(); buildSteps(); cur=1; renderStep(); }
+  else { cur++; if(cur>=steps.length) cur=steps.length-1; renderStep(); }
+});
+
+/* 初始：显示引入页，主按钮文字已为「开始定制我的插座清单」 */
+document.getElementById('quiz').style.display='none';
+document.getElementById('result').style.display='none';
+</script>
+
+
+</body></html>

@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>自装 / 半包 / 全案 怎么选 · 1 分钟测评</title>
+<style>
+  :root{
+    --red:#E60026; --red-soft:#FFE3E8; --ink:#1A1A1A; --sub:#4A4A4A;
+    --line:#ECECEC; --bg:#F4F4F4; --blue:#1E50D8; --blue-soft:#EAEEF6; --green:#0B7A4B; --green-soft:#E4F5EC;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--bg);font-family:"PingFang SC","Microsoft YaHei",-apple-system,sans-serif;
+    color:var(--ink);line-height:1.5;}
+  .app{max-width:460px;margin:0 auto;min-height:100vh;background:#fff;
+    position:relative;padding-bottom:84px;}
+
+  .brand{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line);}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--red);}
+  .brand b{font-size:15px;font-weight:800;}
+  .brand span{font-size:12px;color:var(--sub);margin-left:auto;}
+
+  #intro{padding:0 22px 30px;}
+  .hero{background:linear-gradient(160deg,#fff 0%,#fff 45%,var(--red-soft) 100%);
+    margin:0 -22px;padding:40px 22px 30px;text-align:center;}
+  .hero .q{font-size:54px;}
+  .hero h1{font-size:28px;font-weight:900;letter-spacing:.5px;margin-top:8px;line-height:1.3;}
+  .hero .accent{width:40px;height:6px;background:var(--red);border-radius:4px;margin:14px auto 16px;}
+  .hero p{font-size:14px;color:var(--sub);line-height:1.7;}
+  .insight{background:#EAEEF6;border-radius:16px;padding:18px;margin:22px 0 0;border-left:5px solid var(--blue);}
+  .insight .t{font-size:14px;font-weight:800;color:var(--blue);margin-bottom:8px;}
+  .insight p{font-size:13.5px;color:#22384f;line-height:1.7;margin:0;}
+  .method{background:var(--red-soft);border-radius:16px;padding:18px;margin-top:14px;}
+  .method .t{font-size:14px;font-weight:800;color:var(--red);margin-bottom:8px;}
+  .method p{font-size:13.5px;color:#5a2330;line-height:1.7;margin:0;}
+
+  #quiz{display:none;}
+  .progress{height:4px;background:var(--line);position:relative;}
+  .progress i{position:absolute;left:0;top:0;bottom:0;background:var(--red);transition:width .25s;}
+  .step-meta{padding:14px 18px 0;font-size:12px;color:var(--sub);}
+  .step-body{padding:10px 18px 0;}
+  .q-title{font-size:20px;font-weight:900;margin:6px 0 4px;line-height:1.35;}
+  .q-title .no{color:var(--red);}
+  .q-sub{font-size:13px;color:var(--sub);margin-bottom:16px;line-height:1.6;}
+
+  .opt{display:block;width:100%;text-align:left;background:#fff;border:1.5px solid var(--line);
+    border-radius:14px;padding:14px 16px;margin-bottom:10px;font-size:15px;font-weight:600;
+    color:var(--ink);cursor:pointer;transition:.15s;font-family:inherit;}
+  .opt:active{transform:scale(.99);}
+  .opt.sel{background:var(--red-soft);border-color:var(--red);color:var(--red);}
+  .opt .d{font-size:12px;font-weight:500;color:var(--sub);margin-top:3px;}
+  .opt.sel .d{color:#a23;}
+
+  .footbar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:460px;z-index:60;
+    background:#fff;border-top:1px solid var(--line);padding:12px 18px calc(12px + env(safe-area-inset-bottom));
+    display:flex;gap:12px;}
+  .btn{flex:1;border:none;border-radius:14px;padding:15px;font-size:16px;font-weight:800;
+    cursor:pointer;font-family:inherit;}
+  .btn-pri{background:var(--red);color:#fff;}
+  .btn-pri:active{opacity:.9;}
+  .btn-pri:disabled{background:#E9A9B4;cursor:not-allowed;}
+  .btn-ghost{flex:0 0 96px;background:#fff;border:1.5px solid var(--line);color:var(--sub);}
+  .btn-ghost:active{background:#fafafa;}
+
+  #result{display:none;padding:0 16px 20px;}
+  .r-hero{background:var(--red);color:#fff;border-radius:0 0 22px 22px;margin:0 -16px;padding:24px 18px 20px;text-align:center;}
+  .r-hero .tag{font-size:13px;opacity:.9;}
+  .r-hero h2{font-size:30px;font-weight:900;margin:6px 0 4px;}
+  .r-hero .sub{font-size:13px;opacity:.92;line-height:1.6;}
+  .barset{margin:18px 0 4px;}
+  .bar{display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:13px;}
+  .bar .nm{width:42px;font-weight:800;}
+  .bar .track{flex:1;height:14px;background:var(--line);border-radius:8px;overflow:hidden;}
+  .bar .fill{height:100%;border-radius:8px;transition:width .4s;}
+  .bar .v{width:26px;text-align:right;font-weight:800;color:var(--sub);}
+  .bar.zi .fill{background:var(--red);}
+  .bar.ban .fill{background:var(--blue);}
+  .bar.quan .fill{background:var(--green);}
+  .why{background:#FAFAFA;border:1px solid var(--line);border-radius:14px;padding:16px;margin:16px 0;font-size:13.5px;line-height:1.8;color:#333;}
+  .why .t{font-size:14px;font-weight:800;color:var(--red);margin-bottom:8px;}
+  .why b{color:var(--ink);}
+
+  .sec-t{font-size:15px;font-weight:900;margin:20px 0 10px;display:flex;align-items:center;gap:8px;}
+  .sec-t .bar-i{width:4px;height:16px;background:var(--red);border-radius:3px;}
+  table.cmp{width:100%;border-collapse:collapse;font-size:12px;background:#fff;border:1.5px solid var(--line);border-radius:14px;overflow:hidden;}
+  table.cmp th,table.cmp td{border-bottom:1px solid var(--line);padding:9px 8px;text-align:left;vertical-align:top;line-height:1.45;}
+  table.cmp thead th{background:var(--red);color:#fff;font-weight:800;}
+  table.cmp tbody th{background:#FBFBFB;color:var(--sub);font-weight:800;width:74px;}
+  table.cmp td.zi{color:var(--red);font-weight:700;}
+  table.cmp td.ban{color:var(--blue);font-weight:700;}
+  table.cmp td.quan{color:var(--green);font-weight:700;}
+  .cta-box{background:var(--red-soft);border-radius:16px;padding:18px;margin:18px 0;text-align:center;}
+  .cta-box .kw{display:inline-block;background:var(--red);color:#fff;font-weight:900;font-size:20px;
+    padding:8px 22px;border-radius:30px;letter-spacing:2px;margin:6px 0;}
+  .cta-box p{font-size:13px;color:#5a2330;line-height:1.7;margin:6px 0 0;}
+  .r-foot{text-align:center;font-size:12px;color:var(--sub);padding:8px 0 4px;}
+  .r-foot b{color:var(--ink);}
+
+  /* 采购对比模块 */
+  .matrix{width:100%;border-collapse:collapse;font-size:12px;border:1.5px solid var(--line);border-radius:14px;overflow:hidden;}
+  .matrix th,.matrix td{border-bottom:1px solid var(--line);border-right:1px solid var(--line);padding:10px 6px;text-align:center;vertical-align:middle;line-height:1.4;}
+  .matrix thead th{background:var(--ink);color:#fff;font-weight:800;}
+  .matrix tbody th{background:#FBFBFB;color:var(--sub);font-weight:800;text-align:left;padding-left:10px;width:92px;}
+  .matrix .corner{background:var(--red);}
+  .c-owner{background:var(--red-soft);color:var(--red);font-weight:800;}
+  .c-builder{background:#EAEEF6;color:var(--blue);font-weight:800;}
+  .c-co{background:var(--green-soft);color:var(--green);font-weight:800;}
+  .legend{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 0;font-size:12px;color:var(--sub);}
+  .legend span{display:inline-flex;align-items:center;gap:5px;}
+  .legend i{width:12px;height:12px;border-radius:3px;display:inline-block;}
+  .bar .v.buyv{width:auto;min-width:104px;white-space:nowrap;font-size:11.5px;color:var(--sub);}
+  .note{background:#FFF6E6;border:1px solid #FFD9A6;border-radius:14px;padding:14px 16px;margin:16px 0 0;font-size:12.5px;color:#5a3d00;line-height:1.8;}
+  .note b{color:var(--red);}
+  .grp{background:#fff;border:1.5px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:14px;}
+  .grp .gh{display:flex;align-items:center;gap:10px;padding:12px 14px;background:#FFF7F8;border-bottom:1px solid var(--line);}
+  .grp .gh .e{font-size:22px;}
+  .grp .gh .nm{font-size:16px;font-weight:900;}
+  .grp .gh .ct{margin-left:auto;font-size:12px;color:var(--red);font-weight:800;}
+  .grp ul{margin:0;padding:0;list-style:none;}
+  .grp li{font-size:13px;padding:9px 14px;border-bottom:1px solid #f3f3f3;line-height:1.5;}
+  .grp li:last-child{border-bottom:none;}
+  .grp li .tag{display:inline-block;font-size:10.5px;font-weight:800;border-radius:8px;padding:2px 7px;margin-left:6px;vertical-align:middle;}
+  .tag.zi{background:var(--red-soft);color:var(--red);}
+  .tag.ban{background:#EAEEF6;color:var(--blue);}
+  .tag.quan{background:var(--green-soft);color:var(--green);}
+  .link{display:block;width:calc(100% - 32px);margin:14px auto 0;background:#EEF2FB;border:1.5px solid #D6E0F5;
+    border-radius:14px;padding:13px;text-align:center;font-size:13.5px;font-weight:800;color:var(--blue);cursor:pointer;font-family:inherit;}
+  .link:active{opacity:.85;}
+
+  .sec-sub{font-size:13px;color:var(--sub);margin:0 0 14px;line-height:1.6;}
+
+  /* 采购条形图：作用域限定在 #bars，避免与结果得分条 .barset 的 .bar 样式冲突 */
+  #bars .bar{display:flex;align-items:center;gap:10px;margin-bottom:14px;font-size:13px;}
+  #bars .bar .nm{width:54px;font-size:13px;font-weight:800;}
+  #bars .bar .track{flex:1;height:26px;background:var(--line);border-radius:8px;overflow:hidden;position:relative;}
+  #bars .bar .fill{display:flex;align-items:center;justify-content:flex-end;color:#fff;font-size:12px;font-weight:800;padding-right:8px;}
+  #bars .bar .v{width:118px;font-size:12px;color:var(--sub);}
+  #bars .fill.zi{background:var(--red);}
+  #bars .fill.ban{background:var(--blue);}
+  #bars .fill.quan{background:var(--green);}
+
+  /* 滚动进场动效（下滑淡入） */
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease;will-change:opacity,transform;}
+  .reveal.in{opacity:1;transform:none;}
+
+  /* 手绘标注工具：划线 / 打圈 */
+  #anno{position:absolute;top:0;left:0;z-index:5;pointer-events:none;touch-action:none;}
+  .app.draw-on #anno{pointer-events:auto;}
+  .anno-bar{position:fixed;top:10px;right:10px;z-index:70;display:flex;align-items:center;gap:6px;
+    background:rgba(26,26,26,.82);border-radius:30px;padding:5px 6px;box-shadow:0 4px 14px rgba(0,0,0,.18);}
+  .ab-btn{border:none;background:transparent;color:#fff;font-size:13px;font-weight:800;font-family:inherit;
+    padding:7px 12px;border-radius:22px;cursor:pointer;white-space:nowrap;}
+  .ab-btn.on{background:var(--red);}
+  .ab-group{display:flex;align-items:center;gap:6px;}
+  .ab-sep{width:1px;height:18px;background:rgba(255,255,255,.28);margin:0 2px;}
+  .anno-hint{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:70;
+    background:rgba(230,0,38,.92);color:#fff;font-size:12px;font-weight:700;padding:8px 14px;border-radius:20px;
+    box-shadow:0 4px 14px rgba(230,0,38,.35);pointer-events:none;opacity:0;transition:opacity .25s;max-width:90%;text-align:center;}
+  .anno-hint.show{opacity:1;}
+
+  @media (prefers-reduced-motion: reduce){.progress i,.bar .fill{transition:none;} .reveal{opacity:1;transform:none;transition:none;}}
+</style>
+</head>
+<body>
+<div class="app">
+  <canvas id="anno"></canvas>
+
+  <div class="brand">
+    <span class="dot"></span><b>是小臭狗 SUZY 呀</b>
+    <span>重庆 150㎡ 自装实录</span>
+  </div>
+
+  <!-- 痛点引入 -->
+  <section id="intro" style="display:block;">
+    <div class="hero">
+      <div class="q">🔨</div>
+      <h1>自装 / 半包 / 全案<br>你该选哪个？</h1>
+      <div class="accent"></div>
+      <p>装修第一步就选错方式，<br>可能多花几万、还踩一屁股坑。</p>
+    </div>
+    <div class="insight">
+      <div class="t">⚠️ 不是谁好谁坏，是"你是什么人"</div>
+      <p>自装、半包、全案没有绝对优劣——同一个家，有人自装省出一辆车钱，有人自装返工返到哭。关键看你<b>预算、时间、风格诉求、风险承受</b>这四点站在哪边。</p>
+    </div>
+    <div class="method">
+      <div class="t">✅ 1 分钟测出"适合你的那一种"</div>
+      <p>6 道题，按你的真实情况打分，最后直接给你结论 + 一张重庆本地人工参考对照表。<b>位置你定，数据我们给。</b></p>
+    </div>
+  </section>
+
+  <!-- 答题向导 -->
+  <section id="quiz" style="display:none;">
+    <div class="progress"><i id="bar" style="width:0%"></i></div>
+    <div class="step-meta" id="stepMeta">第 1 步</div>
+    <div class="step-body" id="stepBody"></div>
+  </section>
+
+  <!-- 结果 -->
+  <section id="result" style="display:none;">
+    <div class="r-hero">
+      <div class="tag">根据 6 道题，最适合你的是</div>
+      <h2 id="rMode">—</h2>
+      <div class="sub" id="rSub"></div>
+    </div>
+    <div class="barset" id="barSet"></div>
+    <div class="why" id="why"></div>
+
+    <div class="sec-t"><span class="bar-i"></span>重庆本地 · 三者对照表</div>
+    <table class="cmp">
+      <thead><tr><th>判断项</th><th>自装</th><th>半包</th><th>全案</th></tr></thead>
+      <tbody>
+        <tr><th>预算特点</th>
+          <td class="zi">下限最低，控得好省钱；踩坑会增加返工费</td>
+          <td class="ban">中等，主材自己把控，溢价可控</td>
+          <td class="quan">总价最高，含公司利润、材料加价</td></tr>
+        <tr><th>瓦工人工<br>参考（重庆）</th>
+          <td class="zi">约 16000 元</td>
+          <td class="ban">约 25000 元</td>
+          <td class="quan">约 32000 元</td></tr>
+        <tr><th>设计自由度</th>
+          <td class="zi">自主设计，自由度拉满，适合小众风格</td>
+          <td class="ban">可自行出方案，工长落地</td>
+          <td class="quan">大多现成套图，定制化弱</td></tr>
+        <tr><th>售后主体</th>
+          <td class="zi">工人分开对接，无统一负责人</td>
+          <td class="ban">施工找工长，主材找对应商家</td>
+          <td class="quan">统一对接装修公司</td></tr>
+        <tr><th>延期风险</th>
+          <td class="zi">最高，材料、工人档期自主协调</td>
+          <td class="ban">中等，主材到货容易耽误工期</td>
+          <td class="quan">合同约束工期，追责相对清晰</td></tr>
+      </tbody>
+    </table>
+
+    <div class="sec-t"><span class="bar-i"></span>一图看懂：每块材料谁掏钱买</div>
+    <div class="sec-sub">红=业主自己买　蓝=施工方/工长买　绿=装修公司包</div>
+    <table class="matrix" id="matrix"></table>
+    <div class="legend">
+      <span><i style="background:var(--red)"></i>业主购买</span>
+      <span><i style="background:var(--blue)"></i>施工方/工长</span>
+      <span><i style="background:var(--green)"></i>装修公司包</span>
+    </div>
+
+    <div class="note">
+      <b>🔎 全案 ≠ 一定"拎包入住"。</b>市面上很多"全案"实为<b>硬装全案</b>（只包辅材+主材+人工），软装家具家电仍要业主买——那 37 项别漏算。签合同前务必核对 <b>FF&E 物料清单</b>（是否含家具/窗帘/灯具/家电）。
+    </div>
+
+    <div class="sec-t" style="margin-top:22px;"><span class="bar-i"></span>业主亲自采购的物品数量</div>
+    <div class="sec-sub">按清单逐项统计（辅材约 42、主材约 48、软装家具家电约 37，共约 127 项）</div>
+    <div id="bars"></div>
+    <div class="sec-sub" style="margin-top:12px;">结论：自装几乎全自己买；半包砍掉辅材这 42 项；<b>拎包入住</b>全案业主近乎零采购——但市面最常见的<b>硬装全案</b>，软装家具家电 37 项仍要业主自己买。</div>
+
+    <div class="sec-t" style="margin-top:22px;"><span class="bar-i"></span>最完整装修物品清单（127 项）</div>
+    <div class="sec-sub">逐项标注三种方式下"谁买"，照着买不漏项。</div>
+    <div id="list"></div>
+
+    <div class="cta-box">
+      <p>结论收好，方式选错后面全白搭</p>
+      <div class="kw">装修方式</div>
+      <p>评论区打「<b>装修方式</b>」<br>找 SUZY 领《自装 / 半包 / 全案 对照表 + 避坑清单》✅</p>
+    </div>
+    <div class="r-foot">@是小臭狗 SUZY 呀 · 重庆 150㎡ 自装实录<br>本测评为参考，最终结合你家户型与预算核定</div>
+  </section>
+
+  <!-- 底部按钮 -->
+  <div class="footbar" id="footbar" style="display:flex;">
+    <button class="btn btn-ghost" id="backBtn" style="display:none;">上一步</button>
+    <button class="btn btn-pri" id="mainBtn">开始测评</button>
+  </div>
+
+  <div class="anno-bar" id="annoBar">
+    <button class="ab-btn" id="annoToggle">✏️ 标注重点</button>
+    <span class="ab-group" id="annoGroup" style="display:none;">
+      <span class="ab-sep"></span>
+      <button class="ab-btn on" id="modeLine">划线</button>
+      <button class="ab-btn" id="modeCircle">打圈</button>
+      <span class="ab-sep"></span>
+      <button class="ab-btn" id="annoClear">清除</button>
+      <button class="ab-btn" id="annoDone">完成</button>
+    </span>
+  </div>
+  <div class="anno-hint" id="annoHint">标注模式：手指在内容上划线 / 画圈圈重点，点「完成」退出后可正常滚动</div>
+
+</div>
+
+<script>
+/* ============ 数据 ============ */
+const QUESTIONS=[
+  {q:'装修你最想达成的是什么？',sub:'没有标准答案，先想清楚你图啥。',
+   opts:[
+     {t:'花最少钱，全程自己说了算',d:'预算控死、拒绝中间商',s:{zi:3}},
+     {t:'钱花在刀刃上，主材我自己挑',d:'溢价可控、不被忽悠',s:{ban:3}},
+     {t:'别让我操心，花钱买省心',d:'能不找我就别找我',s:{quan:3}},
+   ]},
+  {q:'你能拿出多少时间盯工地、跑市场、协调工人？',sub:'这一步最容易被低估。',
+   opts:[
+     {t:'时间管够，就当第二份工作',d:'盯工人、盯材料、盯进度',s:{zi:3,ban:1}},
+     {t:'周末能跑，平时远程盯',d:'下班看看、周末突击',s:{ban:3}},
+     {t:'几乎没空，最好别找我',d:'加班狗 / 异地 / 带娃',s:{quan:3}},
+   ]},
+  {q:'你家的风格诉求是？',sub:'小众风格和套图，成本差很多。',
+   opts:[
+     {t:'小众 / 个性化，要自己设计发挥',d:'中古、复古、极简怪味…',s:{zi:3}},
+     {t:'有想法，能交给工长落地',d:'方案我做、施工他干',s:{zi:1,ban:2}},
+     {t:'大众耐看款，套图就够',d:'现代、奶油、原木',s:{quan:3}},
+   ]},
+  {q:'出了问题，你更想要哪种负责方式？',sub:'售后主体决定了你半夜找谁。',
+   opts:[
+     {t:'我自己对接，省钱优先',d:'瓦工、水电各找各的',s:{zi:3}},
+     {t:'施工找工长、主材找商家',d:'分开对接但不怕麻烦',s:{ban:3}},
+     {t:'统一一家公司兜底',d:'一个电话有人管',s:{quan:3}},
+   ]},
+  {q:'对工期延期的容忍度？',sub:'自装最容易被档期拖垮。',
+   opts:[
+     {t:'不急，自己协调档期',d:'空着就慢慢装',s:{zi:3}},
+     {t:'能接受等主材到货',d:'瓷砖定制晚两周能忍',s:{ban:3}},
+     {t:'必须按合同工期，超期要赔',d:'有入住 deadline',s:{quan:3}},
+   ]},
+  {q:'重庆瓦工人工参考（常规铺贴）：自装约 1.6 万、半包 2.5 万、全案 3.2 万，你怎么想？',sub:'SUZY 家 150㎡ 自装，瓦工就比公司报价省了 9000。',
+   opts:[
+     {t:'1.6 万我自己找瓦工，划算',d:'差价够买台好冰箱',s:{zi:3}},
+     {t:'2.5 万给半包工长，溢价合理',d:'有人管施工更稳',s:{ban:3}},
+     {t:'3.2 万全案图省心，认了',d:'多花钱少操心',s:{quan:3}},
+   ]},
+];
+
+const WHY={
+  zi:{t:'为什么是你：自装',
+    html:'你<b>预算控得紧、时间精力愿意投、又想要完全的设计自由度</b>。像 SUZY 一样，150㎡ 自装光瓦工就比装修公司报价省了 9000（1.6 万 vs 2.5 万）。<br>但要清醒：自装<b>延期风险最高、售后要自己分头对接</b>，只适合"愿意把装修当项目来管"的人。'},
+  ban:{t:'为什么是你：半包',
+    html:'你<b>想在主材上自己把控溢价、又要有人（工长）落地施工</b>，性价比最稳。重庆常规铺贴瓦工约 2.5 万（自装约 1.6 万、全案约 3.2 万），半包溢价在合理区间。<br>注意：<b>主材到货最容易拖工期</b>，得自己盯物流和进场顺序。'},
+  quan:{t:'为什么是你：全案',
+    html:'你<b>预算充足、最怕操心，要一家公司统一兜底</b>售后和工期。代价是总价最高（含公司利润 + 材料加价），重庆常规铺贴瓦工就要约 3.2 万，且<b>套图居多、定制化弱</b>。<br>适合"花钱买省心"的人——但合同和增项条款一定看细。'},
+};
+
+/* ============ 状态 ============ */
+let cur=0;
+const answers=new Array(QUESTIONS.length).fill(null);
+
+/* ============ 渲染 ============ */
+function renderStep(){
+  const qq=QUESTIONS[cur];
+  document.getElementById('stepBody').innerHTML=`
+    <div class="q-title"><span class="no">${cur+1}</span> / ${QUESTIONS.length}　${esc(qq.q)}</div>
+    <div class="q-sub">${esc(qq.sub)}</div>
+    ${qq.opts.map((o,i)=>`<button class="opt ${answers[cur]===i?'sel':''}" data-i="${i}">${esc(o.t)}<div class="d">${esc(o.d)}</div></button>`).join('')}`;
+  const total=QUESTIONS.length;
+  document.getElementById('bar').style.width=((cur)/total*100)+'%';
+  document.getElementById('stepMeta').textContent='第 '+(cur+1)+' / '+total+' 步';
+
+  const mb=document.getElementById('mainBtn');
+  mb.textContent = (cur===total-1)?'生成我的结论 ✨':'下一步';
+  mb.disabled = (answers[cur]===null);
+
+  const back=document.getElementById('backBtn');
+  back.style.display = (cur>0)?'block':'none';
+}
+function esc(s){return (s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+
+function compute(){
+  const sc={zi:0,ban:0,quan:0};
+  answers.forEach((ai,qi)=>{
+    if(ai!==null){ const s=QUESTIONS[qi].opts[ai].s; for(const k in s) sc[k]+=s[k]; }
+  });
+  let win='zi',best=-1;
+  for(const k of ['zi','ban','quan']){ if(sc[k]>best){best=sc[k];win=k;} }
+  // 同分时按 zi>ban>quan 稳定排序，tie 仍取最高优先级
+  return {sc,win};
+}
+
+function showResult(){
+  const {sc,win}=compute();
+  const name={zi:'自装',ban:'半包',quan:'全案'}[win];
+  document.getElementById('rMode').textContent=name;
+  document.getElementById('rSub').textContent='自装 / 半包 / 全案，先看你是哪一类人';
+  const maxv=Math.max(sc.zi,sc.ban,sc.quan,1);
+  const rows=[
+    {k:'zi',nm:'自装',v:sc.zi},
+    {k:'ban',nm:'半包',v:sc.ban},
+    {k:'quan',nm:'全案',v:sc.quan},
+  ];
+  document.getElementById('barSet').innerHTML=rows.map(r=>`
+    <div class="bar ${r.k}"><span class="nm">${r.nm}</span>
+      <span class="track"><span class="fill" style="width:${Math.round(r.v/maxv*100)}%"></span></span>
+      <span class="v">${r.v}</span></div>`).join('');
+  document.getElementById('why').innerHTML=`<div class="t">${WHY[win].t}</div>${WHY[win].html}`;
+
+  document.getElementById('intro').style.display='none';
+  document.getElementById('quiz').style.display='none';
+  document.getElementById('result').style.display='block';
+  document.getElementById('footbar').style.display='none';
+  window.scrollTo(0,0);
+  document.querySelectorAll('#result .reveal').forEach((e,i)=>setTimeout(()=>e.classList.add('in'),90*i));
+}
+
+/* ============ 交互 ============ */
+document.getElementById('stepBody').addEventListener('click',e=>{
+  const t=e.target.closest('.opt'); if(!t) return;
+  answers[cur]=+t.dataset.i;
+  renderStep();
+});
+document.getElementById('backBtn').addEventListener('click',()=>{
+  if(cur>0){cur--;renderStep();window.scrollTo(0,0);}
+});
+document.getElementById('mainBtn').addEventListener('click',()=>{
+  const quizShown=document.getElementById('quiz').style.display==='block';
+  if(!quizShown){
+    document.getElementById('intro').style.display='none';
+    document.getElementById('quiz').style.display='block';
+    cur=0; renderStep(); window.scrollTo(0,0); return;
+  }
+  if(answers[cur]===null) return;
+  if(cur<QUESTIONS.length-1){ cur++; renderStep(); window.scrollTo(0,0); }
+  else { showResult(); }
+});
+
+/* ============ 采购对比模块（合并自「装修谁买」采购清单可视化页） ============ */
+// who: zi=业主, ban=施工方/工长, quan=装修公司
+// 全案(quan)软装 默认按"拎包入住"处理为公司包；硬装全案变体见下方注释
+const GROUPS=[
+  {e:'🧱', name:'辅材', items:[
+    '电线(强电/弱电)','PVC 穿线管','暗盒/底盒','PPR 给水管','PVC 排水管','管件(直接/弯头/三通)','阀门','水表','配电箱','空气开关/漏保','网线','保温棉','生料带',
+    '防水涂料','防水卷材','堵漏王',
+    '腻子粉','石膏粉','网格布/防裂网','界面剂(墙固/地固)','阴阳角条',
+    '水泥','沙子','瓷砖胶','填缝剂','美缝剂(基础)','隔音棉',
+    '石膏板','轻钢/木龙骨','细木工板/欧松板/生态板','螺丝钉','白乳胶','收口条',
+    '乳胶漆(底+面)','砂纸','滚筒/毛刷','牛皮纸','纸胶带',
+    '角阀','软管','防霉玻璃胶/密封胶','膨胀螺丝'
+  ], who:{zi:'业主',ban:'施工方',quan:'公司'}},
+  {e:'🚪', name:'主材', items:[
+    '瓷砖(地砖/墙砖/腰线/花片)','木地板(实木/复合/强化/SPC)','踢脚线','过门石','窗台石','石材(大理石/花岗岩)','门槛石',
+    '乳胶漆(自主色号)','艺术漆/硅藻泥','壁纸/墙布+基膜+胶','护墙板/木饰面',
+    '入户门/防盗门','室内门+门套+锁具+合页','窗户(断桥铝/系统窗)','纱窗','推拉门/玻璃门','垭口套',
+    '橱柜(地柜/吊柜/台面)','水槽+龙头','厨房电器(烟机/灶具/消毒柜/洗碗机)','集成吊顶(铝扣板/浴霸/照明)',
+    '马桶/智能马桶','浴室柜','台盆','花洒','淋浴房/浴缸','卫浴五金(毛巾架/地漏/角阀/厕纸架/置物架)','镜前灯',
+    '衣柜','鞋柜','餐边柜','书柜','阳台柜','电视柜(全屋定制)',
+    '石膏板吊顶','铝扣板','龙骨',
+    '主灯','筒灯','射灯','灯带','壁灯','吸顶灯(升级款)',
+    '开关插座面板(含USB/防溅/斜五孔)',
+    '暖气片/地暖','中央空调','新风系统','全屋净水'
+  ], who:{zi:'业主',ban:'业主',quan:'公司'}},
+  {e:'🛋️', name:'软装·家具·家电', items:[
+    '沙发','茶几','床/床垫','餐桌椅','成品柜','书桌书架','懒人沙发','儿童家具',
+    '冰箱','洗衣机','烘干机','电视','空调(分体)','热水器','烟机灶具(部分套餐含)','洗碗机',
+    '吸尘器','扫地机器人','蒸烤箱','小厨宝','净水器','饮水机','微波炉',
+    '窗帘+轨道/罗马杆','地毯','抱枕','床品',
+    '挂画','摆件','绿植','饰品',
+    '智能门锁','智能窗帘','智能开关','摄像头','传感器',
+    '封阳台/系统窗(多数全包不含)'
+  ], who:{zi:'业主',ban:'业主',quan:'公司（拎包入住版）'}},
+];
+
+const MATRIX_ROWS=[
+  {k:'辅材', v:'水泥/沙子/电线/水管/防水/腻子…'},
+  {k:'主材', v:'瓷砖/地板/洁具/橱柜/门窗/定制柜…'},
+  {k:'软装·家具·家电', v:'沙发/床/冰箱/窗帘/智能…'},
+  {k:'设计', v:'方案/效果图/施工图'},
+  {k:'施工人工', v:'各工种人工费'},
+];
+const MATRIX_WHO={
+  '辅材':{zi:'业主',ban:'施工方',quan:'公司'},
+  '主材':{zi:'业主',ban:'业主',quan:'公司'},
+  '软装·家具·家电':{zi:'业主',ban:'业主',quan:'公司'},
+  '设计':{zi:'自己/另找',ban:'公司',quan:'公司'},
+  '施工人工':{zi:'自雇散工',ban:'公司/工长',quan:'公司'},
+};
+
+function cellClass(v){
+  if(v.indexOf('业主')>=0) return 'c-owner';
+  if(v.indexOf('施工')>=0||v.indexOf('工长')>=0||v.indexOf('公司')>=0||v.indexOf('包')>=0) {
+    if(v.indexOf('公司')>=0) return 'c-co';
+    return 'c-builder';
+  }
+  return '';
+}
+
+function renderMatrix(){
+  let h='<thead><tr class="corner"><th>采购项＼方式</th><th>自装</th><th>半包</th><th>全案</th></tr></thead><tbody>';
+  MATRIX_ROWS.forEach(r=>{
+    const w=MATRIX_WHO[r.k];
+    h+='<tr><th>'+r.k+'</th>';
+    ['zi','ban','quan'].forEach(m=>{
+      const val=w[m];
+      h+='<td class="'+cellClass(val)+'">'+esc(val)+'</td>';
+    });
+    h+='</tr>';
+  });
+  h+='</tbody>';
+  document.getElementById('matrix').innerHTML=h;
+}
+
+function renderBars(){
+  const total=GROUPS.reduce((s,g)=>s+g.items.length,0);
+  const counts={
+    zi:GROUPS.reduce((s,g)=>s+(g.who.zi==='业主'?g.items.length:0),0),
+    ban:GROUPS.reduce((s,g)=>s+(g.who.ban==='业主'?g.items.length:0),0),
+    quan:GROUPS.reduce((s,g)=>s+(g.who.quan==='业主'?g.items.length:0),0), // 拎包入住版：公司全包，业主 0；硬装全案变体见 .note
+  };
+  const meta={zi:{nm:'自装',cls:'zi'},ban:{nm:'半包',cls:'ban'},quan:{nm:'全案',cls:'quan'}};
+  // 常规（硬装）全案：公司只包辅材+主材+人工，软装家具家电仍业主买
+  const hardQuan=GROUPS.reduce((s,g)=>s+(g.name.indexOf('软装')===0?g.items.length:0),0);
+  const rows=[
+    {nm:meta.zi.nm,cls:'zi',c:counts.zi},
+    {nm:meta.ban.nm,cls:'ban',c:counts.ban},
+    {nm:'全案',cls:'quan',c:counts.quan},      // 真·拎包入住：业主 0
+    {nm:'硬装全案',cls:'quan',c:hardQuan},     // 市面常见：软装 37 项仍业主买
+  ];
+  let h='';
+  rows.forEach(r=>{
+    const pct=Math.round(r.c/total*100);
+    h+='<div class="bar"><span class="nm">'+r.nm+'</span>'+
+       '<span class="track"><span class="fill '+r.cls+'" style="width:'+pct+'%">'+pct+'%</span></span>'+
+       '<span class="v">业主买 '+r.c+' / '+total+' 项</span></div>';
+  });
+  document.getElementById('bars').innerHTML=h;
+}
+
+function renderList(){
+  let h='';
+  GROUPS.forEach(g=>{
+    let items='';
+    g.items.forEach(it=>{
+      items+='<li>'+esc(it)+
+        '<span class="tag zi">自装·'+esc(g.who.zi)+'</span>'+
+        '<span class="tag ban">半包·'+esc(g.who.ban)+'</span>'+
+        '<span class="tag quan">全案·'+esc(g.who.quan)+'</span></li>';
+    });
+    h+='<div class="grp"><div class="gh"><span class="e">'+g.e+'</span><span class="nm">'+g.name+'</span>'+
+       '<span class="ct">'+g.items.length+' 项</span></div><ul>'+items+'</ul></div>';
+  });
+  document.getElementById('list').innerHTML=h;
+}
+
+// 采购模块不依赖测评答案，页面加载即渲染（结果区默认隐藏，渲染无影响）
+renderMatrix();
+renderBars();
+renderList();
+
+/* ============ 滚动进场动效（下滑淡入） ============ */
+const REVEAL_SEL=['.hero','.insight','.method','.r-hero','.barset','.why',
+  '.sec-t','table.cmp','.matrix','.legend','.note','#bars','.cta-box','.r-foot','.grp','#stepBody'];
+function initReveal(){
+  const els=[];
+  REVEAL_SEL.forEach(s=>document.querySelectorAll(s).forEach(e=>els.push(e)));
+  els.forEach(e=>e.classList.add('reveal'));
+  if(!('IntersectionObserver' in window)){ els.forEach(e=>e.classList.add('in')); return; }
+  const io=new IntersectionObserver(ents=>{
+    ents.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+  },{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+  els.forEach(e=>io.observe(e));
+}
+initReveal();
+
+/* ============ 手绘标注工具：划线 / 打圈 ============ */
+const annoCanvas=document.getElementById('anno');
+const actx=annoCanvas.getContext('2d');
+let annoOn=false, annoMode='line', strokes=[], drawing=false, pts=[], circle=null;
+const ANNO_COLOR='rgba(230,0,38,.85)';
+
+function sizeAnno(){
+  const app=document.querySelector('.app');
+  const w=app.clientWidth, h=app.scrollHeight;
+  const dpr=window.devicePixelRatio||1;
+  annoCanvas.width=Math.round(w*dpr); annoCanvas.height=Math.round(h*dpr);
+  annoCanvas.style.width=w+'px'; annoCanvas.style.height=h+'px';
+  actx.setTransform(dpr,0,0,dpr,0,0);
+  redrawAnno();
+}
+function drawStroke(s){
+  actx.strokeStyle=ANNO_COLOR; actx.lineWidth=3; actx.lineCap='round'; actx.lineJoin='round';
+  if(s.type==='circle'){
+    if(s.r>2){ actx.beginPath(); actx.arc(s.cx,s.cy,s.r,0,Math.PI*2); actx.stroke(); }
+  }else if(s.pts.length){
+    actx.beginPath(); s.pts.forEach((p,i)=> i?actx.lineTo(p.x,p.y):actx.moveTo(p.x,p.y)); actx.stroke();
+  }
+}
+function redrawAnno(){
+  actx.clearRect(0,0,annoCanvas.width,annoCanvas.height);
+  strokes.forEach(drawStroke);
+  if(drawing){
+    if(annoMode==='line') drawStroke({type:'path',pts:pts});
+    else if(circle) drawStroke({type:'circle',cx:circle.cx,cy:circle.cy,r:circle.r});
+  }
+}
+function pos(e){ const r=annoCanvas.getBoundingClientRect(); return {x:e.clientX-r.left,y:e.clientY-r.top}; }
+function setAnno(on){
+  annoOn=on;
+  document.querySelector('.app').classList.toggle('draw-on',on);
+  document.getElementById('annoGroup').style.display=on?'flex':'none';
+  document.getElementById('annoToggle').textContent=on?'✏️ 退出标注':'✏️ 标注重点';
+  document.getElementById('annoHint').classList.toggle('show',on);
+  if(on) sizeAnno();
+}
+function endDraw(){
+  if(!annoOn||!drawing) return;
+  drawing=false;
+  if(annoMode==='line'&&pts.length>1) strokes.push({type:'path',pts:pts.slice()});
+  else if(annoMode==='circle'&&circle&&circle.r>4) strokes.push({type:'circle',cx:circle.cx,cy:circle.cy,r:circle.r});
+  pts=[]; circle=null; redrawAnno();
+}
+annoCanvas.addEventListener('pointerdown',e=>{
+  if(!annoOn) return; e.preventDefault();
+  const p=pos(e); drawing=true;
+  if(annoMode==='line') pts=[p]; else circle={cx:p.x,cy:p.y,r:0};
+  if(annoCanvas.setPointerCapture) try{annoCanvas.setPointerCapture(e.pointerId);}catch(_){}
+});
+annoCanvas.addEventListener('pointermove',e=>{
+  if(!annoOn||!drawing) return; e.preventDefault();
+  const p=pos(e);
+  if(annoMode==='line') pts.push(p); else circle.r=Math.hypot(p.x-circle.cx,p.y-circle.cy);
+  redrawAnno();
+});
+annoCanvas.addEventListener('pointerup',endDraw);
+annoCanvas.addEventListener('pointercancel',endDraw);
+document.getElementById('annoToggle').addEventListener('click',()=>setAnno(!annoOn));
+document.getElementById('modeLine').addEventListener('click',()=>{annoMode='line';document.getElementById('modeLine').classList.add('on');document.getElementById('modeCircle').classList.remove('on');});
+document.getElementById('modeCircle').addEventListener('click',()=>{annoMode='circle';document.getElementById('modeCircle').classList.add('on');document.getElementById('modeLine').classList.remove('on');});
+document.getElementById('annoClear').addEventListener('click',()=>{strokes=[];redrawAnno();});
+document.getElementById('annoDone').addEventListener('click',()=>setAnno(false));
+window.addEventListener('resize',()=>{ if(annoOn) sizeAnno(); });
+</script>
+</body>
+</html>

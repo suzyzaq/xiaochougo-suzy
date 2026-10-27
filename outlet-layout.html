@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>全屋插座布局全攻略 · 小红书图文（叙事版）</title>
+<style>
+  :root{
+    --red:#E60026;        /* 品牌红（深一档，正文/大字更稳） */
+    --red-soft:#FFE3E8;
+    --ink:#1A1A1A;        /* 主文字，对比≈16:1 */
+    --sub:#4A4A4A;        /* 次级文字，对比≈9:1 */
+    --line:#E6E6E6;
+    --cold:#EAF0F6;       /* 谷值冷调 */
+    --cold-ink:#16324F;
+    --cold-accent:#3D5AFE;
+    --warm:#FFF1E6;       /* 转折暖调 */
+    --warm-accent:#FF7A1A;
+    --peak:#FFE9EC;       /* 峰值饱和红调 */
+    --dp2:#1E50D8;
+    --gold:#6B4A00;       /* 黄底深字，对比>7:1 */
+    --b3:#E6F0FF; --b4:#E8F8EE; --b5:#F1E9FF;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:#EFEFEF;font-family:"PingFang SC","Microsoft YaHei",-apple-system,sans-serif;color:var(--ink);}
+  .wrap{max-width:440px;margin:0 auto;padding:20px 0 60px;}
+  .page{
+    width:390px;height:693px; /* 9:16 */
+    background:#fff;margin:0 auto 18px;border-radius:18px;overflow:hidden;
+    border:3px solid var(--red); /* 红窗框品牌框（铁律） */
+    padding:26px 24px;position:relative;
+    box-shadow:0 8px 24px rgba(0,0,0,.08);
+    display:flex;flex-direction:column;
+  }
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);}
+  .tag{display:inline-block;align-self:flex-start;font-size:13px;color:var(--red);font-weight:700;
+    background:var(--red-soft);padding:4px 12px;border-radius:20px;margin-bottom:14px;letter-spacing:.5px;}
+  .beat{position:absolute;top:26px;right:24px;font-size:11px;color:#BBB;font-weight:600;}
+  h1{font-size:29px;line-height:1.22;font-weight:900;letter-spacing:.5px;}
+  h2{font-size:24px;font-weight:900;margin-bottom:4px;line-height:1.25;}
+  .claim{font-size:15px;font-weight:800;color:var(--ink);line-height:1.5;}
+  .sub{color:var(--sub);font-size:14px;line-height:1.65;margin-top:10px;}
+  .accent{display:inline-block;width:36px;height:6px;background:var(--red);border-radius:4px;margin:12px 0 16px;}
+  .foot{position:absolute;bottom:14px;left:24px;right:24px;font-size:12px;color:#B5B5B5;
+    display:flex;justify-content:space-between;}
+
+  /* 表格（三级细节层，辅助一屏主张） */
+  table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px;}
+  th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top;line-height:1.4;}
+  th{background:var(--red-soft);color:var(--red);font-weight:800;}
+  td b{color:var(--dp2);}
+  .note{font-size:12.5px;color:var(--sub);background:#FAFAFA;border-left:4px solid var(--red);
+    padding:8px 12px;border-radius:0 8px 8px 0;margin-top:14px;line-height:1.6;}
+  .note.warn{background:#FFF6E6;border-left-color:var(--warm-accent);color:var(--gold);font-weight:600;}
+
+  /* 封面 */
+  .cover{background:linear-gradient(160deg,#fff 0%,#fff 45%,var(--red-soft) 100%);}
+  .cover .qmark{font-size:60px;margin-top:18px;}
+  .handle{font-size:14px;color:var(--sub);margin-top:16px;font-weight:700;}
+  .big{font-size:19px;font-weight:900;color:var(--red);margin:18px 0 4px;}
+
+  /* 谷值·冷调 */
+  .state-cold{background:var(--cold);}
+  .state-cold h2{color:var(--cold-ink);}
+  .state-cold .tag{background:#fff;color:var(--cold-accent);}
+  .state-cold .accent{background:var(--cold-accent);}
+  .cost{display:flex;flex-direction:column;gap:12px;margin-top:6px;}
+  .cost .c{background:#fff;border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:14px;
+    box-shadow:0 4px 12px rgba(22,50,79,.08);}
+  .cost .c .ic{font-size:30px;}
+  .cost .c .t{font-size:14px;font-weight:800;color:var(--cold-ink);line-height:1.35;}
+  .cost .c .t span{display:block;font-size:12px;font-weight:600;color:var(--sub);margin-top:3px;}
+
+  /* 转折·暖调 */
+  .state-warm{background:var(--warm);}
+  .state-warm .tag{background:#fff;color:var(--warm-accent);}
+  .state-warm .accent{background:var(--warm-accent);}
+  .state-warm h2{color:#9A3D00;}
+  .rule{background:#fff;border-radius:14px;padding:14px 16px;margin-top:12px;display:flex;gap:12px;align-items:flex-start;}
+  .rule .n{flex:0 0 30px;height:30px;border-radius:50%;background:var(--warm-accent);color:#fff;
+    font-weight:900;font-size:16px;display:flex;align-items:center;justify-content:center;}
+  .rule .t{font-size:13.5px;font-weight:700;color:var(--ink);line-height:1.5;}
+  .rule .t span{display:block;font-size:12px;font-weight:600;color:var(--sub);margin-top:3px;}
+
+  /* 峰值·饱和红 */
+  .state-peak{background:var(--peak);}
+  .state-peak .tag{background:#fff;color:var(--red);}
+  .state-peak .accent{background:var(--red);}
+  .map{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;}
+  .map .z{flex:1 1 30%;background:#fff;border-radius:14px;padding:14px 8px;text-align:center;
+    box-shadow:0 4px 14px rgba(230,0,38,.10);}
+  .map .z .e{font-size:26px;}
+  .map .z .nm{font-size:13px;font-weight:800;margin-top:6px;color:var(--ink);}
+  .map .z .ct{font-size:11px;color:var(--sub);margin-top:2px;}
+  .peaknum{text-align:center;margin-top:14px;}
+  .peaknum .b{font-size:54px;font-weight:900;color:var(--red);line-height:1;}
+  .peaknum .s{font-size:14px;font-weight:800;color:var(--ink);margin-top:4px;}
+
+  /* 分区页（新常态） */
+  .zonehead{display:flex;align-items:baseline;gap:10px;}
+  .zonehead .no{font-size:34px;font-weight:900;color:var(--red);line-height:1;}
+  .pill-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+  .pill{background:var(--b5);color:#5B3FA0;font-size:12px;font-weight:700;padding:4px 10px;border-radius:12px;}
+
+  /* 易漏页 */
+  .grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;}
+  .gcard{flex:1 1 30%;background:var(--red-soft);border-radius:12px;padding:10px 8px;text-align:center;
+    font-size:12.5px;font-weight:700;color:var(--red);}
+  .topcard{flex:1 1 46%;background:var(--b3);border-radius:12px;padding:12px 14px;font-size:13.5px;font-weight:700;color:var(--dp2);}
+  .topcard b{display:block;color:var(--red);font-size:15px;margin-top:3px;}
+
+  /* CTA */
+  .cta{background:linear-gradient(160deg,#fff 0%,#fff 40%,var(--red-soft) 100%);}
+  .cta .qmark{font-size:56px;margin-top:14px;}
+  .cta .kw{display:inline-block;background:var(--red);color:#fff;font-weight:900;font-size:22px;
+    padding:8px 22px;border-radius:30px;margin:14px 0 6px;letter-spacing:2px;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none!important;transition:none!important;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ===== 第1页 · 常态（Beat1 强度20） ===== -->
+  <div class="page cover" aria-label="封面：自装业主水电交底前，凭感觉留插座的常态">
+    <span class="tag">装修避坑 · 自装第 25 劫</span>
+    <span class="beat">01 常态</span>
+    <div class="qmark">🔌</div>
+    <h1>全屋插座<br>留错 = 砸墙</h1>
+    <div class="accent"></div>
+    <p class="sub">水电交底前夜，你对着网图一笔笔画插座——<br>位置、类型、回路，错一个，墙一封就得砸。</p>
+    <div class="big">7 区 · 75+ 点位 · 别再凭感觉</div>
+    <div class="handle">@是小臭狗 SUZY 呀 · 重庆 150㎡ 自装实录</div>
+    <div class="foot"><span>自装第 25 劫 · 水电交底</span><span>收藏防踩坑</span></div>
+  </div>
+
+  <!-- ===== 第2页 · 触发（Beat2 强度35） ===== -->
+  <div class="page" aria-label="触发：照着网图抄高度，师傅一问三不知">
+    <span class="tag">翻车第一步</span>
+    <span class="beat">02 触发</span>
+    <h2>照网图抄高度<br>最常翻车</h2>
+    <div class="accent"></div>
+    <p class="claim">师傅一句「沙发多长？床朝哪边？」<br>你答不上来，插座就只能留错。</p>
+    <div class="cost" style="margin-top:18px">
+      <div class="c"><div class="ic">❓</div><div class="t">家具尺寸没定<span>沙发长度、床朝向、柜体深度全是空白</span></div></div>
+      <div class="c"><div class="ic">📐</div><div class="t">高度照抄网图<span>忽略自家完成面，开孔即错位</span></div></div>
+    </div>
+    <div class="note">插座不是留得越多越好——留错位置，比留少更糟。</div>
+    <div class="foot"><span>触发</span><span>交底前夜</span></div>
+  </div>
+
+  <!-- ===== 第3页 · 谷值·代价（Beat3 强度15 冷调） ===== -->
+  <div class="page state-cold" aria-label="谷值：墙一封，砸墙重来、插线板满地、智能马桶装不了的代价">
+    <span class="tag">墙一封，后悔药最贵</span>
+    <span class="beat">03 谷值</span>
+    <h2>三种代价<br>一个比一个疼</h2>
+    <div class="accent"></div>
+    <div class="cost">
+      <div class="c"><div class="ic">🔨</div><div class="t">砸墙重来<span>已封槽的线要刨开，工期 + 粉尘 + 钱</span></div></div>
+      <div class="c"><div class="ic">🧯</div><div class="t">插线板满地<span>入住后绕墙拉线，隐患肉眼可见</span></div></div>
+      <div class="c"><div class="ic">🚽</div><div class="t">想装装不了<span>智能马桶盖、电热毛巾架，封墙后再无电源</span></div></div>
+    </div>
+    <div class="foot"><span>谷值</span><span>这就是「留错」的账单</span></div>
+  </div>
+
+  <!-- ===== 第4页 · 转折·三原则（Beat4 强度70 暖调） ===== -->
+  <div class="page state-warm" aria-label="转折：交底前先把三件事钉死，SUZY 的方法">
+    <span class="tag">救回这一步</span>
+    <span class="beat">04 转折</span>
+    <h2>交底前<br>先把三件事钉死</h2>
+    <div class="accent"></div>
+    <div class="rule"><div class="n">1</div><div class="t">先定家具、柜体、家电尺寸，再定水电<span>连沙发多长都没定，师傅没法留对位置</span></div></div>
+    <div class="rule"><div class="n">2</div><div class="t">高度是参考值，施工按完成面现场复尺<span>别照抄网图高度直接开孔</span></div></div>
+    <div class="rule"><div class="n">3</div><div class="t">厨房、洗烘、空调的回路交专业电工<span>别自己拍脑袋定平方数</span></div></div>
+    <div class="foot"><span>转折</span><span>方法给到你</span></div>
+  </div>
+
+  <!-- ===== 第5页 · 高潮·总览（Beat5 强度100 峰值） ===== -->
+  <div class="page state-peak" aria-label="高潮：一张表收齐7区75+点位，交底当天拿给师傅逐项核对">
+    <span class="tag">一张表搞定</span>
+    <span class="beat">05 高潮</span>
+    <h2>7 区一次收齐</h2>
+    <div class="accent"></div>
+    <div class="map">
+      <div class="z"><div class="e">🚪</div><div class="nm">玄关</div><div class="ct">4 类</div></div>
+      <div class="z"><div class="e">🍽️</div><div class="nm">餐厅</div><div class="ct">易漏</div></div>
+      <div class="z"><div class="e">🛏️</div><div class="nm">卧室</div><div class="ct">双控</div></div>
+      <div class="z"><div class="e">🍳</div><div class="nm">厨房</div><div class="ct">防溅</div></div>
+      <div class="z"><div class="e">🚿</div><div class="nm">卫生间</div><div class="ct">全防溅</div></div>
+      <div class="z"><div class="e">🧺</div><div class="nm">阳台</div><div class="ct">洗烘</div></div>
+      <div class="z"><div class="e">🛋️</div><div class="nm">客厅书房</div><div class="ct">预埋</div></div>
+    </div>
+    <div class="peaknum">
+      <div class="b">75+</div>
+      <div class="s">点位 · 拿这张表给师傅逐项核对</div>
+    </div>
+    <div class="foot"><span>峰值</span><span>完整清单到手</span></div>
+  </div>
+
+  <!-- ===== 第6页 · 入户两区（解决 detail · 强度65） ===== -->
+  <div class="page" aria-label="玄关与餐厅：入户动线两区，最易被忽略">
+    <span class="tag">入户动线两区</span>
+    <span class="beat">06 照表留</span>
+    <div class="zonehead"><div class="no">①②</div><h2>玄关 · 餐厅</h2></div>
+    <div class="accent"></div>
+    <table>
+      <tr><th>型号×数量</th><th>用途 / 高度</th></tr>
+      <tr><td>一开双控 ×1</td><td>玄关/餐厅灯（门旁 130cm）</td></tr>
+      <tr><td>斜五孔 ×2</td><td>玄关鞋柜下 30cm：扫地机/烘鞋</td></tr>
+      <tr><td>一开五孔 ×2</td><td>餐边柜上方 20cm：小家电</td></tr>
+      <tr><td>三孔 ×1</td><td>冰箱（餐厅）</td></tr>
+      <tr><td>五孔 ×1</td><td>餐桌下 50cm：火锅/备用</td></tr>
+      <tr><td>五孔USB ×1</td><td>玄关柜临时充（手机）</td></tr>
+    </table>
+    <div class="note warn">餐边柜是咖啡机、热水壶、破壁机扎堆处，插座宁多勿少；玄关别漏烘鞋器与监控位。</div>
+    <div class="foot"><span>玄关 + 餐厅</span><span>易漏：烘鞋 / 监控</span></div>
+  </div>
+
+  <!-- ===== 第7页 · 卧室 ===== -->
+  <div class="page" aria-label="卧室：双控必做，床头带USB，梳妆台与床尾别漏">
+    <span class="tag">第 3 区</span>
+    <span class="beat">07 照表留</span>
+    <div class="zonehead"><div class="no">③</div><h2>卧室</h2></div>
+    <div class="accent"></div>
+    <table>
+      <tr><th>型号×数量</th><th>用途 / 高度</th></tr>
+      <tr><td>一开单控 ×3 / 双控</td><td>卧灯（门+床头双控）</td></tr>
+      <tr><td>五孔带USB ×2</td><td>床头 30cm：台灯/手机</td></tr>
+      <tr><td>斜五孔 ×3</td><td>卷发棒/加湿器</td></tr>
+      <tr><td>宽带 ×1</td><td>电视/路由器</td></tr>
+      <tr><td>三孔 ×1</td><td>内嵌熨烫机（衣柜旁 130cm）</td></tr>
+      <tr><td>三孔开关 ×1</td><td>空调</td></tr>
+    </table>
+    <div class="note">梳妆台 90cm 留「电脑+网线」；床尾别忘加湿器/电蚊香。</div>
+    <div class="foot"><span>卧室</span><span>双控必做</span></div>
+  </div>
+
+  <!-- ===== 第8页 · 厨房 ===== -->
+  <div class="page" aria-label="厨房：冰箱独立回路，台面带开关斜五孔，水槽下防溅">
+    <span class="tag">第 4 区</span>
+    <span class="beat">08 照表留</span>
+    <div class="zonehead"><div class="no">④</div><h2>厨房</h2></div>
+    <div class="accent"></div>
+    <table>
+      <tr><th>型号×数量</th><th>用途 / 高度</th></tr>
+      <tr><td>二开单控 ×1，一开五孔 ×4</td><td>灯/换风/台面小家电</td></tr>
+      <tr><td>三孔10A ×7</td><td>油烟机 200cm/洗碗机等</td></tr>
+      <tr><td>三孔防溅 ×4</td><td>水槽下 50cm：垃圾处理器/净水/小厨宝</td></tr>
+      <tr><td>三孔16A ×1</td><td>冰箱 30cm · 独立回路</td></tr>
+      <tr><td>三孔</td><td>烤箱 40cm / 消毒柜 50cm</td></tr>
+      <tr><td>五孔</td><td>燃气热水器 220cm / 警报器</td></tr>
+    </table>
+    <div class="note warn">冰箱单独回路＝出差断电也不怕坏；台面小家电用带开关斜五孔，免拔插。</div>
+    <div class="foot"><span>厨房</span><span>防水防溅是重点</span></div>
+  </div>
+
+  <!-- ===== 第9页 · 卫生间 ===== -->
+  <div class="page" aria-label="卫生间：全部带防溅盒，智能马桶与电热毛巾架必留">
+    <span class="tag">第 5 区</span>
+    <span class="beat">09 照表留</span>
+    <div class="zonehead"><div class="no">⑤</div><h2>卫生间</h2></div>
+    <div class="accent"></div>
+    <table>
+      <tr><th>型号×数量</th><th>用途 / 高度</th></tr>
+      <tr><td>双开单控 ×1</td><td>灯/换风（130cm）</td></tr>
+      <tr><td>五孔防溅 ×2</td><td>镜前 130cm：牙刷/洁面</td></tr>
+      <tr><td>三孔防溅 ×3</td><td>智能马桶 40cm / 电热毛巾架 150cm</td></tr>
+      <tr><td>五孔防溅 ×1</td><td>热水器 200cm</td></tr>
+      <tr><td>四孔 ×1</td><td>小电器备用</td></tr>
+    </table>
+    <div class="note warn">智能马桶盖 + 电热毛巾架是「装完才后悔没留」重灾区，务必提前留。</div>
+    <div class="foot"><span>卫生间</span><span>全部带防溅盒</span></div>
+  </div>
+
+  <!-- ===== 第10页 · 阳台 ===== -->
+  <div class="page" aria-label="阳台：洗烘两台都留，地面留扫地机与宠物饮水机电源">
+    <span class="tag">第 6 区</span>
+    <span class="beat">10 照表留</span>
+    <div class="zonehead"><div class="no">⑥</div><h2>阳台</h2></div>
+    <div class="accent"></div>
+    <table>
+      <tr><th>型号×数量</th><th>用途 / 高度</th></tr>
+      <tr><td>一开单控 ×1</td><td>阳台灯（130cm）</td></tr>
+      <tr><td>五孔 ×2</td><td>洗衣机/烘干机（130cm 带控制）</td></tr>
+      <tr><td>三孔防溅 ×1</td><td>备用</td></tr>
+    </table>
+    <div class="note">洗＋烘两台都要留；扫地机/宠物饮水机在地面 30cm 留五孔。</div>
+    <div class="foot"><span>阳台</span><span>洗烘两台别漏</span></div>
+  </div>
+
+  <!-- ===== 第11页 · 客厅书房 ===== -->
+  <div class="page" aria-label="客厅书房：电视墙预埋50管藏线，电动窗帘与监控，立式空调16A">
+    <span class="tag">第 7 区</span>
+    <span class="beat">11 照表留</span>
+    <div class="zonehead"><div class="no">⑦</div><h2>客厅 / 书房</h2></div>
+    <div class="accent"></div>
+    <table>
+      <tr><th>位置</th><th>点位 / 高度</th></tr>
+      <tr><td>电视墙</td><td>四孔+五孔+两线（预埋 50 管藏线）+ 宽带</td></tr>
+      <tr><td>沙发两侧</td><td>五孔USB 70–100cm：手机/电动沙发</td></tr>
+      <tr><td>窗边</td><td>200–220cm：电动窗帘</td></tr>
+      <tr><td>入户门上方</td><td>220cm：监控</td></tr>
+      <tr><td>吊顶</td><td>220cm：投影仪</td></tr>
+      <tr><td>墙角</td><td>16A 带开关：立式空调</td></tr>
+      <tr><td>书桌</td><td>桌面 25cm：电脑位 + 桌下网口</td></tr>
+    </table>
+    <div class="note">茶几下做地插（加湿/茶台）；榻榻米旁 75cm 预留充电。</div>
+    <div class="foot"><span>客厅 / 书房</span><span>预埋 50 管藏线</span></div>
+  </div>
+
+  <!-- ===== 第12页 · 易漏9项（Beat6 新常态 强度65） ===== -->
+  <div class="page" aria-label="最容易漏的9个与翻车率最高的4个">
+    <span class="tag">照着打钩</span>
+    <span class="beat">12 易漏</span>
+    <h2>最容易漏的 9 个</h2>
+    <div class="accent"></div>
+    <div class="grid">
+      <span class="gcard">电动窗帘</span>
+      <span class="gcard">USB 快充</span>
+      <span class="gcard">网口</span>
+      <span class="gcard">HDMI 预埋管</span>
+      <span class="gcard">智能面板</span>
+      <span class="gcard">洗烘设备</span>
+      <span class="gcard">蒸烤箱</span>
+      <span class="gcard">洗碗机</span>
+      <span class="gcard">柜内隐藏电源</span>
+    </div>
+    <p class="claim" style="margin-top:16px">翻车率最高 4 个</p>
+    <div class="grid" style="margin-top:8px">
+      <div class="topcard">智能马桶盖<b>40cm 必留</b></div>
+      <div class="topcard">电热毛巾架<b>150cm</b></div>
+      <div class="topcard">冰箱独立回路<b>16A</b></div>
+      <div class="topcard">餐边柜小家电<b>20cm 上方</b></div>
+    </div>
+    <div class="foot"><span>易漏清单</span><span>逐条打钩</span></div>
+  </div>
+
+  <!-- ===== 第13页 · CTA（Beat7 强度55） ===== -->
+  <div class="page cta" aria-label="行动号召：评论区打插座，私信发完整速查表">
+    <span class="tag">收好</span>
+    <span class="beat">13 行动</span>
+    <div class="qmark">⚡</div>
+    <h1 style="font-size:25px">插座的后悔药<br>最贵</h1>
+    <div class="accent"></div>
+    <p class="sub">墙一封，想加一个都得砸墙。<br>水电定位前，把这套表打印出来，拿给师傅逐项对。</p>
+    <p class="claim" style="margin-top:14px">想要完整 7 区速查表？</p>
+    <div class="kw">插座</div>
+    <p class="sub">评论区打「<b style="color:var(--red)">插座</b>」<br>我看到挨个给你发过去 ✅</p>
+    <div class="foot"><span>@是小臭狗 SUZY 呀</span><span>关注不迷路</span></div>
+  </div>
+
+</div>
+
+<!-- ===== 无障碍交付：纯文本线性版本（替代文本） ===== -->
+<div class="sr-only" aria-label="纯文本版本">
+全屋插座布局全攻略 · 叙事版纯文本
+1 封面（常态）：自装业主水电交底前凭感觉留插座，位置/类型/回路错一个墙一封就得砸。7区75+点位。
+2 触发：照网图抄高度最常翻车——家具尺寸没定、高度忽略完成面，师傅一问三不知。
+3 谷值（代价）：墙一封三种代价——砸墙重来（工期+粉尘+钱）、插线板满地（隐患）、智能马桶/电热毛巾架装不了。
+4 转折（三原则）：先定家具家电尺寸再定水电；高度是参考值现场复尺；厨房洗烘空调回路交专业电工。
+5 高潮（总览）：7区（玄关/餐厅/卧室/厨房/卫生间/阳台/客厅书房）一次收齐，75+点位，拿表给师傅逐项核对。
+6 玄关+餐厅：一开双控×1、斜五孔×2（鞋柜下30cm）、一开五孔×2（餐边柜20cm）、三孔×1冰箱、五孔×1餐桌下50cm、五孔USB×1。餐边柜宁多勿少，别漏烘鞋与监控。
+7 卧室：一开单控×3双控、五孔带USB×2床头30cm、斜五孔×3、宽带×1、三孔×1熨烫机、三孔开关×1空调。梳妆台90cm留电脑网线，床尾留加湿器。
+8 厨房：二开单控×1+一开五孔×4、三孔10A×7、三孔防溅×4水槽下、三孔16A×1冰箱独立回路、三孔烤箱/消毒柜、五孔热水器。冰箱独立回路，台面带开关斜五孔。
+9 卫生间：双开单控×1、五孔防溅×2镜前、三孔防溅×3智能马桶40cm/电热毛巾架150cm、五孔防溅×1热水器、四孔×1备用。全部带防溅盒。
+10 阳台：一开单控×1、五孔×2洗烘130cm、三孔防溅×1备用。洗烘两台都留，地面30cm留扫地机/宠物饮水机。
+11 客厅书房：电视墙预埋50管藏线+宽带、沙发两侧五孔USB70-100cm、窗边电动窗帘200-220cm、入户门上方监控220cm、吊顶投影220cm、墙角16A立式空调、书桌25cm电脑位+网口。
+12 易漏9项：电动窗帘/USB快充/网口/HDMI预埋管/智能面板/洗烘设备/蒸烤箱/洗碗机/柜内隐藏电源。翻车率最高：智能马桶盖40cm、电热毛巾架150cm、冰箱独立回路16A、餐边柜小家电20cm上方。
+13 行动号召：评论区打「插座」，私信发完整7区速查表。
+</div>
+</body>
+</html>

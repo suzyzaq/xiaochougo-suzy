@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>自装 / 半包 / 全案 谁买什么 · 采购清单可视化</title>
+<style>
+  :root{
+    --red:#E60026; --red-soft:#FFE3E8; --ink:#1A1A1A; --sub:#4A4A4A;
+    --line:#ECECEC; --bg:#F4F4F4; --blue:#1E50D8; --blue-soft:#EAEEF6;
+    --green:#0B7A4B; --green-soft:#E4F5EC;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--bg);font-family:"PingFang SC","Microsoft YaHei",-apple-system,sans-serif;
+    color:var(--ink);line-height:1.5;}
+  .app{max-width:460px;margin:0 auto;min-height:100vh;background:#fff;
+    position:relative;padding-bottom:30px;}
+
+  .brand{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line);}
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--red);}
+  .brand b{font-size:15px;font-weight:800;}
+  .brand span{font-size:12px;color:var(--sub);margin-left:auto;}
+
+  .hero{background:linear-gradient(160deg,#fff 0%,#fff 45%,var(--red-soft) 100%);padding:36px 22px 28px;text-align:center;}
+  .hero .q{font-size:52px;}
+  .hero h1{font-size:27px;font-weight:900;letter-spacing:.5px;margin-top:8px;line-height:1.3;}
+  .hero .accent{width:40px;height:6px;background:var(--red);border-radius:4px;margin:14px auto 16px;}
+  .hero p{font-size:14px;color:var(--sub);line-height:1.7;}
+  .insight{background:var(--blue-soft);border-radius:16px;padding:16px 18px;margin:18px 16px 0;border-left:5px solid var(--blue);}
+  .insight .t{font-size:14px;font-weight:800;color:var(--blue);margin-bottom:6px;}
+  .insight p{font-size:13px;color:#22384f;line-height:1.7;margin:0;}
+
+  .sec{padding:22px 16px 4px;}
+  .sec-t{font-size:18px;font-weight:900;margin:0 0 4px;display:flex;align-items:center;gap:8px;}
+  .sec-t .bar-i{width:4px;height:18px;background:var(--red);border-radius:3px;}
+  .sec-sub{font-size:13px;color:var(--sub);margin:0 0 16px;line-height:1.6;}
+
+  /* 责任矩阵 */
+  .matrix{width:100%;border-collapse:collapse;font-size:12.5px;border:1.5px solid var(--line);border-radius:14px;overflow:hidden;}
+  .matrix th,.matrix td{border-bottom:1px solid var(--line);border-right:1px solid var(--line);padding:10px 6px;text-align:center;vertical-align:middle;line-height:1.4;}
+  .matrix thead th{background:var(--ink);color:#fff;font-weight:800;}
+  .matrix tbody th{background:#FBFBFB;color:var(--sub);font-weight:800;text-align:left;padding-left:10px;width:96px;}
+  .matrix .corner{background:var(--red);}
+  .c-owner{background:var(--red-soft);color:var(--red);font-weight:800;}
+  .c-builder{background:var(--blue-soft);color:var(--blue);font-weight:800;}
+  .c-co{background:var(--green-soft);color:var(--green);font-weight:800;}
+  .legend{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 0;font-size:12px;color:var(--sub);}
+  .legend span{display:inline-flex;align-items:center;gap:5px;}
+  .legend i{width:12px;height:12px;border-radius:3px;display:inline-block;}
+
+  /* 条形图 */
+  .bar{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+  .bar .nm{width:54px;font-size:13px;font-weight:800;}
+  .bar .track{flex:1;height:26px;background:var(--line);border-radius:8px;overflow:hidden;position:relative;}
+  .bar .fill{height:100%;border-radius:8px;display:flex;align-items:center;justify-content:flex-end;color:#fff;font-size:12px;font-weight:800;padding-right:8px;transition:width .5s;}
+  .bar .v{width:118px;font-size:12px;color:var(--sub);}
+  .fill.zi{background:var(--red);}
+  .fill.ban{background:var(--blue);}
+  .fill.quan{background:var(--green);}
+
+  .note{background:#FFF6E6;border:1px solid #FFD9A6;border-radius:14px;padding:14px 16px;margin:16px 16px 0;font-size:12.5px;color:#5a3d00;line-height:1.8;}
+  .note b{color:var(--red);}
+
+  /* 清单 */
+  .grp{background:#fff;border:1.5px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:14px;}
+  .grp .gh{display:flex;align-items:center;gap:10px;padding:12px 14px;background:#FFF7F8;border-bottom:1px solid var(--line);}
+  .grp .gh .e{font-size:22px;}
+  .grp .gh .nm{font-size:16px;font-weight:900;}
+  .grp .gh .ct{margin-left:auto;font-size:12px;color:var(--red);font-weight:800;}
+  .grp ul{margin:0;padding:0;list-style:none;}
+  .grp li{font-size:13px;padding:9px 14px;border-bottom:1px solid #f3f3f3;line-height:1.5;}
+  .grp li:last-child{border-bottom:none;}
+  .grp li .tag{display:inline-block;font-size:10.5px;font-weight:800;border-radius:8px;padding:2px 7px;margin-left:6px;vertical-align:middle;}
+  .tag.zi{background:var(--red-soft);color:var(--red);}
+  .tag.ban{background:var(--blue-soft);color:var(--blue);}
+  .tag.quan{background:var(--green-soft);color:var(--green);}
+
+  .cta-box{background:var(--red-soft);border-radius:16px;padding:18px;margin:18px 16px 0;text-align:center;}
+  .cta-box .kw{display:inline-block;background:var(--red);color:#fff;font-weight:900;font-size:20px;
+    padding:8px 22px;border-radius:30px;letter-spacing:2px;margin:6px 0;}
+  .cta-box p{font-size:13px;color:#5a2330;line-height:1.7;margin:6px 0 0;}
+  .r-foot{text-align:center;font-size:12px;color:var(--sub);padding:14px 16px 4px;line-height:1.6;}
+  .r-foot b{color:var(--ink);}
+  .link{display:block;width:calc(100% - 32px);margin:14px auto 0;background:#EEF2FB;border:1.5px solid #D6E0F5;
+    border-radius:14px;padding:13px;text-align:center;font-size:13.5px;font-weight:800;color:var(--blue);}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="brand">
+    <span class="dot"></span><b>是小臭狗 SUZY 呀</b>
+    <span>重庆 150㎡ 自装实录</span>
+  </div>
+
+  <div class="hero">
+    <div class="q">🛒</div>
+    <h1>自装 / 半包 / 全案<br>到底谁买材料？</h1>
+    <div class="accent"></div>
+    <p>同一种 150㎡ 的房，<br>选不同方式，你要跑的建材市场能差出一倍。</p>
+  </div>
+  <div class="insight">
+    <div class="t">⚠️ 先分清"辅材 / 主材 / 软装"三本账</div>
+    <p>装修材料分三块：<b>辅材</b>（水泥沙子电线水管，看不见）、<b>主材</b>（瓷砖地板洁具橱柜，看得见）、<b>软装家具家电</b>（沙发床冰箱窗帘）。三种方式，就是这三块在"你"和"公司"之间换位置。</p>
+  </div>
+
+  <!-- 责任矩阵 -->
+  <div class="sec">
+    <div class="sec-t"><span class="bar-i"></span>一图看懂：每块谁掏钱买</div>
+    <div class="sec-sub">红=业主自己买　蓝=施工方/工长买　绿=装修公司包</div>
+    <table class="matrix" id="matrix"></table>
+    <div class="legend">
+      <span><i style="background:var(--red)"></i>业主购买</span>
+      <span><i style="background:var(--blue)"></i>施工方/工长</span>
+      <span><i style="background:var(--green)"></i>装修公司包</span>
+    </div>
+  </div>
+
+  <div class="note">
+    <b>🔎 全案 ≠ 一定"拎包入住"。</b>市面上很多"全案"实为<b>硬装全案</b>（只包辅材+主材+人工），软装家具家电仍要业主买——那 40+ 项别漏算。签合同前务必核对 <b>FF&E 物料清单</b>（是否含家具/窗帘/灯具/家电）。
+  </div>
+
+  <!-- 条形图 -->
+  <div class="sec">
+    <div class="sec-t"><span class="bar-i"></span>业主亲自采购的物品数量</div>
+    <div class="sec-sub">按清单逐项统计（辅材约 42、主材约 48、软装家具家电约 37，共约 127 项）</div>
+    <div id="bars"></div>
+    <div class="sec-sub" style="margin-top:12px;">结论：自装几乎全自己买；半包砍掉辅材这 42 项；<b>拎包入住</b>全案业主近乎零采购——但市面最常见的<b>硬装全案</b>，软装家具家电 37 项仍要业主自己买。</div>
+  </div>
+
+  <!-- 完整清单 -->
+  <div class="sec">
+    <div class="sec-t"><span class="bar-i"></span>最完整装修物品清单</div>
+    <div class="sec-sub">逐项标注三种方式下"谁买"，照着买不漏项。</div>
+    <div id="list"></div>
+  </div>
+
+  <div class="cta-box">
+    <p>清单收好， mode 选错采购直接翻倍</p>
+    <div class="kw">采购清单</div>
+    <p>评论区打「<b>采购清单</b>」<br>找 SUZY 领《自装 / 半包 / 全案 业主采购清单 · 完整版》✅</p>
+  </div>
+  <a class="link" href="装修方式怎么选_自装半包全包_问答.html">📋 先做「自装/半包/全包 怎么选」1 分钟测评 →</a>
+  <div class="r-foot">@是小臭狗 SUZY 呀 · 重庆 150㎡ 自装实录<br>清单为依据行业通用口径整理，具体以合同与本地行情为准</div>
+
+</div>
+
+<script>
+/* ============ 数据 ============ */
+// who: zi=业主, ban=施工方/工长, quan=装修公司
+// 全案(quan)软装 默认按"拎包入住"处理为公司包；硬装全案变体见注释
+const GROUPS=[
+  {e:'🧱', name:'辅材', items:[
+    '电线(强电/弱电)','PVC 穿线管','暗盒/底盒','PPR 给水管','PVC 排水管','管件(直接/弯头/三通)','阀门','水表','配电箱','空气开关/漏保','网线','保温棉','生料带',
+    '防水涂料','防水卷材','堵漏王',
+    '腻子粉','石膏粉','网格布/防裂网','界面剂(墙固/地固)','阴阳角条',
+    '水泥','沙子','瓷砖胶','填缝剂','美缝剂(基础)','隔音棉',
+    '石膏板','轻钢/木龙骨','细木工板/欧松板/生态板','螺丝钉','白乳胶','收口条',
+    '乳胶漆(底+面)','砂纸','滚筒/毛刷','牛皮纸','纸胶带',
+    '角阀','软管','防霉玻璃胶/密封胶','膨胀螺丝'
+  ], who:{zi:'业主',ban:'施工方',quan:'公司'}},
+  {e:'🚪', name:'主材', items:[
+    '瓷砖(地砖/墙砖/腰线/花片)','木地板(实木/复合/强化/SPC)','踢脚线','过门石','窗台石','石材(大理石/花岗岩)','门槛石',
+    '乳胶漆(自主色号)','艺术漆/硅藻泥','壁纸/墙布+基膜+胶','护墙板/木饰面',
+    '入户门/防盗门','室内门+门套+锁具+合页','窗户(断桥铝/系统窗)','纱窗','推拉门/玻璃门','垭口套',
+    '橱柜(地柜/吊柜/台面)','水槽+龙头','厨房电器(烟机/灶具/消毒柜/洗碗机)','集成吊顶(铝扣板/浴霸/照明)',
+    '马桶/智能马桶','浴室柜','台盆','花洒','淋浴房/浴缸','卫浴五金(毛巾架/地漏/角阀/厕纸架/置物架)','镜前灯',
+    '衣柜','鞋柜','餐边柜','书柜','阳台柜','电视柜(全屋定制)',
+    '石膏板吊顶','铝扣板','龙骨',
+    '主灯','筒灯','射灯','灯带','壁灯','吸顶灯(升级款)',
+    '开关插座面板(含USB/防溅/斜五孔)',
+    '暖气片/地暖','中央空调','新风系统','全屋净水'
+  ], who:{zi:'业主',ban:'业主',quan:'公司'}},
+  {e:'🛋️', name:'软装·家具·家电', items:[
+    '沙发','茶几','床/床垫','餐桌椅','成品柜','书桌书架','懒人沙发','儿童家具',
+    '冰箱','洗衣机','烘干机','电视','空调(分体)','热水器','烟机灶具(部分套餐含)','洗碗机',
+    '吸尘器','扫地机器人','蒸烤箱','小厨宝','净水器','饮水机','微波炉',
+    '窗帘+轨道/罗马杆','地毯','抱枕','床品',
+    '挂画','摆件','绿植','饰品',
+    '智能门锁','智能窗帘','智能开关','摄像头','传感器',
+    '封阳台/系统窗(多数全包不含)'
+  ], who:{zi:'业主',ban:'业主',quan:'公司（拎包入住版）'}},
+];
+
+const MATRIX_ROWS=[
+  {k:'辅材', v:'水泥/沙子/电线/水管/防水/腻子…'},
+  {k:'主材', v:'瓷砖/地板/洁具/橱柜/门窗/定制柜…'},
+  {k:'软装·家具·家电', v:'沙发/床/冰箱/窗帘/智能…'},
+  {k:'设计', v:'方案/效果图/施工图'},
+  {k:'施工人工', v:'各工种人工费'},
+];
+const MATRIX_WHO={
+  '辅材':{zi:'业主',ban:'施工方',quan:'公司'},
+  '主材':{zi:'业主',ban:'业主',quan:'公司'},
+  '软装·家具·家电':{zi:'业主',ban:'业主',quan:'公司'},
+  '设计':{zi:'自己/另找',ban:'公司',quan:'公司'},
+  '施工人工':{zi:'自雇散工',ban:'公司/工长',quan:'公司'},
+};
+
+/* ============ 渲染 ============ */
+function cellClass(v){
+  if(v.indexOf('业主')>=0) return 'c-owner';
+  if(v.indexOf('施工')>=0||v.indexOf('工长')>=0||v.indexOf('公司')>=0||v.indexOf('包')>=0) {
+    if(v.indexOf('公司')>=0) return 'c-co';
+    return 'c-builder';
+  }
+  return '';
+}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+
+function renderMatrix(){
+  let h='<thead><tr class="corner"><th>采购项＼方式</th><th>自装</th><th>半包</th><th>全案</th></tr></thead><tbody>';
+  MATRIX_ROWS.forEach(r=>{
+    const w=MATRIX_WHO[r.k];
+    h+='<tr><th>'+r.k+'</th>';
+    ['zi','ban','quan'].forEach(m=>{
+      const val=w[m];
+      h+='<td class="'+cellClass(val)+'">'+esc(val)+'</td>';
+    });
+    h+='</tr>';
+  });
+  h+='</tbody>';
+  document.getElementById('matrix').innerHTML=h;
+}
+
+function renderBars(){
+  const total=GROUPS.reduce((s,g)=>s+g.items.length,0);
+  const counts={
+    zi:GROUPS.reduce((s,g)=>s+(g.who.zi==='业主'?g.items.length:0),0),
+    ban:GROUPS.reduce((s,g)=>s+(g.who.ban==='业主'?g.items.length:0),0),
+    quan:GROUPS.reduce((s,g)=>s+(g.who.quan==='业主'?g.items.length:0),0), // 拎包入住版：公司全包，业主 0；硬装全案变体见 .note
+  };
+  const meta={zi:{nm:'自装',cls:'zi'},ban:{nm:'半包',cls:'ban'},quan:{nm:'全案',cls:'quan'}};
+  // 常规（硬装）全案：公司只包辅材+主材+人工，软装家具家电仍业主买
+  const hardQuan=GROUPS.reduce((s,g)=>s+(g.name.indexOf('软装')===0?g.items.length:0),0);
+  const rows=[
+    {nm:meta.zi.nm,cls:'zi',c:counts.zi},
+    {nm:meta.ban.nm,cls:'ban',c:counts.ban},
+    {nm:'全案',cls:'quan',c:counts.quan},      // 真·拎包入住：业主 0
+    {nm:'硬装全案',cls:'quan',c:hardQuan},     // 市面常见：软装 37 项仍业主买
+  ];
+  let h='';
+  rows.forEach(r=>{
+    const pct=Math.round(r.c/total*100);
+    h+='<div class="bar"><span class="nm">'+r.nm+'</span>'+
+       '<span class="track"><span class="fill '+r.cls+'" style="width:'+pct+'%">'+pct+'%</span></span>'+
+       '<span class="v">业主买 '+r.c+' / '+total+' 项</span></div>';
+  });
+  document.getElementById('bars').innerHTML=h;
+}
+
+function renderList(){
+  let h='';
+  GROUPS.forEach(g=>{
+    let items='';
+    g.items.forEach(it=>{
+      items+='<li>'+esc(it)+
+        '<span class="tag zi">自装·'+esc(g.who.zi)+'</span>'+
+        '<span class="tag ban">半包·'+esc(g.who.ban)+'</span>'+
+        '<span class="tag quan">全案·'+esc(g.who.quan)+'</span></li>';
+    });
+    h+='<div class="grp"><div class="gh"><span class="e">'+g.e+'</span><span class="nm">'+g.name+'</span>'+
+       '<span class="ct">'+g.items.length+' 项</span></div><ul>'+items+'</ul></div>';
+  });
+  document.getElementById('list').innerHTML=h;
+}
+
+renderMatrix();
+renderBars();
+renderList();
+</script>
+</body>
+</html>
