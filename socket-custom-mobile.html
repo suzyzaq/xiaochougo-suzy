@@ -4,9 +4,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" data-page-node-id="PRPXlUEPUAfTGHFEIWRkHd">
 <title data-page-node-id="8GTS2e0AkBhhHt5efxwbOs">全屋插座定制清单 · 1 分钟测评</title>
 <style data-page-node-id="CWguVc9TbPNjsw7LKrcS3B">
-  :root{
-    --red:#E60026; --red-soft:#FFE3E8; --ink:#1A1A1A; --sub:#4A4A4A;
-    --line:#ECECEC; --bg:#F4F4F4; --gold:#6B4A00; --blue:#1E50D8; --green:#0B7A4B;
+  :root{--yellow:#FACD3A;--paper:#FBF8F1;
+    --red:#EA453E; --red-soft:#FCE4E2; --ink:#15110D; --sub:#4A4A4A;
+    --line:#ECECEC; --bg:#F4EEE0; --gold:#6B4A00; --blue:#1C6FB5; --green:#1C6FB5;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
   html,body{margin:0;padding:0;}
@@ -29,7 +29,7 @@
   .hero h1{font-size:30px;font-weight:900;letter-spacing:.5px;margin-top:8px;}
   .hero .accent{width:40px;height:6px;background:var(--red);border-radius:4px;margin:14px auto 16px;}
   .hero p{font-size:14px;color:var(--sub);line-height:1.7;}
-  .insight{background:#EAEEF6;border-radius:16px;padding:18px 18px;margin:22px 0 0;
+  .insight{background:#E3EFF7;border-radius:16px;padding:18px 18px;margin:22px 0 0;
     border-left:5px solid var(--blue);}
   .insight .t{font-size:14px;font-weight:800;color:var(--blue);margin-bottom:8px;}
   .insight p{font-size:13.5px;color:#22384f;line-height:1.7;margin:0;}
@@ -120,11 +120,22 @@
     font-size:14px;font-weight:800;color:var(--blue);cursor:pointer;font-family:inherit;}
   .reflink:active{opacity:.85;}
   .sec table td.o{font-size:11px;color:var(--sub);line-height:1.4;}
+
+  /* === SUZY 四组制·第4组 包豪斯几何风（2026-10-27 强制合规）=== */
+  .geobar{height:10px;display:flex;}
+  .geobar i{flex:1;}
+  .geobar .r{background:var(--red);} .geobar .y{background:var(--yellow);} .geobar .b{background:var(--blue);}
+  .brand{background:var(--ink);color:var(--paper);border-bottom:4px solid var(--red);}
+  .brand b{color:var(--paper);}
+  .brand span{color:#cfc8bd;}
+  .brand .dot{width:18px;height:18px;border-radius:50%;background:conic-gradient(var(--red) 0 33%,var(--yellow) 33% 66%,var(--blue) 66% 100%);margin:0 8px 0 0;}
+  .app{border-left:3px solid var(--ink);border-right:3px solid var(--ink);background:var(--paper);}
 </style>
 <style id="__dm_no_drag_style__">* { -webkit-user-drag: none !important; }</style><style id="__dm_bindable_badge_style__">[data-sp-bindable="database"]{outline:1px dashed #0088ff;outline-offset:2px;border-radius:4px;}[data-sp-bindable="database"] *{pointer-events:none !important;transition:none !important;animation:none !important;}[data-sp-bindable="database"]{transition:none !important;animation:none !important;}</style></head>
 <body data-page-node-id="1FGVO8Fzo9b1sdwF1bhPfI" style="">
 <div class="app" data-page-node-id="JYklPV0SbnZqxwuI496Nza">
 
+  <div class="geobar"><i class="r"></i><i class="y"></i><i class="b"></i></div>
   <div class="brand" data-page-node-id="N7OwBnSfFhXhMuHPrblhE3">
     <span class="dot" data-page-node-id="OsovLjvnlJOBVsXJ7B6CTP"></span><b data-page-node-id="hETmepTvRBj3OAGrfYgIZB">是小臭狗 SUZY 呀</b>
     <span data-page-node-id="sexdNEt5vHPCW0lBAoTR0q">重庆 150㎡ 自装实录</span>
@@ -233,7 +244,7 @@
 
   <!-- SUZY 真实点位参考 -->
   <section id="ref" style="display:none;padding:0 16px 20px;" data-page-node-id="ytRlGkBHkcIfPPKDELXa8n">
-    <div class="r-hero" style="background:#1E50D8;" data-page-node-id="c3dGBBpPOYGBzLfgwS0qqc">
+    <div class="r-hero" style="background:#1C6FB5;" data-page-node-id="c3dGBBpPOYGBzLfgwS0qqc">
       <h2 data-page-node-id="XoaxxiP90930EIpp4UVCTm">SUZY 家 150㎡ 真实点位</h2>
       <p data-page-node-id="tY0PgM32E0GpoFT6TUn3R9">以下为 SUZY 自装实际规划（示例），供你对照参考；你的清单按你的户型生成。</p>
     </div>
@@ -640,7 +651,8 @@ function renderRef(){
   document.getElementById('refBody').innerHTML=groups.map(g=>{
     const rows=g.rows.map(r=>`<tr><td>${esc(r.l)}</td><td>${esc(r.s)}</td><td class="t">${esc(sockSum(r))}</td><td class="h">${esc(r.n)||'—'}</td><td class="o">${esc(r.o)||''}</td></tr>`).join('');
     return `<div class="sec"><div class="sh"><span class="e">📍</span><span class="nm">${esc(g.r)}</span><span class="ct">${g.rows.length} 处</span></div>
-      <table><tr><th>位置</th><th>场景</th><th>点位</th><th>离地</th><th>备注</th></tr>${rows}</table></div>`;
+      <table><tr><th>位置</th><th>场景</th><th>点位</th><th>离地</th><th>备注</th></tr>${rows}</table><div class="geobar"><i class="r"></i><i class="y"></i><i class="b"></i></div>
+</div>`;
   }).join('');
 }
 let refFrom='intro';
