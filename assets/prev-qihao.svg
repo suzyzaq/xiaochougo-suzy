@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450">
+  <rect width="800" height="450" fill="#E1251B"/>
+  <rect x="60" y="60" width="170" height="170" fill="#F5C518"/>
+  <polygon points="400,70 560,330 240,330" fill="#005BBB"/>
+  <circle cx="650" cy="150" r="95" fill="#15110D"/>
+  <circle cx="650" cy="150" r="48" fill="#F4EEE0"/>
+  <rect x="60" y="300" width="320" height="34" fill="#F4EEE0"/>
+  <rect x="60" y="345" width="220" height="20" fill="#15110D"/>
+  <text x="400" y="408" font-size="34" fill="#ffffff" text-anchor="middle" font-family="-apple-system,'PingFang SC','Microsoft YaHei',sans-serif" font-weight="800">起号策略 · 家居装修号怎么起</text>
+</svg>
