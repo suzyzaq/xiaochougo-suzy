@@ -5,78 +5,186 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>是小臭狗 SUZY 呀 · 自装工具站</title>
 <style>
-  :root{--red:#E60026;--ink:#1f1f1f;--paper:#fff;--muted:#6b6b6b;}
+  :root{--red:#E60026;--ink:#1f1f1f;--paper:#fff;--muted:#6b6b6b;--line:#efe6e2}
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:#faf7f5;color:var(--ink);-webkit-font-smoothing:antialiased}
-  .wrap{max-width:460px;margin:0 auto;padding:0 16px 40px}
-  header{background:var(--red);color:#fff;padding:28px 16px 22px;border-radius:0 0 18px 18px;margin:0 -16px 22px}
-  header .brand{font-size:22px;font-weight:800;letter-spacing:.5px}
-  header .sub{font-size:13px;opacity:.92;margin-top:6px;line-height:1.5}
-  .intro{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:20px}
-  .card{display:block;text-decoration:none;background:var(--paper);border:1px solid #efe6e2;border-radius:16px;padding:18px;margin-bottom:14px;box-shadow:0 4px 14px rgba(230,0,38,.06);transition:transform .15s ease,box-shadow .15s ease}
+  /* 顶部 sticky 导航栏 */
+  .topbar{position:sticky;top:0;z-index:20;background:var(--red);color:#fff;box-shadow:0 2px 10px rgba(0,0,0,.12)}
+  .brandrow{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 16px 8px;max-width:880px;margin:0 auto}
+  .brandrow .brand{font-size:19px;font-weight:800;letter-spacing:.5px}
+  .brandrow .sub{font-size:12px;opacity:.92;flex:1 1 140px}
+  .search{flex:1 1 200px;min-width:160px}
+  .search input{width:100%;border:none;border-radius:999px;padding:9px 14px;font-size:14px;color:var(--ink);background:#fff;outline:none}
+  .search input::placeholder{color:#b9b9b9}
+  .phases{display:flex;gap:6px;overflow-x:auto;padding:0 16px 10px;max-width:880px;margin:0 auto;-webkit-overflow-scrolling:touch}
+  .phases a{flex:0 0 auto;font-size:12.5px;font-weight:700;color:#fff;text-decoration:none;background:rgba(255,255,255,.16);padding:5px 12px;border-radius:999px;white-space:nowrap}
+  .phases a:hover{background:rgba(255,255,255,.3)}
+  .wrap{max-width:880px;margin:0 auto;padding:0 16px 48px}
+  .intro{font-size:14px;color:var(--muted);line-height:1.7;margin:20px 0 8px}
+  .phase{margin-top:26px}
+  .phase h2{font-size:17px;margin-bottom:14px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  .phase h2 .range{font-size:12.5px;font-weight:600;color:var(--red);background:#ffe9ec;padding:3px 10px;border-radius:999px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+  .card{display:flex;flex-direction:column;text-decoration:none;background:var(--paper);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 4px 14px rgba(230,0,38,.06);transition:transform .15s ease,box-shadow .15s ease}
   .card:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(230,0,38,.12)}
-  .card .tag{display:inline-block;font-size:11px;font-weight:700;color:var(--red);background:#ffe9ec;padding:3px 9px;border-radius:999px;margin-bottom:10px}
-  .card h2{font-size:18px;margin-bottom:8px;color:var(--ink)}
-  .card p{font-size:13.5px;color:var(--muted);line-height:1.65}
-  .card .go{margin-top:12px;font-size:13px;font-weight:700;color:var(--red)}
-  footer{margin-top:26px;font-size:12px;color:#9a9a9a;text-align:center;line-height:1.7}
+  .thumb{aspect-ratio:16/9;background:#f0e9e7;overflow:hidden}
+  .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+  .body{padding:14px 16px 16px}
+  .tag{display:inline-block;font-size:11px;font-weight:700;color:var(--red);background:#ffe9ec;padding:3px 9px;border-radius:999px;margin-bottom:9px}
+  .body h3{font-size:16px;margin-bottom:7px;color:var(--ink);line-height:1.35}
+  .body p{font-size:13px;color:var(--muted);line-height:1.6}
+  .go{margin-top:11px;font-size:13px;font-weight:700;color:var(--red)}
+  .card.empty{background:#f3eeec;border-style:dashed}
+  .card.empty .body{color:#9a9a9a}
+  .card.empty .body h3{color:#9a9a9a}
+  footer{margin-top:30px;font-size:12px;color:#9a9a9a;text-align:center;line-height:1.7}
   footer a{color:var(--red);text-decoration:none}
 </style>
 </head>
 <body>
-  <header>
-    <div class="brand">是小臭狗 SUZY 呀</div>
-    <div class="sub">重庆 · 150㎡ 包豪斯清包自装 · 实用工具站</div>
+  <header class="topbar">
+    <div class="brandrow">
+      <div class="brand">是小臭狗 SUZY 呀</div>
+      <div class="sub">重庆 · 150㎡ 包豪斯清包自装</div>
+      <div class="search"><input id="q" type="search" placeholder="检索工具 / 劫难 / 阶段…" autocomplete="off"></div>
+    </div>
+    <nav class="phases" id="phasesNav">
+      <a href="#p1">决策规划</a>
+      <a href="#p2">主材选购</a>
+      <a href="#p3">施工落地</a>
+      <a href="#p4">效果呈现</a>
+      <a href="#p5">入住复盘</a>
+      <a href="#p6">起号策略</a>
+    </nav>
   </header>
+
   <main class="wrap">
-    <p class="intro">SUZY 自主设计、真实踩坑记录。从选砖算钱，到水电插座、装修方式决策、采购分工——下面这些小工具，帮你把自装里最烧脑的部分一次性搞定。</p>
+    <p class="intro">SUZY 自主设计、真实踩坑记录。按真实装修时间轴分阶段整理——从决策规划、主材选购、施工落地，到效果呈现、入住复盘、起号策略。下面这些小工具，帮你把自装里最烧脑的部分一次性搞定。</p>
 
-    <a class="card" href="tiles-selection.html">
-      <span class="tag">主材选购</span>
-      <h2>瓷砖选品 · 200 挑 6 百搭</h2>
-      <p>从 200 款瓷砖里挑出 6 款百搭砖，全屋怎么搭一图看懂。附重庆报价避坑与美缝真相。</p>
-      <div class="go">打开 →</div>
-    </a>
+    <!-- 阶段一 · 决策规划 -->
+    <section class="phase" id="p1">
+      <h2>阶段一 · 决策规划 <span class="range">装修前·筹备 · 第1–14劫</span></h2>
+      <div class="grid">
+        <a class="card" href="renovation-mode-qa.html" data-kw="装修方式 怎么选 自装 半包 全包 清包 决策 模式 第1劫">
+          <div class="thumb"><img src="assets/prev-decision-mode.svg" alt="装修方式怎么选"></div>
+          <div class="body">
+            <span class="tag">决策规划</span>
+            <h3>装修方式怎么选 · 自装/半包/全包</h3>
+            <p>自装、半包、全包到底差在哪？一问一答把三种模式的钱、精力、风险讲清楚，照着对号入座。</p>
+            <div class="go">打开 →</div>
+          </div>
+        </a>
+        <a class="card" href="who-buys-checklist.html" data-kw="装修谁买 采购清单 预算 主材 辅材 软装 责任 谁负责">
+          <div class="thumb"><img src="assets/prev-who-buys.svg" alt="装修谁买"></div>
+          <div class="body">
+            <span class="tag">决策规划</span>
+            <h3>装修谁买 · 自装/半包/全案采购清单</h3>
+            <p>主材、辅材、软装谁负责买？一张可视化清单厘清自装/半包/全案的责任边界，避免漏买扯皮。</p>
+            <div class="go">打开 →</div>
+          </div>
+        </a>
+      </div>
+    </section>
 
-    <a class="card" href="quote-calculator.html">
-      <span class="tag">报价比价</span>
-      <h2>瓷砖铺贴美缝报价计算器</h2>
-      <p>输入面积与瓷砖规格，快速估算瓦工铺贴 + 美缝费用，自装比价不踩坑。</p>
-      <div class="go">打开 →</div>
-    </a>
+    <!-- 阶段二 · 主材选购 -->
+    <section class="phase" id="p2">
+      <h2>阶段二 · 主材选购 <span class="range">第15–24劫</span></h2>
+      <div class="grid">
+        <a class="card" href="tiles-selection.html" data-kw="瓷砖 选品 200挑6 百搭 主材 美缝 重庆报价 地砖 搭配">
+          <div class="thumb"><img src="assets/tile-overview.jpg" alt="瓷砖选品"></div>
+          <div class="body">
+            <span class="tag">主材选购</span>
+            <h3>瓷砖选品 · 200 挑 6 百搭</h3>
+            <p>从 200 款瓷砖里挑出 6 款百搭砖，全屋怎么搭一图看懂。附重庆报价避坑与美缝真相。</p>
+            <div class="go">打开 →</div>
+          </div>
+        </a>
+        <a class="card" href="quote-calculator.html" data-kw="报价 计算器 铺贴 美缝 费用 比价 预算 主材 算钱">
+          <div class="thumb"><img src="assets/prev-quote.svg" alt="报价计算器"></div>
+          <div class="body">
+            <span class="tag">主材选购</span>
+            <h3>瓷砖铺贴美缝报价计算器</h3>
+            <p>输入面积与瓷砖规格，快速估算瓦工铺贴 + 美缝费用，自装比价不踩坑。</p>
+            <div class="go">打开 →</div>
+          </div>
+        </a>
+      </div>
+    </section>
 
-    <a class="card" href="outlet-layout.html">
-      <span class="tag">水电避坑</span>
-      <h2>全屋插座布局全攻略</h2>
-      <p>小红书图文版：玄关、客厅、厨房、卧室插座怎么留，数量与高度一图记牢，避免入住后到处拉排插。</p>
-      <div class="go">打开 →</div>
-    </a>
+    <!-- 阶段三 · 施工落地 -->
+    <section class="phase" id="p3">
+      <h2>阶段三 · 施工落地 <span class="range">工种验收 · 第25–34劫</span></h2>
+      <div class="grid">
+        <a class="card" href="outlet-layout.html" data-kw="插座 布局 水电 交底 点位 施工 第25劫 全屋">
+          <div class="thumb"><img src="assets/prev-outlet.svg" alt="全屋插座布局"></div>
+          <div class="body">
+            <span class="tag">施工落地</span>
+            <h3>全屋插座布局全攻略</h3>
+            <p>小红书图文版：玄关、客厅、厨房、卧室插座怎么留，数量与高度一图记牢，避免入住后到处拉排插。</p>
+            <div class="go">打开 →</div>
+          </div>
+        </a>
+        <a class="card" href="socket-custom-mobile.html" data-kw="插座 定制 手机版 水电 施工 点位 清单">
+          <div class="thumb"><img src="assets/prev-socket.svg" alt="插座定制手机版"></div>
+          <div class="body">
+            <span class="tag">施工落地</span>
+            <h3>插座定制 · 手机版</h3>
+            <p>手机端可横滑的插座点位清单，按房间对照水电交底，瓦工/电工进场前先对一遍。</p>
+            <div class="go">打开 →</div>
+          </div>
+        </a>
+      </div>
+    </section>
 
-    <a class="card" href="socket-custom-mobile.html">
-      <span class="tag">水电避坑</span>
-      <h2>插座定制 · 手机版</h2>
-      <p>手机端可横滑的插座点位清单，按房间对照水电交底，瓦工/电工进场前先对一遍。</p>
-      <div class="go">打开 →</div>
-    </a>
+    <!-- 阶段四 · 效果呈现 -->
+    <section class="phase" id="p4">
+      <h2>阶段四 · 效果呈现 <span class="range">美学+人设 · 第35–49劫</span></h2>
+      <div class="grid">
+        <div class="card empty"><div class="body"><span class="tag">效果呈现</span><h3>筹备中 · 敬请期待</h3><p>包豪斯+多巴胺审美、灯光杠杆、花小钱办大事等内容正在整理，按劫号顺序陆续上线。</p></div></div>
+      </div>
+    </section>
 
-    <a class="card" href="renovation-mode-qa.html">
-      <span class="tag">决策规划</span>
-      <h2>装修方式怎么选 · 自装/半包/全包</h2>
-      <p>自装、半包、全包到底差在哪？一问一答把三种模式的钱、精力、风险讲清楚，照着对号入座。</p>
-      <div class="go">打开 →</div>
-    </a>
+    <!-- 阶段五 · 入住复盘 -->
+    <section class="phase" id="p5">
+      <h2>阶段五 · 入住复盘 <span class="range">第50–52劫</span></h2>
+      <div class="grid">
+        <div class="card empty"><div class="body"><span class="tag">入住复盘</span><h3>筹备中 · 敬请期待</h3><p>甲醛/通风治理、软装进场顺序、可逆收纳体系等真实居住复盘内容筹备中。</p></div></div>
+      </div>
+    </section>
 
-    <a class="card" href="who-buys-checklist.html">
-      <span class="tag">采购清单</span>
-      <h2>装修谁买 · 自装/半包/全案采购清单</h2>
-      <p>主材、辅材、软装谁负责买？一张可视化清单厘清自装/半包/全案的责任边界，避免漏买扯皮。</p>
-      <div class="go">打开 →</div>
-    </a>
+    <!-- 阶段六 · 起号策略 -->
+    <section class="phase" id="p6">
+      <h2>阶段六 · 起号策略 <span class="range">贯穿线 · 第53–56劫</span></h2>
+      <div class="grid">
+        <div class="card empty"><div class="body"><span class="tag">起号策略</span><h3>筹备中 · 敬请期待</h3><p>真人出镜起号、低粉高变现、垂直细分冷启动、真实感大于 AI 框架等内容方法论筹备中。</p></div></div>
+      </div>
+    </section>
 
     <footer>
-      本页由 GitHub Pages 托管 · 内容持续更新<br>
+      本页由 GitHub Pages 托管 · 内容按装修时间轴持续更新<br>
       小红书同名账号：是小臭狗 SUZY 呀
     </footer>
   </main>
+
+  <script>
+    // 客户端检索：按关键词/阶段过滤卡片，仅隐藏不匹配项、绝不重排（顺序不可变更）
+    (function () {
+      var q = document.getElementById('q');
+      q.addEventListener('input', function () {
+        var term = q.value.trim().toLowerCase();
+        var phases = document.querySelectorAll('.phase');
+        phases.forEach(function (sec) {
+          var visible = 0;
+          sec.querySelectorAll('.card').forEach(function (card) {
+            var hay = (card.getAttribute('data-kw') || '') + ' ' + card.textContent;
+            var match = !term || hay.toLowerCase().indexOf(term) !== -1;
+            card.style.display = match ? '' : 'none';
+            if (match) visible++;
+          });
+          sec.style.display = (!term || visible > 0) ? '' : 'none';
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
