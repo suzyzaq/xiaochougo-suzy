@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>全屋插座布局全攻略 · 小红书图文（叙事版）</title>
 <style>
-  :root{
-    --red:#E60026;        /* 品牌红（深一档，正文/大字更稳） */
-    --red-soft:#FFE3E8;
-    --ink:#1A1A1A;        /* 主文字，对比≈16:1 */
+  :root{--yellow:#FACD3A;--paper:#FBF8F1;
+    --red:#EA453E;        /* 品牌红（深一档，正文/大字更稳） */
+    --red-soft:#FCE4E2;
+    --ink:#15110D;        /* 主文字，对比≈16:1 */
     --sub:#4A4A4A;        /* 次级文字，对比≈9:1 */
     --line:#E6E6E6;
     --cold:#EAF0F6;       /* 谷值冷调 */
@@ -17,7 +17,7 @@
     --warm:#FFF1E6;       /* 转折暖调 */
     --warm-accent:#FF7A1A;
     --peak:#FFE9EC;       /* 峰值饱和红调 */
-    --dp2:#1E50D8;
+    --dp2:#1C6FB5;
     --gold:#6B4A00;       /* 黄底深字，对比>7:1 */
     --b3:#E6F0FF; --b4:#E8F8EE; --b5:#F1E9FF;
   }
@@ -118,10 +118,21 @@
   @media (prefers-reduced-motion: reduce){
     *{animation:none!important;transition:none!important;}
   }
+
+  /* === SUZY 四组制·第4组 包豪斯几何风（2026-10-27 强制合规）=== */
+  .geobar{height:10px;display:flex;}
+  .geobar i{flex:1;}
+  .geobar .r{background:var(--red);} .geobar .y{background:var(--yellow);} .geobar .b{background:var(--blue);}
+  .brand{background:var(--ink);color:var(--paper);border-bottom:4px solid var(--red);}
+  .brand b{color:var(--paper);}
+  .brand span{color:#cfc8bd;}
+  .brand .dot{width:18px;height:18px;border-radius:50%;background:conic-gradient(var(--red) 0 33%,var(--yellow) 33% 66%,var(--blue) 66% 100%);margin:0 8px 0 0;}
+  .app{border-left:3px solid var(--ink);border-right:3px solid var(--ink);background:var(--paper);}
 </style>
 </head>
 <body>
 <div class="wrap">
+  <div class="geobar"><i class="r"></i><i class="y"></i><i class="b"></i></div>
 
   <!-- ===== 第1页 · 常态（Beat1 强度20） ===== -->
   <div class="page cover" aria-label="封面：自装业主水电交底前，凭感觉留插座的常态">
@@ -369,6 +380,7 @@
 11 客厅书房：电视墙预埋50管藏线+宽带、沙发两侧五孔USB70-100cm、窗边电动窗帘200-220cm、入户门上方监控220cm、吊顶投影220cm、墙角16A立式空调、书桌25cm电脑位+网口。
 12 易漏9项：电动窗帘/USB快充/网口/HDMI预埋管/智能面板/洗烘设备/蒸烤箱/洗碗机/柜内隐藏电源。翻车率最高：智能马桶盖40cm、电热毛巾架150cm、冰箱独立回路16A、餐边柜小家电20cm上方。
 13 行动号召：评论区打「插座」，私信发完整7区速查表。
+<div class="geobar"><i class="r"></i><i class="y"></i><i class="b"></i></div>
 </div>
 </body>
 </html>
