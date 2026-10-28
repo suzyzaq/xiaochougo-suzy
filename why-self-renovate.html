@@ -62,6 +62,10 @@
   .truth h3{font-size:16px;font-weight:900;color:var(--red);margin-bottom:8px;}
   .truth p{font-size:13.5px;line-height:1.8;color:#2c2822;font-weight:500;}
   .truth .hl{background:var(--yellow);font-weight:900;padding:0 3px;}
+  .hl{background:var(--yellow);font-weight:900;padding:0 3px;color:var(--ink);}
+  .bl{list-style:none;margin:12px 0 2px;padding:0;}
+  .bl li{position:relative;padding:0 0 0 20px;margin-bottom:9px;font-size:13.5px;line-height:1.75;color:#2c2822;font-weight:500;}
+  .bl li::before{content:"";position:absolute;left:0;top:8px;width:9px;height:9px;background:var(--red);}
   .quote{border:4px solid var(--ink);background:var(--ink);color:var(--paper);padding:22px 18px;margin:6px 18px;}
   .quote p{font-size:19px;font-weight:900;line-height:1.5;}
   .quote p em{font-style:normal;color:var(--yellow);}
@@ -109,7 +113,9 @@
 
   <section class="sec reveal">
     <h2>我的触发点</h2>
-    <p class="bd">有天我和长辈坐在酒店里，对着<strong>七八家装修公司</strong>的报价单算账，最后落地比的就是三家。越算越发现，装修公司的报价和我们自己找工人的报价，差距大到离谱。而且我们家个性化太多、自己的想法太满，整装根本装不出我想要的家。那一刻我就定了：要<strong>一切尽在掌握</strong>——风格、进度、设计，100% 我自己参与。</p>
+    <p class="bd">有天我和长辈坐在酒店里，对着<strong>七八家装修公司</strong>的报价单算账，最后落地比的就是三家。</p>
+    <p class="bd">越算越发现，装修公司的报价和我们自己找工人的报价，<span class="hl">差距大到离谱</span>。而且我们家个性化太多、自己的想法太满，整装根本装不出我想要的家。</p>
+    <p class="bd">那一刻我就定了：要<strong>一切尽在掌握</strong>——风格、进度、设计，100% 我自己参与。</p>
   </section>
 
   <section class="sec reveal">
@@ -127,13 +133,29 @@
     <p class="lead">接瓷砖那期 · 半包清单里"没写但你要付"的增项</p>
     <div class="truth">
       <h3>瓷砖胶的坑</h3>
-      <p>我家地砖至少 800×800，大的 1米2×600、甚至 1米5×750，这种大砖铺贴至少要用 <span class="hl">C1 以上瓷砖胶</span>。装修公司给你什么？水泥河沙，好一点预拌砂浆。所以瓷砖胶的钱，最后还是你自己掏——我家用了<span class="hl">差不多 100 袋</span>，一袋 30 到 40 块，大几千，还是隐蔽工程，看都看不出来。<br><br>更绝的在后头：我们瓦工是装修公司出来的，看我按国标买胶花了三四千，热心说"妹儿别买外面的，我们公司胶便宜，100 斤才 20 多块"。我让他发包装背面，结果上面明写着：<span class="hl">仅适用于 400×400 地砖</span>。大砖？上墙？想都别想。装修公司自己也是水泥砂浆给你上墙。除渣费？更不包。</p>
+      <p>我家地砖至少 800×800，大的 1米2×600、甚至 1米5×750。这种大砖铺贴，至少要用 <span class="hl">C1 以上瓷砖胶</span>。</p>
+      <ul class="bl">
+        <li>装修公司给你什么？水泥河沙，好一点预拌砂浆——瓷砖胶的钱，最后还是你自己掏。</li>
+        <li>我家用了<span class="hl">差不多 100 袋</span>，一袋 30 到 40 块，大几千，还是隐蔽工程，看都看不出来。</li>
+      </ul>
+      <p>更绝的在后头：瓦工是装修公司出来的，看我按国标买胶花了三四千，热心说"妹儿别买外面的，我们公司胶便宜，100 斤才 20 多块"。</p>
+      <ul class="bl">
+        <li>我让他发包装背面，上面明写着：<span class="hl">仅适用于 400×400 地砖</span>。大砖？上墙？想都别想。</li>
+        <li>装修公司自己也是水泥砂浆给你上墙。除渣费？更不包。</li>
+      </ul>
     </div>
   </section>
 
   <section class="sec reveal">
     <h2>诚实代价</h2>
-    <p class="bd">我不美化：自装不是童话。我付出的——时间、脑细胞，还有鞋上永远洗不掉的水泥灰。白天在公司搬砖，晚上去工地搬砖，别人下班逛街，我灰头土脸回家。<br><br>还有和老一辈的分歧：他们信熟人、信"认识的人不会坑你"，但装修这行不是。小到"先安窗还是先铺窗台砖"、该用水泥砂浆还是瓷砖胶，老一辈经验和新生代思路都在打架。连我们 40 多岁的瓦工都不太信国标，说单组分背胶一桶刷一屋就行——可双组分背胶一桶才刷 20 平。这些分歧，加上不找设计师就得自己收集、整理、沟通、落地的能力，才是自装真正的门槛。</p>
+    <p class="bd">我不美化：自装不是童话。我付出的——时间、脑细胞，还有鞋上永远洗不掉的水泥灰。</p>
+    <p class="bd">白天在公司搬砖，晚上去工地搬砖；别人下班逛街，我灰头土脸回家。</p>
+    <p class="bd">还有和老一辈的分歧：他们信熟人、信"认识的人不会坑你"，但装修这行不是。</p>
+    <ul class="bl">
+      <li>小到"先安窗还是先铺窗台砖"、该用水泥砂浆还是瓷砖胶，老一辈经验和新生代思路都在打架。</li>
+      <li>连 40 多岁的瓦工都不太信国标：说单组分背胶一桶刷一屋就行——可双组分背胶一桶才刷 20 平。</li>
+      <li>不找设计师，就得自己收集、整理、沟通、落地——这些分歧加能力，才是自装真正的门槛。</li>
+    </ul>
   </section>
 
   <section class="sec reveal">
