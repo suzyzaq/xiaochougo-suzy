@@ -91,6 +91,7 @@
         <option value="400x800">400×800（厨房墙砖）</option>
         <option value="200x200">200×200（小砖 / 小蓝砖）</option>
         <option value="100x100">100×100（小方砖）</option>
+        <option value="110x110">110×110（小方砖）</option>
         <option value="65x200">65×200（指定规格）</option>
         <option value="1200x600">1200×600（大砖上墙）</option>
       </select>
@@ -174,6 +175,7 @@ const SPECS = {
   '200x200':  {w:0.2,  h:0.2,  tileMin:5,  tileMax:6,  tileDef:5.5, paveDef:62,  seam:10},
   '1200x600': {w:1.2,  h:0.6,  tileMin:40, tileMax:60, tileDef:50,  paveDef:55,  seam:2.5},
   '100x100':  {w:0.1,  h:0.1,  tileMin:2,  tileMax:5,  tileDef:3.5, paveDef:75,  seam:20},
+  '110x110':  {w:0.11, h:0.11, tileMin:2,  tileMax:5,  tileDef:3.5, paveDef:75,  seam:18.18},
   '65x200':   {w:0.065,h:0.2,  tileMin:1,  tileMax:3,  tileDef:2,   paveDef:85,  seam:20.38}
 };
 const SEAM_MIN = 9.9, SEAM_MAX = 17; // 桶装平缝区间，用于预选价格区间
@@ -227,7 +229,7 @@ function renderRange(){
     const seamMaxM = s.seam * SEAM_MAX;
     const compMin = tileMinM + s.paveDef + seamMinM;
     const compMax = tileMaxM + s.paveDef + seamMaxM;
-    const name = {'800x800':'800×800','400x800':'400×800','200x200':'200×200','100x100':'100×100','65x200':'65×200','1200x600':'1200×600'}[k];
+    const name = {'800x800':'800×800','400x800':'400×800','200x200':'200×200','100x100':'100×100','110x110':'110×110','65x200':'65×200','1200x600':'1200×600'}[k];
     const tr = document.createElement('tr');
     tr.innerHTML = '<td>'+name+'</td>'+
       '<td class="r">'+tileMinM.toFixed(0)+'–'+tileMaxM.toFixed(0)+'</td>'+
