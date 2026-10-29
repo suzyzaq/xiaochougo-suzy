@@ -90,6 +90,8 @@
         <option value="800x800">800×800（大地砖）</option>
         <option value="400x800">400×800（厨房墙砖）</option>
         <option value="200x200">200×200（小砖 / 小蓝砖）</option>
+        <option value="100x100">100×100（小方砖）</option>
+        <option value="20x150">20×150（小长条）</option>
         <option value="1200x600">1200×600（大砖上墙）</option>
       </select>
     </div>
@@ -157,7 +159,7 @@
     1. 报价里的砖是多大？尺寸不同价不同，逐规格核对。<br>
     2. 是否含<b>背胶</b>？背胶/瓷砖胶常是增项（自购踩过 2290 元）。<br>
     3. 是否含<b>加工</b>？切割/倒角/拉槽常另算，写进合同。<br>
-    <b>美缝加价项：</b>缝隙&gt;2.5mm 加 2 元/米；调色超 3 款 100 元/色；特殊小砖（如 200×200）价另算。
+    <b>美缝加价项：</b>缝隙&gt;2.5mm 加 2 元/米；调色超 3 款 100 元/色；特殊小砖（如 100×100 / 20×150）价另算；小砖缝长更大，美缝费会明显升高。
   </div>
 
   <div class="foot">@是小臭狗 SUZY 呀 · 重庆 150㎡ 自装实录<br>价格为师傅参考价，最终以实物报价为准</div>
@@ -170,7 +172,9 @@ const SPECS = {
   '800x800':  {w:0.8,  h:0.8,  tileMin:25, tileMax:35, tileDef:30,  paveDef:45,  seam:2.5},
   '400x800':  {w:0.4,  h:0.8,  tileMin:10, tileMax:12, tileDef:11,  paveDef:67,  seam:3.75},
   '200x200':  {w:0.2,  h:0.2,  tileMin:5,  tileMax:6,  tileDef:5.5, paveDef:62,  seam:10},
-  '1200x600': {w:1.2,  h:0.6,  tileMin:40, tileMax:60, tileDef:50,  paveDef:55,  seam:2.5}
+  '1200x600': {w:1.2,  h:0.6,  tileMin:40, tileMax:60, tileDef:50,  paveDef:55,  seam:2.5},
+  '100x100':  {w:0.1,  h:0.1,  tileMin:2,  tileMax:5,  tileDef:3.5, paveDef:75,  seam:20},
+  '20x150':   {w:0.02, h:0.15, tileMin:1,  tileMax:3,  tileDef:2,   paveDef:85,  seam:56.67}
 };
 const SEAM_MIN = 9.9, SEAM_MAX = 17; // 桶装平缝区间，用于预选价格区间
 
@@ -223,7 +227,7 @@ function renderRange(){
     const seamMaxM = s.seam * SEAM_MAX;
     const compMin = tileMinM + s.paveDef + seamMinM;
     const compMax = tileMaxM + s.paveDef + seamMaxM;
-    const name = {'800x800':'800×800','400x800':'400×800','200x200':'200×200','1200x600':'1200×600'}[k];
+    const name = {'800x800':'800×800','400x800':'400×800','200x200':'200×200','100x100':'100×100','20x150':'20×150','1200x600':'1200×600'}[k];
     const tr = document.createElement('tr');
     tr.innerHTML = '<td>'+name+'</td>'+
       '<td class="r">'+tileMinM.toFixed(0)+'–'+tileMaxM.toFixed(0)+'</td>'+
