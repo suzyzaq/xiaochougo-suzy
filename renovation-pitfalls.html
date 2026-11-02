@@ -294,32 +294,36 @@ function handleFiles(id, files){
   const card = state.cards.find(c=>c.id===id); if(!card) return;
   const arr = Array.from(files).filter(f=>f.type.startsWith('image/'));
   if(arr.length===0) return;
-  let done=0, total=arr.length, anyCloud=false, anyLocal=false;
+  let done=0, total=arr.length, anyCloud=false, anyLocal=false, lastErr='';
   toast('正在上传到云端…');
   arr.forEach(f=>{
     compress(f, 1200, 0.82).then(dataUrl=>{
       // 云端优先：把压缩后的 JPEG 上传，拿到公网 URL；失败则本地兜底
-      if(!CLOUD_ON) return Promise.reject('off');
+      if(!CLOUD_ON) return Promise.reject(new Error('云端已关闭'));
       return uploadCloud(f.name, dataUrl).then(url=>{
         card.images = card.images||[];
         card.images.push(url);
         anyCloud=true;
-      }).catch(()=>{
+      }).catch(err=>{
         card.images = card.images||[];
         card.images.push(dataUrl);
         anyLocal=true;
+        lastErr=(err&&err.message)||String(err)||'未知';
+        console.error('[云端上传失败]', err);
       });
-    }).catch(()=>{ // 压缩失败 → 直接本地兜底
+    }).catch(err=>{ // 压缩失败 → 直接本地兜底
       card.images = card.images||[];
       card.images.push(f.name||'local');
       anyLocal=true;
+      lastErr=(err&&err.message)||'压缩失败';
+      console.error('[压缩失败]', err);
     }).then(()=>{
       done++;
       if(done===total){
         const ok=save(); render();
         if(anyCloud && !anyLocal) toast('示例图已上传云端 ✅（跨设备可访问）');
         else if(anyCloud && anyLocal) toast('部分已传云端，部分存本地');
-        else toast(ok?'云端暂不可用，已存本机浏览器':'保存失败：本地空间不足，请先备份JSON');
+        else toast(ok?('云端不可用('+lastErr+')，已存本机'):'保存失败：本地空间不足，请先备份JSON');
       }
     });
   });
@@ -340,9 +344,9 @@ function uploadCloud(filename, dataUrl){
     // 经 canvas 压缩后恒为 JPEG，统一用 .jpg，避免扩展名与实际内容不符导致浏览器嗅探失败
     fd.append('file', blob, 'img.jpg');
     fetch(UPLOAD_EP, {method:'POST', body:fd})
-      .then(r=>{ if(!r.ok) throw new Error('up '+r.status); return r.json(); })
-      .then(j=>{ if(j && j.url) res(j.url); else rej(new Error('no url')); })
-      .catch(e=>rej(e));
+      .then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+      .then(j=>{ if(j && j.url) res(j.url); else rej(new Error('返回无URL')); })
+      .catch(e=>rej(new Error(e && e.name==='TypeError' ? '网络/证书/跨域被拦' : (e.message||'上传异常'))));
   });
 }
 function compress(file, maxW, q){
