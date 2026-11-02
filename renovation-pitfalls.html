@@ -337,9 +337,8 @@ function dataUrlToBlob(dataUrl){
 function uploadCloud(filename, dataUrl){
   return new Promise((res,rej)=>{
     const blob = dataUrlToBlob(dataUrl);
-    const fd = new FormData();
-    const ext = (filename.match(/\.\w+$/)||['.jpg'])[0].toLowerCase();
-    fd.append('file', blob, 'img'+ext);
+    // 经 canvas 压缩后恒为 JPEG，统一用 .jpg，避免扩展名与实际内容不符导致浏览器嗅探失败
+    fd.append('file', blob, 'img.jpg');
     fetch(UPLOAD_EP, {method:'POST', body:fd})
       .then(r=>{ if(!r.ok) throw new Error('up '+r.status); return r.json(); })
       .then(j=>{ if(j && j.url) res(j.url); else rej(new Error('no url')); })
