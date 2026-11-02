@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>装修翻车细节整理台 · SUZY 自装避坑</title>
+<style>
+  :root{
+    --red:#EA453E; --yellow:#FACD3A; --blue:#1C6FB5; --ink:#15110D;
+    --paper:#F4EEE0; --paperwhite:#FBF8F1; --red-soft:#FCE4E2; --sub:#5a5a5a; --line:#E6DFD0;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--paper);font-family:"PingFang SC","Microsoft YaHei",-apple-system,sans-serif;color:var(--ink);line-height:1.6;}
+  .app{max-width:560px;margin:0 auto;background:var(--paperwhite);min-height:100vh;padding-bottom:90px;}
+
+  .geobar{height:10px;display:flex;}
+  .geobar i{flex:1;}
+  .geobar .r{background:var(--red);} .geobar .y{background:var(--yellow);} .geobar .b{background:var(--blue);}
+  .brand{background:var(--ink);color:var(--paperwhite);display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:4px solid var(--red);}
+  .brand .dot{width:18px;height:18px;border-radius:50%;background:conic-gradient(var(--red) 0 33%,var(--yellow) 33% 66%,var(--blue) 66% 100%);}
+  .brand b{font-size:15px;font-weight:800;}
+  .brand span{font-size:12px;color:#cfc8bd;margin-left:auto;}
+
+  .hd{padding:18px 18px 6px;}
+  .hd .tag{display:inline-block;background:var(--red-soft);color:var(--red);font-weight:800;font-size:12px;padding:3px 10px;border-radius:20px;}
+  .hd h1{font-size:21px;font-weight:900;margin:10px 0 4px;line-height:1.3;}
+  .hd p{font-size:12.5px;color:var(--sub);margin:0 0 10px;}
+
+  .stat{display:flex;gap:10px;padding:0 18px 6px;}
+  .stat .box{flex:1;background:#fff;border:2px solid var(--ink);border-radius:12px;padding:8px 10px;text-align:center;box-shadow:3px 3px 0 var(--ink);}
+  .stat .n{font-size:20px;font-weight:900;color:var(--red);}
+  .stat .l{font-size:11px;color:var(--sub);}
+
+  .controls{padding:6px 18px 2px;}
+  .search{width:100%;border:2px solid var(--ink);border-radius:10px;padding:9px 12px;font-size:14px;background:#fff;outline:none;font-family:inherit;}
+  .search:focus{border-color:var(--blue);}
+  .chips{display:flex;gap:8px;overflow-x:auto;padding:10px 0 4px;scrollbar-width:none;}
+  .chips::-webkit-scrollbar{display:none;}
+  .chip{flex:0 0 auto;border:2px solid var(--ink);background:#fff;border-radius:20px;padding:5px 13px;font-size:12.5px;font-weight:700;cursor:pointer;white-space:nowrap;}
+  .chip.on{background:var(--ink);color:var(--paperwhite);}
+  .acts{display:flex;gap:8px;padding:6px 0 12px;}
+  .btn{flex:1;border:2px solid var(--ink);background:#fff;border-radius:10px;padding:9px;font-size:13px;font-weight:800;cursor:pointer;font-family:inherit;}
+  .btn.r{background:var(--red);color:#fff;border-color:var(--red);}
+  .btn.b{background:var(--blue);color:#fff;border-color:var(--blue);}
+  .btn.y{background:var(--yellow);color:var(--ink);border-color:var(--ink);}
+
+  .sec-t{display:flex;align-items:center;gap:8px;margin:14px 18px 8px;font-size:15px;font-weight:900;}
+  .sec-t .bi{width:14px;height:14px;}
+  .sec-t .bi.c{background:var(--red);border-radius:50%;}
+  .sec-t .bi.s{background:var(--yellow);}
+  .sec-t .bi.t{width:0;height:0;background:none;border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:14px solid var(--blue);}
+  .sec-t .bi.d{border:2px solid var(--ink);transform:rotate(45deg);}
+
+  .card{border:2.5px solid var(--ink);border-radius:14px;background:#fff;margin:0 18px 14px;padding:13px;box-shadow:4px 4px 0 var(--ink);}
+  .card .chd{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .card .mk{width:16px;height:16px;flex:0 0 auto;}
+  .card .mk.c{background:var(--red);border-radius:50%;}
+  .card .mk.s{background:var(--yellow);}
+  .card .mk.t{width:0;height:0;background:none;border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:14px solid var(--blue);}
+  .card .mk.d{border:2px solid var(--ink);transform:rotate(45deg);}
+  .card h3{font-size:15.5px;font-weight:900;margin:0;flex:1;line-height:1.35;}
+  .card .cat{font-size:10.5px;font-weight:800;color:#fff;background:var(--ink);padding:2px 8px;border-radius:10px;flex:0 0 auto;}
+  .card .del{margin-left:4px;flex:0 0 auto;border:none;background:var(--red-soft);color:var(--red);font-weight:900;font-size:13px;border-radius:8px;padding:2px 8px;cursor:pointer;}
+  .kv{font-size:13px;margin:7px 0;}
+  .kv .k{font-weight:900;color:var(--red);display:block;margin-bottom:1px;}
+  .kv .k.ok{color:var(--blue);}
+  .kv .k.src{color:var(--sub);font-size:12px;}
+  .kv .v{color:var(--ink);}
+  .kv .v.src{color:var(--sub);font-size:12px;}
+
+  .upzone{border:2px dashed var(--ink);border-radius:12px;padding:14px 10px;text-align:center;color:var(--sub);font-size:12.5px;margin-top:10px;cursor:pointer;background:#fff;}
+  .upzone.drag{background:var(--yellow);border-color:var(--blue);}
+  .upzone .plus{font-size:22px;font-weight:900;color:var(--red);line-height:1;}
+  .thumbs{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+  .thumb{position:relative;width:74px;height:74px;border:2px solid var(--ink);border-radius:8px;overflow:hidden;background:#eee;}
+  .thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+  .thumb .x{position:absolute;top:2px;right:2px;width:18px;height:18px;border-radius:50%;background:var(--red);color:#fff;font-size:12px;line-height:18px;text-align:center;cursor:pointer;font-weight:900;}
+  .thumb .cap{position:absolute;bottom:0;left:0;right:0;background:rgba(21,17,13,.7);color:#fff;font-size:9px;text-align:center;padding:1px;}
+
+  .note{background:#FAFAF8;border:1px solid var(--line);border-left:4px solid var(--red);border-radius:12px;padding:11px 13px;font-size:12px;line-height:1.7;color:var(--ink);margin:8px 18px 14px;}
+  .note b{color:var(--red);}
+
+  .foot{text-align:center;font-size:11.5px;color:var(--sub);padding:12px 16px 4px;line-height:1.6;}
+
+  /* 添加表单 */
+  .mask{position:fixed;inset:0;background:rgba(21,17,13,.45);display:none;z-index:30;}
+  .mask.on{display:block;}
+  .panel{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:92%;max-width:460px;max-height:86vh;overflow:auto;background:var(--paperwhite);border:3px solid var(--ink);border-radius:16px;box-shadow:6px 6px 0 var(--ink);padding:16px;z-index:31;display:none;}
+  .panel.on{display:block;}
+  .panel h2{font-size:17px;font-weight:900;margin:0 0 10px;display:flex;align-items:center;gap:8px;}
+  .panel h2 .bi{width:16px;height:16px;background:var(--red);border-radius:50%;}
+  .fld{margin-bottom:10px;}
+  .fld label{display:block;font-size:12.5px;font-weight:800;margin-bottom:3px;}
+  .fld input,.fld select,.fld textarea{width:100%;border:2px solid var(--ink);border-radius:9px;padding:8px 10px;font-size:13.5px;background:#fff;outline:none;font-family:inherit;}
+  .fld textarea{resize:vertical;min-height:54px;}
+  .fld input:focus,.fld select:focus,.fld textarea:focus{border-color:var(--blue);}
+  .pbtns{display:flex;gap:8px;margin-top:8px;}
+  .hidden-input{display:none;}
+  .toast{position:fixed;left:50%;bottom:100px;transform:translateX(-50%);background:var(--ink);color:#fff;font-size:13px;padding:9px 16px;border-radius:20px;z-index:40;opacity:0;transition:opacity .25s;pointer-events:none;}
+  .toast.on{opacity:1;}
+
+  .app{border-left:3px solid var(--ink);border-right:3px solid var(--ink);}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="geobar"><i class="r"></i><i class="y"></i><i class="b"></i></div>
+  <div class="brand"><span class="dot"></span><b>是小臭狗 SUZY 呀</b><span>重庆 150㎡ 自装实录</span></div>
+
+  <div class="hd">
+    <span class="tag">翻车细节整理台</span>
+    <h1>装修容易翻车<br>必须把握好的细节</h1>
+    <p>把真实踩过的坑、师傅的叮嘱、辅料识别都收进来，每张可传示例图。本地保存，不上传服务器。</p>
+  </div>
+
+  <div class="stat">
+    <div class="box"><div class="n" id="stCards">0</div><div class="l">翻车细节</div></div>
+    <div class="box"><div class="n" id="stImgs">0</div><div class="l">示例图</div></div>
+    <div class="box"><div class="n" id="stCat">0</div><div class="l">分类</div></div>
+  </div>
+
+  <div class="controls">
+    <input class="search" id="search" placeholder="搜索细节关键词，如：柔性、美缝、搬运…">
+    <div class="chips" id="chips"></div>
+    <div class="acts">
+      <button class="btn r" id="addBtn">＋ 添加细节</button>
+      <button class="btn y" id="exportTxt">导出文字版</button>
+      <button class="btn b" id="exportJson">备份JSON</button>
+      <button class="btn" id="importJson">导入</button>
+    </div>
+  </div>
+
+  <div id="list"></div>
+
+  <div class="note">
+    <b>使用说明：</b><br>
+    1. 点卡片底部虚线框可<b>点击或拖拽上传示例图</b>，图片在本地压缩后存浏览器（刷新不丢）。<br>
+    2. 「＋ 添加细节」补充你自己的坑；「导出文字版」一键复制全部内容到笔记；「备份JSON」防丢，可「导入」恢复。<br>
+    3. 数据仅存在你这台浏览器，换设备需先「备份JSON」。
+  </div>
+
+  <div class="foot">@是小臭狗 SUZY 呀 · 重庆 150㎡ 自装实录<br>真实避坑， honesty first</div>
+  <div class="geobar"><i class="r"></i><i class="y"></i><i class="b"></i></div>
+</div>
+
+<div class="mask" id="mask"></div>
+<div class="panel" id="panel">
+  <h2><span class="bi"></span>添加翻车细节</h2>
+  <div class="fld"><label>分类</label>
+    <select id="fCat"></select></div>
+  <div class="fld"><label>标题（坑点）</label>
+    <input id="fTitle" placeholder="如：墙面防水用错类型"></div>
+  <div class="fld"><label>翻车点（错在哪）</label>
+    <textarea id="fWrong" placeholder="描述容易踩的坑…"></textarea></div>
+  <div class="fld"><label>正确做法</label>
+    <textarea id="fRight" placeholder="应该怎么把握…"></textarea></div>
+  <div class="fld"><label>来源 / 备注（选填）</label>
+    <textarea id="fSrc" placeholder="如：美缝师傅原话 / SUZY 实录…"></textarea></div>
+  <div class="pbtns">
+    <button class="btn r" id="saveCard">保存</button>
+    <button class="btn" id="cancelCard">取消</button>
+  </div>
+</div>
+
+<input type="file" id="importFile" class="hidden-input" accept="application/json">
+<div class="toast" id="toast"></div>
+
+<script>
+const CATS = ['防水工程','瓷砖选材','施工顺序','采购避坑','辅料识别'];
+const MK = {0:'c',1:'s',2:'t',3:'d'}; // 几何标记循环
+const LS_KEY = 'suzy_pitfalls_v1';
+
+const SEED = [
+  {cat:'防水工程',title:'墙面防水用错类型（柔性上墙）',
+   wrong:'瓦工在贴砖墙面刷了柔性防水——柔性与水泥墙粘接力差，一撕掉一大片；贴砖后几十斤重必然掉砖。',
+   right:'墙面（尤其贴砖墙）必须用刚性防水（K11）；地面才用柔性。若已刷柔性：先闭水48h确认不漏→界面处理/打磨毛化清浮灰→刚性K11薄刷2遍→养护≥24h再贴砖。',
+   source:'马贝官方"柔性防水都不可以上墙"；社媒大量掉砖求助帖'},
+  {cat:'防水工程',title:'闭水试验走过场',
+   wrong:'防水刷完直接贴砖，没做闭水验收，后期漏水夹层难修。',
+   right:'柔性干透后闭水48h，确认不漏再进下一道（刷刚性/贴砖）；顺序反了夹层积水难修。',
+   source:'SUZY 施工验收口径（第31章）'},
+  {cat:'瓷砖选材',title:'手工砖误当全瓷大面积铺',
+   wrong:'把小蓝砖等手工砖当全瓷上墙拼全瓷、做台面，结果吸水率高、易翻车。',
+   right:'小蓝砖=半瓷（介于全瓷/陶土之间）只做点缀；杏黄撞色=全瓷敢上台面；真陶土砖只铺墙、不做台面、不跟全瓷拼缝。',
+   source:'SUZY 口述选品（200挑6）'},
+  {cat:'瓷砖选材',title:'迷信"美缝永远不变色"',
+   wrong:'以为环氧彩砂永远白净，几年后发黄显脏。',
+   right:'美缝师傅说再好的环氧彩砂最多撑5–6年必氧化发黄；不爱打理直接选深色美缝，黄了也看不出来。',
+   source:'美缝师傅原话'},
+  {cat:'瓷砖选材',title:'选砖只听瓷砖老板',
+   wrong:'进店被花砖迷住、只听老板推荐，买回家一铺全乱。',
+   right:'先定"百搭"基调（任意两块不违和）；选砖秘密武器是美缝师傅（做7–8年的老师傅），截图发他一眼报品牌色号。',
+   source:'SUZY 选砖经验'},
+  {cat:'施工顺序',title:'砖夹灶工序顺序错',
+   wrong:'先做地台/先夹铝型材再贴墙砖，容易翻车。',
+   right:'正确工序＝①先贴墙砖 ②再做地台 ③最后夹铝型材+玻化砖做灶台。顺序不能乱（铝型材DIY系列）。',
+   source:'SUZY 施工实录'},
+  {cat:'采购避坑',title:'批发市场不包送货不包搬运',
+   wrong:'以为批发单价便宜就划算，不知批发市场正常不包送货也不包搬运，搬运费+运费高昂。',
+   right:'购买前把搬运/运费算进总价；实例板材搬运+送货190元；离电梯远还要额外加钱（搬楼/远距搬运费）。',
+   source:'SUZY 马家岩光能建材市场实录'},
+  {cat:'采购避坑',title:'背胶/加工增项漏算',
+   wrong:'报价含砖含铺贴，结果背胶/瓷砖胶、切割倒角拉槽全另算，超预算。',
+   right:'签约前逐条核对：是否含背胶（自购踩过2290元）、是否含加工；写进合同。',
+   source:'SUZY 诚实账单'},
+  {cat:'辅料识别',title:'雨虹防水桶色辨柔刚',
+   wrong:'买防水分不清柔性刚性，用错位置。',
+   right:'雨虹墙面刚性=橙色桶（标注100，墙面9㎡/2遍）；地面柔性=蓝色桶（标注200彩色高柔，地面9㎡/2遍）；管根/墙脚用堵漏宝。',
+   source:'SUZY 辅料识别'}
+];
+
+let state = load();
+
+function load(){
+  try{
+    const raw = localStorage.getItem(LS_KEY);
+    if(raw){ const d=JSON.parse(raw); if(Array.isArray(d.cards)) return d; }
+  }catch(e){}
+  return {cards: SEED.map((c,i)=>({id:'s'+i, ...c, images:[], custom:false}))};
+}
+function save(){
+  try{ localStorage.setItem(LS_KEY, JSON.stringify(state)); return true; }
+  catch(e){ toast('本地存储空间不足，请删除部分示例图或先备份JSON'); return false; }
+}
+
+let activeCat = '全部';
+let kw = '';
+
+function filtered(){
+  return state.cards.filter(c=>{
+    if(activeCat!=='全部' && c.cat!==activeCat) return false;
+    if(kw){ const t=(c.title+c.wrong+c.right+c.source+c.cat).toLowerCase(); if(!t.includes(kw.toLowerCase())) return false; }
+    return true;
+  });
+}
+
+function render(){
+  // chips
+  const chips = document.getElementById('chips');
+  const allCats = ['全部', ...CATS];
+  chips.innerHTML = allCats.map(c=>`<div class="chip ${c===activeCat?'on':''}" data-cat="${c}">${c}</div>`).join('');
+  // fCat options
+  const fc = document.getElementById('fCat');
+  if(!fc.dataset.filled){ fc.innerHTML = CATS.map(c=>`<option>${c}</option>`).join(''); fc.dataset.filled='1'; }
+  // list grouped by category order
+  const list = document.getElementById('list');
+  const cards = filtered();
+  if(cards.length===0){ list.innerHTML = '<div class="note">没有匹配的细节，换个关键词或添加一条。</div>'; }
+  else{
+    const order = CATS;
+    let html = '';
+    let mi = 0;
+    order.forEach(cat=>{
+      const group = cards.filter(c=>c.cat===cat);
+      if(group.length===0) return;
+      const mk = MK[order.indexOf(cat)%4];
+      html += `<div class="sec-t"><span class="bi ${mk}"></span>${cat}（${group.length}）</div>`;
+      group.forEach(c=>{
+        const mki = MK[(order.indexOf(cat))%4];
+        html += cardHTML(c, mki);
+      });
+    });
+    list.innerHTML = html;
+  }
+  // stats
+  document.getElementById('stCards').textContent = state.cards.length;
+  document.getElementById('stImgs').textContent = state.cards.reduce((s,c)=>s+(c.images?c.images.length:0),0);
+  const catsUsed = new Set(state.cards.map(c=>c.cat));
+  document.getElementById('stCat').textContent = catsUsed.size;
+}
+
+function cardHTML(c, mk){
+  const imgs = (c.images||[]).map((d,i)=>`
+    <div class="thumb"><img src="${d}" alt=""><span class="x" data-delimg="${c.id}" data-idx="${i}">×</span></div>`).join('');
+  return `<div class="card">
+    <div class="chd"><span class="mk ${mk}"></span><h3>${esc(c.title)}</h3><span class="cat">${esc(c.cat)}</span>${c.custom?'<button class="del" data-delcard="'+c.id+'">删</button>':''}</div>
+    <div class="kv"><span class="k">翻车点</span><span class="v">${esc(c.wrong)}</span></div>
+    <div class="kv"><span class="k ok">正确做法</span><span class="v">${esc(c.right)}</span></div>
+    ${c.source?`<div class="kv"><span class="k src">来源</span><span class="v src">${esc(c.source)}</span></div>`:''}
+    <div class="upzone" data-id="${c.id}"><div class="plus">＋</div>点击或拖拽上传示例图</div>
+    <div class="thumbs" data-thumbs="${c.id}">${imgs}</div>
+  </div>`;
+}
+function esc(s){ return (s||'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m])); }
+
+function handleFiles(id, files){
+  const card = state.cards.find(c=>c.id===id); if(!card) return;
+  const arr = Array.from(files).filter(f=>f.type.startsWith('image/'));
+  if(arr.length===0) return;
+  let done=0;
+  arr.forEach(f=>{
+    compress(f, 1200, 0.82).then(dataUrl=>{
+      card.images = card.images||[];
+      card.images.push(dataUrl);
+      done++;
+      if(done===arr.length){ save(); render(); }
+    }).catch(()=>{ done++; });
+  });
+}
+function compress(file, maxW, q){
+  return new Promise((res,rej)=>{
+    const r=new FileReader();
+    r.onload=()=>{
+      const img=new Image();
+      img.onload=()=>{
+        let {width:w,height:h}=img;
+        if(w>maxW){ h=h*w/maxW; w=maxW; }
+        const cv=document.createElement('canvas'); cv.width=w; cv.height=h;
+        cv.getContext('2d').drawImage(img,0,0,w,h);
+        try{ res(cv.toDataURL('image/jpeg',q)); }catch(e){ rej(e); }
+      };
+      img.onerror=rej; img.src=r.result;
+    };
+    r.onerror=rej; r.readAsDataURL(file);
+  });
+}
+
+// 事件委托
+const app = document.querySelector('.app');
+document.getElementById('list').addEventListener('click', e=>{
+  const di = e.target.closest('[data-delimg]');
+  if(di){ const card=state.cards.find(c=>c.id===di.dataset.delimg); const i=+di.dataset.idx; card.images.splice(i,1); save(); render(); return; }
+  const dc = e.target.closest('[data-delcard]');
+  if(dc){ if(confirm('删除这条细节？')){ state.cards=state.cards.filter(c=>c.id!==dc.dataset.delcard); save(); render(); } return; }
+  const uz = e.target.closest('.upzone');
+  if(uz){ pickImage(uz.dataset.id); return; }
+});
+document.getElementById('list').addEventListener('change', e=>{
+  if(e.target.matches('input.ufile')){ handleFiles(e.target.dataset.id, e.target.files); e.target.value=''; }
+});
+// 拖拽
+['dragover','dragenter'].forEach(ev=>document.getElementById('list').addEventListener(ev, e=>{
+  const z=e.target.closest('.upzone'); if(z){ e.preventDefault(); z.classList.add('drag'); }
+}));
+['dragleave','drop'].forEach(ev=>document.getElementById('list').addEventListener(ev, e=>{
+  const z=e.target.closest('.upzone'); if(z){ if(ev==='dragleave'){z.classList.remove('drag');return;} e.preventDefault(); z.classList.remove('drag'); handleFiles(z.dataset.id, e.dataTransfer.files); }
+}));
+
+function pickImage(id){
+  const inp=document.createElement('input'); inp.type='file'; inp.className='ufile'; inp.multiple=true; inp.accept='image/*'; inp.dataset.id=id;
+  inp.onchange=()=>{ handleFiles(id, inp.files); };
+  inp.click();
+}
+
+document.getElementById('search').addEventListener('input', e=>{ kw=e.target.value; render(); });
+document.getElementById('chips').addEventListener('click', e=>{
+  const c=e.target.closest('[data-cat]'); if(c){ activeCat=c.dataset.cat; render(); }
+});
+
+// 添加面板
+const mask=document.getElementById('mask'), panel=document.getElementById('panel');
+function openPanel(){ mask.classList.add('on'); panel.classList.add('on'); }
+function closePanel(){ mask.classList.remove('on'); panel.classList.remove('on'); }
+document.getElementById('addBtn').onclick=openPanel;
+document.getElementById('cancelCard').onclick=closePanel;
+mask.onclick=closePanel;
+document.getElementById('saveCard').onclick=()=>{
+  const cat=document.getElementById('fCat').value;
+  const title=document.getElementById('fTitle').value.trim();
+  const wrong=document.getElementById('fWrong').value.trim();
+  const right=document.getElementById('fRight').value.trim();
+  const src=document.getElementById('fSrc').value.trim();
+  if(!title||!wrong||!right){ toast('标题、翻车点、正确做法都要填'); return; }
+  state.cards.push({id:'c'+Date.now(), cat, title, wrong, right, source:src, images:[], custom:true});
+  save(); render(); closePanel();
+  document.getElementById('fTitle').value=''; document.getElementById('fWrong').value=''; document.getElementById('fRight').value=''; document.getElementById('fSrc').value='';
+};
+
+// 导出文字版
+document.getElementById('exportTxt').onclick=()=>{
+  let t='【装修翻车细节整理 · SUZY 自装避坑】\n\n';
+  const order=CATS;
+  order.forEach(cat=>{
+    const g=state.cards.filter(c=>c.cat===cat); if(!g.length) return;
+    t+='■ '+cat+'\n';
+    g.forEach((c,i)=>{
+      t+=(i+1)+'. '+c.title+'\n';
+      t+='   翻车点：'+c.wrong+'\n';
+      t+='   正确做法：'+c.right+'\n';
+      if(c.source) t+='   来源：'+c.source+'\n';
+      if(c.images&&c.images.length) t+='   （示例图 '+c.images.length+' 张）\n';
+    });
+    t+='\n';
+  });
+  navigator.clipboard.writeText(t).then(()=>toast('已复制全部文字到剪贴板'),()=>toast('复制失败，请手动选择'));
+};
+// 备份JSON
+document.getElementById('exportJson').onclick=()=>{
+  const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='装修翻车细节_备份.json'; a.click();
+  toast('已导出备份JSON');
+};
+// 导入JSON
+document.getElementById('importJson').onclick=()=>document.getElementById('importFile').click();
+document.getElementById('importFile').onchange=e=>{
+  const f=e.target.files[0]; if(!f) return;
+  const r=new FileReader(); r.onload=()=>{
+    try{ const d=JSON.parse(r.result); if(!Array.isArray(d.cards)) throw 0;
+      state=d; save(); activeCat='全部'; kw=''; render(); toast('导入成功'); }
+    catch(err){ toast('JSON 解析失败'); }
+  }; r.readAsText(f); e.target.value='';
+};
+
+let toastT;
+function toast(m){ const el=document.getElementById('toast'); el.textContent=m; el.classList.add('on'); clearTimeout(toastT); toastT=setTimeout(()=>el.classList.remove('on'),1800); }
+
+render();
+</script>
+</body>
+</html>
