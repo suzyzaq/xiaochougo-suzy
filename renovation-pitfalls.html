@@ -111,7 +111,7 @@
   <div class="hd">
     <span class="tag">翻车细节整理台</span>
     <h1>装修容易翻车<br>必须把握好的细节</h1>
-    <p>把真实踩过的坑、师傅的叮嘱、辅料识别都收进来，每张可传示例图。本地保存，不上传服务器。</p>
+    <p>把真实踩过的坑、师傅的叮嘱、辅料识别都收进来，每张可传示例图。示例图自动上传<b>云端</b>（跨设备可访问），本机浏览器同时留底兜底。</p>
   </div>
 
   <div class="stat">
@@ -136,9 +136,9 @@
 
   <div class="note">
     <b>使用说明：</b><br>
-    1. 点卡片底部虚线框可<b>点击或拖拽上传示例图</b>，图片在本地压缩后存浏览器（刷新不丢）。<br>
+    1. 点卡片底部虚线框可<b>点击或拖拽上传示例图</b>，图片本地压缩后<b>上传云端</b>（标「☁云端」，换设备/分享链接也能看），同时本机浏览器留底兜底。<br>
     2. 「＋ 添加细节」补充你自己的坑；「导出文字版」一键复制全部内容到笔记；「备份JSON」防丢，可「导入」恢复。<br>
-    3. 数据仅存在你这台浏览器，换设备需先「备份JSON」。
+    3. 云端不可用时自动转本地存储；本地数据仅存这台浏览器，换设备需先「备份JSON」。
   </div>
 
   <div class="foot">@是小臭狗 SUZY 呀 · 重庆 150㎡ 自装实录<br>真实避坑， honesty first</div>
@@ -171,6 +171,11 @@
 const CATS = ['防水工程','瓷砖选材','施工顺序','采购避坑','辅料识别'];
 const MK = {0:'c',1:'s',2:'t',3:'d'}; // 几何标记循环
 const LS_KEY = 'suzy_pitfalls_v1';
+
+// 云端存储后端（部署于 AI 应用部署环境，已配 CORS 允许 GitHub Pages 源）
+const CLOUD_ON = true;
+const UPLOAD_EP = 'https://aiuat.ofs.cn/zhuanqi/suzy-upload/api/upload';
+const DEL_EP = 'https://aiuat.ofs.cn/zhuanqi/suzy-upload/api/delete';
 
 const SEED = [
   {cat:'防水工程',title:'墙面防水用错类型（柔性上墙）',
@@ -273,7 +278,7 @@ function render(){
 
 function cardHTML(c, mk){
   const imgs = (c.images||[]).map((d,i)=>`
-    <div class="thumb"><img src="${d}" alt=""><span class="x" data-delimg="${c.id}" data-idx="${i}">×</span></div>`).join('');
+    <div class="thumb"><img src="${d}" alt=""><span class="x" data-delimg="${c.id}" data-idx="${i}">×</span>${d.startsWith('http')?'<span class="cap">☁云端</span>':''}</div>`).join('');
   return `<div class="card">
     <div class="chd"><span class="mk ${mk}"></span><h3>${esc(c.title)}</h3><span class="cat">${esc(c.cat)}</span>${c.custom?'<button class="del" data-delcard="'+c.id+'">删</button>':''}</div>
     <div class="kv"><span class="k">翻车点</span><span class="v">${esc(c.wrong)}</span></div>
@@ -289,15 +294,57 @@ function handleFiles(id, files){
   const card = state.cards.find(c=>c.id===id); if(!card) return;
   const arr = Array.from(files).filter(f=>f.type.startsWith('image/'));
   if(arr.length===0) return;
-  let done=0;
-    arr.forEach(f=>{
-      compress(f, 1200, 0.82).then(dataUrl=>{
+  let done=0, total=arr.length, anyCloud=false, anyLocal=false;
+  toast('正在上传到云端…');
+  arr.forEach(f=>{
+    compress(f, 1200, 0.82).then(dataUrl=>{
+      // 云端优先：把压缩后的 JPEG 上传，拿到公网 URL；失败则本地兜底
+      if(!CLOUD_ON) return Promise.reject('off');
+      return uploadCloud(f.name, dataUrl).then(url=>{
+        card.images = card.images||[];
+        card.images.push(url);
+        anyCloud=true;
+      }).catch(()=>{
         card.images = card.images||[];
         card.images.push(dataUrl);
-        done++;
-        if(done===arr.length){ const ok=save(); render(); toast(ok?'示例图已保存到本机浏览器':'保存失败：本地空间不足，请先备份JSON'); }
-      }).catch(()=>{ done++; });
+        anyLocal=true;
+      });
+    }).catch(()=>{ // 压缩失败 → 直接本地兜底
+      card.images = card.images||[];
+      card.images.push(f.name||'local');
+      anyLocal=true;
+    }).then(()=>{
+      done++;
+      if(done===total){
+        const ok=save(); render();
+        if(anyCloud && !anyLocal) toast('示例图已上传云端 ✅（跨设备可访问）');
+        else if(anyCloud && anyLocal) toast('部分已传云端，部分存本地');
+        else toast(ok?'云端暂不可用，已存本机浏览器':'保存失败：本地空间不足，请先备份JSON');
+      }
     });
+  });
+}
+// dataURL → Blob
+function dataUrlToBlob(dataUrl){
+  const m = dataUrl.match(/^data:(.*?);base64,(.*)$/);
+  const mime = m? m[1] : 'image/jpeg';
+  const bin = atob(m? m[2] : '');
+  const arr = new Uint8Array(bin.length);
+  for(let i=0;i<bin.length;i++) arr[i]=bin.charCodeAt(i);
+  return new Blob([arr], {type:mime});
+}
+// 上传到云端，返回公网 URL
+function uploadCloud(filename, dataUrl){
+  return new Promise((res,rej)=>{
+    const blob = dataUrlToBlob(dataUrl);
+    const fd = new FormData();
+    const ext = (filename.match(/\.\w+$/)||['.jpg'])[0].toLowerCase();
+    fd.append('file', blob, 'img'+ext);
+    fetch(UPLOAD_EP, {method:'POST', body:fd})
+      .then(r=>{ if(!r.ok) throw new Error('up '+r.status); return r.json(); })
+      .then(j=>{ if(j && j.url) res(j.url); else rej(new Error('no url')); })
+      .catch(e=>rej(e));
+  });
 }
 function compress(file, maxW, q){
   return new Promise((res,rej)=>{
@@ -321,7 +368,9 @@ function compress(file, maxW, q){
 const app = document.querySelector('.app');
 document.getElementById('list').addEventListener('click', e=>{
   const di = e.target.closest('[data-delimg]');
-  if(di){ const card=state.cards.find(c=>c.id===di.dataset.delimg); const i=+di.dataset.idx; card.images.splice(i,1); save(); render(); return; }
+  if(di){ const card=state.cards.find(c=>c.id===di.dataset.delimg); const i=+di.dataset.idx; const removed=card.images[i];
+    if(removed && removed.startsWith('http') && CLOUD_ON){ fetch(DEL_EP+'?name='+encodeURIComponent(removed.split('/').pop())).catch(()=>{}); }
+    card.images.splice(i,1); save(); render(); return; }
   const dc = e.target.closest('[data-delcard]');
   if(dc){ if(confirm('删除这条细节？')){ state.cards=state.cards.filter(c=>c.id!==dc.dataset.delcard); save(); render(); } return; }
   const uz = e.target.closest('.upzone');
@@ -403,8 +452,8 @@ document.getElementById('importFile').onchange=e=>{
   };   r.readAsText(f); e.target.value='';
 };
 
-// 下载全部示例图（导出为 PNG 落本机）
-document.getElementById('downloadImgs').onclick=()=>{
+// 下载全部示例图（导出为 PNG 落本机；云端 URL 先 fetch→blob 规避跨域下载失效）
+document.getElementById('downloadImgs').onclick=async ()=>{
   const list=[];
   state.cards.forEach(c=>{
     (c.images||[]).forEach((url,i)=>{
@@ -413,10 +462,17 @@ document.getElementById('downloadImgs').onclick=()=>{
     });
   });
   if(!list.length){ toast('还没有示例图可下载'); return; }
-  list.forEach((o,idx)=>{
-    setTimeout(()=>{ const a=document.createElement('a'); a.href=o.url; a.download=o.name+'.png'; document.body.appendChild(a); a.click(); a.remove(); }, idx*450);
-  });
   toast('开始下载 '+list.length+' 张示例图');
+  for(let idx=0; idx<list.length; idx++){
+    const o=list[idx];
+    try{
+      let blobUrl=o.url;
+      if(!o.url.startsWith('data:')){ const r=await fetch(o.url); const b=await r.blob(); blobUrl=URL.createObjectURL(b); }
+      const a=document.createElement('a'); a.href=blobUrl; a.download=o.name+'.png'; document.body.appendChild(a); a.click(); a.remove();
+      if(blobUrl.startsWith('blob:')) setTimeout(()=>URL.revokeObjectURL(blobUrl), 1500);
+    }catch(e){ window.open(o.url,'_blank'); }
+    await new Promise(r=>setTimeout(r,450));
+  }
 };
 
 let toastT;
