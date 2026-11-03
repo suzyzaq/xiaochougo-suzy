@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>装修全流程16节点 · SUZY 150㎡自装实录</title>
+<style>
+  :root{
+    --red:#EA453E; --yellow:#FACD3A; --blue:#1C6FB5; --ink:#15110D;
+    --paper:#F4EEE0; --paperwhite:#FBF8F1; --redsoft:#FCE4E2; --sub:#5a5a5a; --line:#E6DFD0;
+    --yellsoft:#FFF3C4; --bluesoft:#E4EFF9;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--paper);font-family:"PingFang SC","Microsoft YaHei",-apple-system,sans-serif;color:var(--ink);line-height:1.68;}
+  .app{max-width:720px;margin:0 auto;background:var(--paperwhite);min-height:100vh;border-left:3px solid var(--ink);border-right:3px solid var(--ink);padding-bottom:70px;}
+
+  .geobar{height:10px;display:flex;}
+  .geobar i{flex:1;}
+  .geobar .r{background:var(--red);} .geobar .y{background:var(--yellow);} .geobar .b{background:var(--blue);}
+  .brand{background:var(--ink);color:var(--paperwhite);display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:4px solid var(--red);}
+  .brand .dot{width:18px;height:18px;border-radius:50%;background:conic-gradient(var(--red) 0 33%,var(--yellow) 33% 66%,var(--blue) 66% 100%);}
+  .brand b{font-size:15px;font-weight:800;}
+  .brand span{font-size:12px;color:#cfc8bd;margin-left:auto;}
+
+  .hd{padding:20px 18px 8px;}
+  .hd .tag{display:inline-block;background:var(--redsoft);color:var(--red);font-weight:800;font-size:12px;padding:3px 10px;border-radius:20px;}
+  .hd h1{font-size:24px;font-weight:900;margin:11px 0 6px;line-height:1.3;letter-spacing:-.3px;}
+  .hd h1 em{font-style:normal;color:var(--red);}
+  .hd p{font-size:13px;color:var(--sub);margin:0 0 12px;}
+
+  .stat{display:flex;gap:9px;padding:0 18px 8px;flex-wrap:wrap;}
+  .stat .box{flex:1;min-width:70px;background:#fff;border:2px solid var(--ink);border-radius:12px;padding:9px 6px;text-align:center;box-shadow:3px 3px 0 var(--ink);}
+  .stat .n{font-size:19px;font-weight:900;color:var(--red);line-height:1.1;}
+  .stat .n.b{color:var(--blue);} .stat .n.y{color:#B98A00;}
+  .stat .l{font-size:10.5px;color:var(--sub);margin-top:2px;}
+
+  /* 吸顶导航 */
+  .nav{position:sticky;top:0;z-index:20;background:var(--paperwhite);border-bottom:2px solid var(--ink);padding:8px 12px;}
+  .nav .chips{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;}
+  .nav .chips::-webkit-scrollbar{display:none;}
+  .nav .chip{flex:0 0 auto;border:2px solid var(--ink);background:#fff;border-radius:20px;padding:5px 12px;font-size:12.5px;font-weight:800;cursor:pointer;white-space:nowrap;color:var(--ink);text-decoration:none;}
+  .nav .chip:active,.nav .chip.on{background:var(--ink);color:var(--paperwhite);}
+
+  .sec-t{display:flex;align-items:center;gap:9px;margin:22px 18px 6px;font-size:17px;font-weight:900;scroll-margin-top:56px;}
+  .sec-t .bi{width:15px;height:15px;flex:0 0 auto;}
+  .sec-t .bi.c{background:var(--red);border-radius:50%;}
+  .sec-t .bi.s{background:var(--yellow);}
+  .sec-t .bi.t{width:0;height:0;background:none;border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:14px solid var(--blue);}
+  .sec-t .bi.d{border:2px solid var(--ink);transform:rotate(45deg);}
+  .sec-sub{margin:0 18px 10px;font-size:12.5px;color:var(--sub);}
+
+  /* 阶段 */
+  .stage{margin:0 18px 16px;border:2.5px solid var(--ink);border-radius:14px;background:#fff;box-shadow:4px 4px 0 var(--ink);overflow:hidden;}
+  .stage .shd{display:flex;align-items:center;gap:10px;padding:12px 13px;background:var(--ink);color:var(--paperwhite);}
+  .stage .shd .no{width:30px;height:30px;border-radius:50%;background:var(--yellow);color:var(--ink);font-weight:900;font-size:15px;display:flex;align-items:center;justify-content:center;flex:0 0 auto;}
+  .stage .shd .tt{font-size:15.5px;font-weight:900;}
+  .stage .shd .cnt{margin-left:auto;font-size:11.5px;color:#cfc8bd;}
+  .stage .tagline{padding:8px 13px;font-size:12px;color:var(--sub);background:var(--paper);border-bottom:1px solid var(--line);}
+  .stage .nodes{padding:6px 12px 12px;}
+
+  .node{border-left:3px solid var(--line);padding:9px 0 9px 12px;margin-top:6px;position:relative;}
+  .node:before{content:"";position:absolute;left:-7px;top:16px;width:10px;height:10px;background:var(--red);border-radius:50%;border:2px solid #fff;}
+  .node .nh{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;}
+  .node .nh .no{font-size:12px;font-weight:900;color:var(--blue);}
+  .node .nh h4{margin:0;font-size:14.5px;font-weight:900;}
+  .node .nh .dur{font-size:10.5px;font-weight:800;color:#fff;background:var(--blue);border-radius:10px;padding:1px 8px;}
+  .node p{margin:5px 0 0;font-size:13px;color:#2b2b2b;}
+  .suzy{margin-top:8px;background:var(--yellsoft);border:1.5px solid #E9C639;border-radius:10px;padding:8px 10px;font-size:12.5px;line-height:1.6;}
+  .suzy b{display:inline-block;background:var(--ink);color:var(--yellow);font-size:10.5px;font-weight:900;border-radius:6px;padding:1px 7px;margin-right:5px;vertical-align:1px;}
+  .suzy .hl{color:var(--red);font-weight:900;}
+
+  /* 打胶 */
+  .glue{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 18px;}
+  @media(max-width:560px){.glue{grid-template-columns:1fr;}}
+  .gcard{border:2px solid var(--ink);border-radius:12px;background:#fff;padding:11px 12px;box-shadow:3px 3px 0 var(--ink);}
+  .gcard .gt{font-size:12px;font-weight:800;color:#fff;background:var(--blue);display:inline-block;border-radius:8px;padding:1px 9px;margin-bottom:6px;}
+  .gcard h5{margin:0 0 5px;font-size:14px;font-weight:900;}
+  .gcard ol{margin:0;padding-left:17px;font-size:12.5px;color:#2b2b2b;}
+  .gcard ol li{margin:1px 0;}
+  .gcard .adv{margin-top:7px;font-size:11.5px;font-weight:800;color:var(--red);}
+
+  /* 翻车细节 */
+  .card{border:2.5px solid var(--ink);border-radius:14px;background:#fff;margin:0 18px 12px;padding:13px;box-shadow:4px 4px 0 var(--ink);}
+  .card .chd{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+  .card .mk{width:15px;height:15px;flex:0 0 auto;}
+  .card .mk.c{background:var(--red);border-radius:50%;}
+  .card .mk.s{background:var(--yellow);}
+  .card .mk.t{width:0;height:0;background:none;border-left:7px solid transparent;border-right:7px solid transparent;border-bottom:13px solid var(--blue);}
+  .card .mk.d{border:2px solid var(--ink);transform:rotate(45deg);}
+  .card h3{font-size:15px;font-weight:900;margin:0;line-height:1.35;flex:1;}
+  .kv{font-size:13px;margin:6px 0;}
+  .kv .k{font-weight:900;color:var(--red);display:block;font-size:12px;margin-bottom:1px;}
+  .kv .k.ok{color:var(--blue);}
+  .kv .v{color:var(--ink);}
+
+  /* 账单 */
+  .bill{margin:0 18px;border:2.5px solid var(--ink);border-radius:14px;background:#fff;box-shadow:4px 4px 0 var(--ink);overflow:hidden;}
+  .bill .row{display:flex;align-items:center;gap:10px;padding:10px 13px;border-bottom:1px dashed var(--line);}
+  .bill .row:last-child{border-bottom:none;}
+  .bill .row .ic{width:8px;height:8px;border-radius:50%;background:var(--red);flex:0 0 auto;}
+  .bill .row .ic.y{background:var(--yellow);} .bill .row .ic.b{background:var(--blue);}
+  .bill .row .nm{font-size:13px;font-weight:700;flex:1;}
+  .bill .row .nm small{display:block;color:var(--sub);font-weight:400;font-size:11.5px;}
+  .bill .row .amt{font-size:15px;font-weight:900;color:var(--red);white-space:nowrap;}
+  .bill .row .amt.save{color:#1a8a3c;}
+
+  /* 渠道 */
+  .chan{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 18px;}
+  @media(max-width:560px){.chan{grid-template-columns:1fr;}}
+  .ccard{border:2px solid var(--ink);border-radius:12px;padding:11px;background:var(--bluesoft);box-shadow:3px 3px 0 var(--ink);}
+  .ccard b{display:block;font-size:13.5px;font-weight:900;margin-bottom:3px;}
+  .ccard span{font-size:12px;color:#2b2b2b;}
+
+  /* 陷阱速查 */
+  .risk{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 18px;}
+  @media(max-width:560px){.risk{grid-template-columns:1fr;}}
+  .rcard{border:2px solid var(--ink);border-radius:12px;padding:11px;background:#fff;box-shadow:3px 3px 0 var(--ink);}
+  .rcard .st{font-size:10.5px;font-weight:800;color:#fff;background:var(--red);border-radius:8px;padding:1px 8px;display:inline-block;margin-bottom:5px;}
+  .rcard h5{margin:0 0 4px;font-size:13.5px;font-weight:900;}
+  .rcard p{margin:0;font-size:12px;color:#2b2b2b;}
+
+  .note{background:#FAFAF8;border:1px solid var(--line);border-left:4px solid var(--red);border-radius:12px;padding:11px 13px;font-size:12px;line-height:1.75;color:var(--ink);margin:14px 18px;}
+  .note b{color:var(--red);}
+  .foot{text-align:center;font-size:11.5px;color:var(--sub);padding:16px 16px 6px;line-height:1.7;}
+  .totop{position:fixed;right:14px;bottom:22px;width:44px;height:44px;border-radius:50%;background:var(--ink);color:var(--yellow);border:2px solid var(--ink);font-size:18px;display:none;align-items:center;justify-content:center;cursor:pointer;z-index:30;box-shadow:2px 2px 0 rgba(0,0,0,.25);}
+  .totop.on{display:flex;}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="geobar"><i class="r"></i><i class="y"></i><i class="b"></i></div>
+  <div class="brand"><span class="dot"></span><b>是小臭狗 SUZY 呀</b><span>重庆 150㎡ 自装实录</span></div>
+
+  <div class="hd">
+    <span class="tag">装修全流程 · 16 节点避坑</span>
+    <h1>装修全流程16节点<br><em>标准流程 + 我的真实案例</em></h1>
+    <p>系统梳理 5 大阶段、16 个工序节点，每个节点穿插我 150㎡ 自装的真实花费与翻车实录。看懂合同、管好现场、少踩坑。</p>
+  </div>
+
+  <div class="stat">
+    <div class="box"><div class="n">150㎡</div><div class="l">自装户型</div></div>
+    <div class="box"><div class="n b">5</div><div class="l">核心阶段</div></div>
+    <div class="box"><div class="n b">16</div><div class="l">工序节点</div></div>
+    <div class="box"><div class="n y">9</div><div class="l">翻车细节</div></div>
+  </div>
+
+  <div class="nav"><div class="chips">
+    <a class="chip" href="#stages">五阶段16节点</a>
+    <a class="chip" href="#glue">全屋打胶15处</a>
+    <a class="chip" href="#pitfalls">真实翻车9条</a>
+    <a class="chip" href="#bills">真实账单</a>
+    <a class="chip" href="#channels">采购渠道</a>
+    <a class="chip" href="#risks">陷阱速查</a>
+  </div></div>
+
+  <div class="sec-t" id="stages"><span class="bi c"></span>装修五大阶段 · 16 节点</div>
+  <div class="sec-sub">黄底「SUZY 实录」= 我这一套真实踩过/验证过的数据，其余为通用标准工艺。</div>
+  <div id="stageWrap"></div>
+
+  <div class="sec-t" id="glue"><span class="bi s"></span>全屋打胶 · 15 处收口工艺</div>
+  <div class="sec-sub">密封防水、防虫防尘、美观收口。厨卫湿区选高倍防霉胶，接缝处选抗拉裂醇型美容胶，别用腻子糊。</div>
+  <div class="glue" id="glueWrap"></div>
+
+  <div class="sec-t" id="pitfalls"><span class="bi t"></span>我真实翻过的 9 个细节</div>
+  <div class="sec-sub">150㎡ 全程自装，工地几乎天天蹲，还是差点在这 9 处翻车。能救一个是一个。</div>
+  <div id="pitWrap"></div>
+
+  <div class="sec-t" id="bills"><span class="bi d"></span>真实账单（不吹不藏）</div>
+  <div class="sec-sub">自装 vs 装修公司，钱到底差在哪，全给你摊开。</div>
+  <div class="bill" id="billWrap"></div>
+
+  <div class="sec-t" id="channels"><span class="bi c"></span>瓷砖采购 · 四路渠道</div>
+  <div class="sec-sub">「图在手，价我有」——拿着花色图去问价，别被店里灯光牵着走。</div>
+  <div class="chan" id="chanWrap"></div>
+
+  <div class="sec-t" id="risks"><span class="bi s"></span>全周期高频陷阱速查</div>
+  <div class="sec-sub">这 6 类最容易吃哑巴亏，签合同前先对照一遍。</div>
+  <div class="risk" id="riskWrap"></div>
+
+  <div class="note">
+    <b>使用说明：</b><br>
+    1. 节点工期为常规参考，实际随户型/队伍浮动；「SUZY 实录」为我这套的真实数据，仅供对照，不构成报价承诺。<br>
+    2. 账单金额含个人采购渠道与时段因素，公开引用请注明「SUZY 自装实录」；涉及商户/个人信息的凭证不作展示。<br>
+    3. 任何节点验收不合格，宁可不付款、不进入下一道，也不要事后返工。
+  </div>
+
+  <div class="foot">@是小臭狗 SUZY 呀 · 重庆 150㎡ 自装实录<br>真实避坑，honesty first</div>
+  <div class="geobar"><i class="r"></i><i class="y"></i><i class="b"></i></div>
+</div>
+
+<div class="totop" id="totop">↑</div>
+
+<script>
+const STAGES = [
+  {no:1, name:'前期准备', tag:'打好基础，签死合同与图纸', nodes:[
+    {no:'①', title:'收房验房', dur:'1~3 天', std:'备齐空鼓锤、感应电笔、卷尺、塞尺、垂直检测尺。毛坯重点查墙体开裂空鼓、地面平整、门窗密封；精装重点核验材料品牌与地砖空鼓。拍照留证，书面反馈物业整改。'},
+    {no:'②', title:'确定预算', dur:'3~7 天', std:'黄金比例：硬装 40% + 主材 30% + 家具家电 20% + 备用金 10%。防低价全包增项陷阱，合同约定增项上限不超 5%；分清「定金」不可退与「订金」可退。',
+      suzy:'<span class="hl">光瓦工一项就省 9000</span>：瓦工自装 <b style="background:none;color:var(--red);padding:0">16000</b>，装修公司报价 <b style="background:none;color:var(--red);padding:0">25000</b>。自装的钱是省出来的，但得自己盯。'},
+    {no:'③', title:'设计定稿', dur:'7~15 天', std:'带户型图明确生活动线，承重墙绝不动，插座宁多勿少。定稿八大清单：平面布局、水电点位、立面、铺砖排版、砌墙尺寸、木工尺寸、灯具定位、主辅材清单。'}
+  ]},
+  {no:2, name:'基础施工', tag:'水电隐蔽工程与防水止水基石', nodes:[
+    {no:'④', title:'拆改工程', dur:'3~7 天', std:'关闭水电气总阀，封堵地漏下水管防止碎渣堵塞。承重墙、剪力墙、配重墙严禁拆除。新砌墙体必须植筋、挂网，顶部斜砌「蜈蚣脚」60 度排砖防沉降开裂。'},
+    {no:'⑤', title:'砌墙粉刷', dur:'3~5 天', std:'红砖提前浸水 2 小时，弹线定位，每砌 3 层用水平仪校准垂直度（误差 ≤3mm）。新旧墙交界铲墙皮 10cm 再挂网植筋，门洞加混凝土过梁，抹灰后连续 2~3 天洒水养护。'},
+    {no:'⑥', title:'水电改造', dur:'7~10 天', std:'先定全屋定制方案再留插座点位。电线用单芯 BV 线，水管 PPR 走顶，网线超六类。强弱电分管分盒、交叉处包锡纸。冷热水管间距 15cm 水平一致，打压 8~10 公斤保压 30 分钟不漏，全屋走向拍照录像存档。'},
+    {no:'⑦', title:'防水施工', dur:'3~5 天', std:'卫生间砌墙必做 20cm 混凝土止水梁；门口瓷砖比外面低 1cm；淋浴区防水刷到 1.8m，横竖各一遍；沉箱式做二次排水；闭水试验做满 48 小时，到楼下邻居顶面核验。',
+      suzy:'<span class="hl">天坑：墙面被刷了柔性防水</span>，被我发现及时拦住——柔性粘不住水泥墙，一撕一大片，贴砖几十斤必掉。<b>墙刚地柔</b>：雨虹橙桶=墙面刚性（100），蓝桶=地面柔性（桶上大字「只能地面用」）。若已刷错：闭水 48h 不漏 → 界面处理/打磨毛化清灰 → 刚性 K11 薄刷 2 遍 → 养护 ≥24h 再贴。管根墙脚用堵漏宝。'}
+  ]},
+  {no:3, name:'瓦木油漆', tag:'面子工程与平整度核心把控', nodes:[
+    {no:'⑧', title:'瓦工铺贴', dur:'7~15 天', std:'提前确认工厂预制海棠角 45 度倒角；必须按排版图铺贴，先地砖后墙砖（墙压地）；地面砖严禁空鼓，墙砖空鼓率 ≤5%；美缝地面留缝 2.5mm、墙面 2.0mm；地漏设最低处。',
+      suzy:'瓦工自装 16000。瓷砖走<b>巴山建材市场/师傅带路</b>，师傅朋友价 <span class="hl">40 元/750×1500、25 元/600×1200</span>；200 块里挑 6 块百搭砖。小蓝砖半瓷只做点缀、杏黄全瓷敢上台面、陶土砖只铺墙不跟全瓷拼缝。<b>砖夹灶顺序</b>：先贴墙砖 → 做地台 → 夹铝型材+玻化砖，别搞反。美缝师傅做 7~8 年：再好的环氧彩砂 5~6 年必发黄，怕脏选深色。'},
+    {no:'⑨', title:'木工吊顶', dur:'5~10 天', std:'拐角处整板 7 字型切割防开裂，石膏板接缝开 V 型凹槽批灰；轻钢龙骨主骨间距 80~120cm，双层板缝错开；窗帘盒欧松板打底；浴霸排风软管封板前务必对接通风口并试运转。',
+      suzy:'吊顶/木作辅料线上开单，合计 <span class="hl">1660.20</span>：圣戈班杰嘉合 Max 石膏板 9.5mm×23、副龙骨 50mm×43、吊杆丝杆 8mm、自攻钉、膨胀螺栓 6mm 等。'},
+    {no:'⑩', title:'油工刷漆', dur:'7~12 天', std:'铲除原开发商大白到底层，滚刷墙固；开槽处挂网、钉眼刷防锈漆；严禁往腻子加胶水；成品耐水腻子批 2~3 遍且每遍干透；射灯斜照打磨平整；底漆一遍 + 面漆两遍。'}
+  ]},
+  {no:4, name:'成品安装', tag:'全屋定制五金与木门地板收口', nodes:[
+    {no:'⑪', title:'厨卫吊顶', dur:'1~2 天', std:'主流铝扣板耐用易检修，安装高度不低于 2.3m；浴霸正对淋浴区外侧避免直吹；必须预留管道阀门检修口，联动排风止逆阀调试。'},
+    {no:'⑫', title:'定制柜安装', dur:'3~7 天', std:'签合同前问透 16 个增项：五金品牌/封边方式/见光板/抽屉数量/灯带变压器/收口条/背板厚度 ≥9mm。封边首选 PUR 或激光，五金优先百隆、海蒂诗、悍高、东泰。',
+      suzy:'部分柜体与灶台走<b>铝型材 DIY</b>（砖夹灶），比整柜定制更可控成本、也更灵活；成品柜则重点盯背板厚度与封边。'},
+    {no:'⑬', title:'木门地板', dur:'3~5 天', std:'木门内部填充避免蜂窝纸，选实木复合实心填充；地板铺设前地面找平误差 ≤3mm，四周预留伸缩缝 8~10mm 防起拱；门套与踢脚线衔接收口平齐。'}
+  ]},
+  {no:5, name:'收尾入住', tag:'保洁调试与科学通风', nodes:[
+    {no:'⑭', title:'灯具洁具', dur:'2~3 天', std:'大品牌阻燃开关插座按图复核相零地线；马桶法兰圈对准压实打防霉胶；花洒角阀缠生料带并涂密封胶；前置过滤器同步进场试水保压。'},
+    {no:'⑮', title:'开荒保洁', dur:'1~2 天', std:'安排在硬装与定制安装完成、家具进场之前；按由上至下、由里到外顺序，清理窗框水泥胶痕、瓷砖死角、抽屉导轨粉尘；严禁钢丝球刮擦不锈钢与釉面。'},
+    {no:'⑯', title:'软装入住', dur:'通风 ≥3 个月', std:'先大件家具后窗帘饰品；开窗对流为主、配合风扇辅助排湿排醛；普通家庭建议通风 3 个月以上，有孕妇老人婴幼儿建议半年以上并封闭检测达标再入住。'}
+  ]}
+];
+
+const GLUE = [
+  {t:'01~04 基础接缝', h:'柜体、窗框与门套', list:['全屋定制柜与墙面顶面','窗框与窗台石、墙面接缝','踢脚线与地面墙面（上瓷白下透明）','全屋门套窗套与墙面接缝'], adv:'建议：抗拉裂醇型美容胶'},
+  {t:'05~08 卫浴核心', h:'马桶、台盆与隔断', list:['木饰面拼接缝与墙面','马桶底座与地面（防霉玻璃胶，不用美缝剂）','浴室柜与墙面交接处','洗手盆与台面接缝'], adv:'必须：0 级防霉中性玻璃胶'},
+  {t:'09~12 厨卫湿区', h:'水槽台面与灶台', list:['浴缸周边缝隙密封','卫生间玻璃隔断与墙面地面','厨房台面与墙面防溅板','洗菜水槽盆与台面接缝'], adv:'关键：韧性防霉胶，防震动开裂'},
+  {t:'13~15 烟道收边', h:'灶台吊柜与角阀', list:['厨房灶台与台面接缝','厨房吊柜与墙面接缝','集成吊顶收边条与墙面','★ 花洒水龙头角阀与瓷砖缝打胶防暗渗','★ 排风止逆阀周边气密打胶'], adv:'重点：角阀暗渗、止逆阀气密'}
+];
+
+const PITFALLS = [
+  {mk:'c', t:'墙面刷了柔性防水', w:'瓦工在贴砖墙面刷柔性防水——柔性跟水泥墙粘不住，一撕掉一大片，贴砖几十斤必掉砖。', r:'墙面用刚性（K11），地面才用柔性。已刷错：闭水 48h 不漏 → 界面处理/打磨毛化清灰 → 刚性薄刷 2 遍 → 养护 ≥24h 再贴砖。'},
+  {mk:'s', t:'闭水试验走过场', w:'防水刷完直接贴砖，没闭水验收，后期漏水夹层难修。', r:'柔性干透后闭水 48h，确认不漏再进下一道（刷刚性/贴砖）；顺序反了夹层积水难修。'},
+  {mk:'t', t:'手工砖当全瓷大面积铺', w:'把小蓝砖这类手工砖当全瓷上墙拼全瓷、做台面，吸水率高易翻车。', r:'小蓝砖=半瓷，只做点缀；杏黄撞色=全瓷敢上台面；真陶土砖只铺墙、不做台面、不跟全瓷拼缝。'},
+  {mk:'d', t:'迷信「美缝永远不变色」', w:'以为环氧彩砂永远白净，几年后发黄显脏。', r:'美缝师傅说再好最多撑 5~6 年必氧化发黄；不爱打理直接选深色美缝，黄了也看不出来。'},
+  {mk:'c', t:'选砖只听瓷砖老板', w:'进店被花砖迷住、只听老板推荐，买回家一铺全乱。', r:'先定「百搭」基调（任意两块不违和）；选砖秘密武器是做了 7~8 年的美缝师傅，截图发他一眼报品牌色号。'},
+  {mk:'s', t:'砖夹灶工序搞反', w:'先做地台/先夹铝型材再贴墙砖，容易翻车。', r:'正确工序＝①先贴墙砖 ②再做地台 ③最后夹铝型材+玻化砖做灶台，顺序不能乱。'},
+  {mk:'t', t:'批发市场不包送货不包搬运', w:'以为批发单价便宜就划算，不知批发市场正常不包送货也不包搬运，搬运费+运费高昂。', r:'购买前把搬运/运费算进总价；我板材搬运+送货就 190 元；离电梯远还要额外加钱。'},
+  {mk:'d', t:'背胶/加工增项漏算', w:'报价含砖含铺贴，结果背胶、切割倒角拉槽全另算，超预算。', r:'签约前逐条核对：是否含背胶（我自购背胶 2290 元）、是否含加工；写进合同。'},
+  {mk:'c', t:'买防水分不清柔性刚性', w:'用错位置，白花钱还留隐患。', r:'雨虹橙桶=墙面刚性（100），蓝桶=地面柔性（只能地面用）；管根/墙脚用堵漏宝。'}
+];
+
+const BILLS = [
+  {ic:'', nm:'瓦工自装', note:'装修公司报价 25000，省 9000', amt:'16000'},
+  {ic:'y', nm:'瓷砖（师傅/朋友价）', note:'750×1500 = 40 元/片；600×1200 = 25 元/片', amt:'按铺贴量'},
+  {ic:'b', nm:'线下批发（瓷砖+辅料）', note:'马家岩光能建材市场 · 单号 0061040 · 不含搬运', amt:'¥1461'},
+  {ic:'y', nm:'线上（石膏板/木作辅料）', note:'圣戈班杰嘉合 Max 石膏板+龙骨+丝杆等', amt:'¥1660.20'},
+  {ic:'b', nm:'板材搬运 + 送货', note:'批发市场不包搬运，这笔必须算进去', amt:'¥190'},
+  {ic:'', nm:'背胶（自购）', note:'报价外增项，签约务必问清', amt:'¥2290'},
+  {ic:'y', nm:'提前采购 25 件', note:'烟机止逆阀 / 燃气热水器排烟管预埋 / 嵌入式电器定型号', amt:'按需'}
+];
+
+const CHANNELS = [
+  {b:'巴山建材市场', s:'往巷子深处走，避开临街高价店'},
+  {b:'瓦工师傅带路', s:'师傅熟店，能拿到师傅价'},
+  {b:'装修过的朋友', s:'问他们要同款花色与成交价'},
+  {b:'互联网花色图询价', s:'图在手，价我有，发给店主比价'}
+];
+
+const RISKS = [
+  {st:'合同签订', t:'价格陷阱', p:'低价全包诱导签约，进场后以「漏项、图纸未标」疯狂加收；订金写成定金退款无门。'},
+  {st:'定制柜/主材', t:'货不对板', p:'样板间与实际交付板材品牌不符，素板冒充精板，背板偷工减料换 5mm 薄板。'},
+  {st:'水电/防水', t:'隐蔽工程猫腻', p:'工人绕线多算米数，防水高度缩水，闭水敷衍，封槽后漏水跳闸损失惨重。'},
+  {st:'瓦工/油工', t:'工艺粗糙', p:'瓷砖大面积空鼓，未按排版留极窄收尾砖，油工私自加胶水，射灯下波浪起伏。'},
+  {st:'收尾工程', t:'售后缺位', p:'尾款结清后公司失联，漏水开裂互相推诿，前期口头承诺全盘不认。'},
+  {st:'软装入住', t:'甲醛超标', p:'劣质密度板家具与劣质玻璃胶挥发，盲目相信「喷剂除醛」，缺乏有效通风。'}
+];
+
+function esc(s){ return (s||'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m])); }
+function mkCls(m){ return m; }
+
+// 阶段 + 节点
+document.getElementById('stageWrap').innerHTML = STAGES.map(st=>{
+  const nodes = st.nodes.map(n=>`
+    <div class="node">
+      <div class="nh"><span class="no">${n.no}</span><h4>${esc(n.title)}</h4><span class="dur">${esc(n.dur)}</span></div>
+      <p>${esc(n.std)}</p>
+      ${n.suzy?`<div class="suzy"><b>SUZY 实录</b>${n.suzy}</div>`:''}
+    </div>`).join('');
+  return `<div class="stage">
+    <div class="shd"><span class="no">${st.no}</span><span class="tt">阶段 ${st.no} · ${esc(st.name)}</span><span class="cnt">${st.nodes.length} 个节点</span></div>
+    <div class="tagline">${esc(st.tag)}</div>
+    <div class="nodes">${nodes}</div>
+  </div>`;
+}).join('');
+
+// 打胶
+document.getElementById('glueWrap').innerHTML = GLUE.map(g=>`
+  <div class="gcard">
+    <span class="gt">${esc(g.t)}</span>
+    <h5>${esc(g.h)}</h5>
+    <ol>${g.list.map(x=>`<li>${esc(x)}</li>`).join('')}</ol>
+    <div class="adv">${esc(g.adv)}</div>
+  </div>`).join('');
+
+// 翻车
+document.getElementById('pitWrap').innerHTML = PITFALLS.map((c,i)=>`
+  <div class="card">
+    <div class="chd"><span class="mk ${mkCls(c.mk)}"></span><h3>${i+1}. ${esc(c.t)}</h3></div>
+    <div class="kv"><span class="k">翻车点</span><span class="v">${esc(c.w)}</span></div>
+    <div class="kv"><span class="k ok">正确做法</span><span class="v">${esc(c.r)}</span></div>
+  </div>`).join('');
+
+// 账单
+document.getElementById('billWrap').innerHTML = BILLS.map(b=>`
+  <div class="row">
+    <span class="ic ${b.ic}"></span>
+    <span class="nm">${esc(b.nm)}<small>${esc(b.note)}</small></span>
+    <span class="amt ${b.save?'save':''}">${b.save?esc(b.save):esc(b.amt)}</span>
+  </div>`).join('');
+
+// 渠道
+document.getElementById('chanWrap').innerHTML = CHANNELS.map(c=>`
+  <div class="ccard"><b>${esc(c.b)}</b><span>${esc(c.s)}</span></div>`).join('');
+
+// 陷阱
+document.getElementById('riskWrap').innerHTML = RISKS.map(r=>`
+  <div class="rcard"><span class="st">${esc(r.st)}</span><h5>${esc(r.t)}</h5><p>${esc(r.p)}</p></div>`).join('');
+
+// 回到顶部
+const totop=document.getElementById('totop');
+window.addEventListener('scroll',()=>{ totop.classList.toggle('on', window.scrollY>400); });
+totop.onclick=()=>window.scrollTo({top:0,behavior:'smooth'});
+
+// 导航高亮
+document.querySelectorAll('.nav .chip').forEach(c=>{
+  c.addEventListener('click',()=>{
+    document.querySelectorAll('.nav .chip').forEach(x=>x.classList.remove('on'));
+    c.classList.add('on');
+  });
+});
+</script>
+</body>
+</html>
